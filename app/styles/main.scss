@@ -12,8 +12,8 @@ $color_boston_blue_approx: rgb(66, 139, 202);
 $concrete: rgb(242, 242, 242);
 $color_log_cabin_approx: rgb(34, 34, 34);
 $color_woodsmoke_approx: rgb(17, 17, 17);
-$color_geyser_approx: rgb(215, 224, 229);
 $color_celeste_approx: rgb(204, 204, 204);
+$color_alabaster_approx: rgb(249, 249, 249);
 $black: rgb(0, 0, 0);
 
 .browsehappy {
@@ -99,7 +99,7 @@ body {
 }
 .container-fluid .jumbotron {
   border-radius: 20px;
-  background-color: $color_geyser_approx;
+  background-color: $color_alabaster_approx;
 }
 
 /*
