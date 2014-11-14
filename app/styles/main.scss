@@ -1,0 +1,161 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+// bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+// endbower
+
+
+//colors
+$color_wild_sand_approx: rgb(245, 245, 245);
+$color_gallery_approx: rgb(238, 238, 238);
+$white: rgb(255, 255, 255);
+$color_boston_blue_approx: rgb(66, 139, 202);
+$concrete: rgb(242, 242, 242);
+$color_log_cabin_approx: rgb(34, 34, 34);
+$color_woodsmoke_approx: rgb(17, 17, 17);
+$color_geyser_approx: rgb(215, 224, 229);
+$color_celeste_approx: rgb(204, 204, 204);
+$black: rgb(0, 0, 0);
+
+.browsehappy {
+  margin: 0.2em 0;
+  background: $color_celeste_approx;
+  color: $black;
+  padding: 0.2em 0;
+}
+
+/*
+ * Base structure
+ */
+body {
+  padding-top: 20px;
+}
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Main content
+ */
+
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+  h4 {
+    margin-bottom: 0;
+  }
+}
+.placeholder {
+  margin-bottom: 20px;
+  img {
+    display: inline-block;
+    border-radius: 50%;
+  }
+}
+
+/*
+ * Vertical divider
+ */
+
+@media (max-width: 767px) {
+  .navbar-collapse .nav > .divider-vertical {
+    display: none;
+  }
+}
+.navbar .divider-vertical {
+  height: 50px;
+  margin: 0 9px;
+  border-right: 1px solid $white;
+  border-left: 1px solid $concrete;
+}
+.navbar-inverse .divider-vertical {
+  border-right-color: $color_log_cabin_approx;
+  border-left-color: $color_woodsmoke_approx;
+}
+
+.container-fluid {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+.container-fluid .jumbotron {
+  border-radius: 20px;
+  background-color: $color_geyser_approx;
+}
+
+/*
+ * Sidebar and navigation
+ */
+.sidebar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: $color_wild_sand_approx;
+    border-right: 1px solid $color_gallery_approx;
+  }
+}
+.nav-sidebar {
+  margin-right: -21px;
+  margin-bottom: 20px;
+  margin-left: -20px;
+  > {
+    p {
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+    li > a {
+      padding-right: 30px;
+      padding-left: 30px;
+    }
+    .active > a {
+      color: $white;
+      background-color: $color_boston_blue_approx;
+      &:hover {
+        color: $white;
+        background-color: $color_boston_blue_approx;
+      }
+      &:focus {
+        color: $white;
+        background-color: $color_boston_blue_approx;
+      }
+    }
+  }
+}
+
+/*
+ * Grid
+ */
+
+.grid {
+  width: 100%;
+  height: 400px;
+}

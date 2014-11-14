@@ -1,0 +1,190 @@
+<div class="container-fluid">
+  <div class="page-header">
+    <h1>Anslut tjänst för tjänsteproducent
+    </h1>
+  </div>
+  <p>En förklarande text om vad man kan/bör göra i den här vyn</p>
+    <h2>Välj tjänsteproducent</h2>
+    <div class="jumbotron">
+
+      <div class="row">
+
+        <div class="col-md-3 form-group">
+          <select class="form-control" ng-model="selectedProducent" ng-options="producent.name for producent in tjansteProducenter">
+            <option value="">Välj producent</option>
+          </select>
+        </div>
+
+        <div class="col-md-3 form-group">
+          <div class="btn-group">
+            <button type="button" class="btn btn-default">Registrera ny tjänsteproducent</button>
+          </div>
+        </div>
+      </div> <!-- End row -->
+
+      <form role="form">
+        <div class="row">
+          <div class="col-md-4">
+            <h4>Huvudansvarig</h4>
+          </div>
+          <div class="col-md-4">
+            <h4>Funktionsbrevlåda</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="huvudansvarigNamn">Namn</label>
+              <input type="text" class="form-control" id="huvudansvarigNamn" placeholder=""
+                     readonly value="{{tjansteProducent.huvudansvarig.name}}">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="brevladaEmail">Mail</label>
+              <input type="email" class="form-control" id="brevladaEmail"
+                     placeholder="" readonly value="{{tjansteProducent.brevlada.mail}}">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="huvudansvarigEmail">Mail</label>
+              <input type="email" class="form-control" id="huvudansvarigEmail"
+                     placeholder="" readonly value="{{tjansteProducent.huvudansvarig.mail}}">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="brevladaTelefon">Telefon</label>
+              <input type="text" class="form-control" id="brevladaTelefon"
+                     placeholder="" readonly value="{{tjansteProducent.brevlada.phone}}">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="huvudansvarigTelefon">Telefon</label>
+              <input type="text" class="form-control" id="huvudansvarigTelefon" placeholder=""
+                     readonly value="{{tjansteProducent.huvudansvarig.phone}}">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <h4>Kontakt, teknik</h4>
+          </div>
+          <div class="col-md-4">
+            <h4>Övrigt</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="kontaktNamn">Namn</label>
+              <input type="text" class="form-control" id="kontaktNamn" placeholder=""
+                     readonly value="{{tjansteProducent.kontakt.name}}">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="ovrigtIP">IP nummer</label>
+              <input type="text" class="form-control" id="ovrigtIP"
+                     placeholder="" readonly value="{{tjansteProducent.ovrigt.ip}}">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="kontaktMail">Mail</label>
+              <input type="email" class="form-control" id="kontaktMail" placeholder=""
+                     readonly value="{{tjansteProducent.kontakt.mail}}">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="kontaktTelefon">Telefon</label>
+              <input type="text" class="form-control" id="kontaktTelefon" placeholder=""
+                     readonly value="{{tjansteProducent.kontakt.phone}}">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  <h2>Välj tjänstekontrakt</h2>
+
+  <div class="jumbotron">
+
+    <div class="row">
+
+      <div class="col-md-3 form-group">
+        <select class="form-control" ng-model="selectedEnvironment" ng-options="environment.name for environment in environments">
+          <option value="">Välj driftmiljö</option>
+        </select>
+      </div>
+
+    </div>
+    <!-- End row -->
+
+    <div class="row">
+      <div class="btn-group col-md-4" data-toggle="buttons">
+        <label class="btn btn-primary active">
+          <input type="radio" name="options" id="option1" autocomplete="off"> Tjänstedomän
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" name="options" id="option2" autocomplete="off"> E-Tjänst
+        </label>
+      </div>
+      <div class="col-md-4 form-group">
+        <select class="form-control" ng-model="selectedEnvironment" ng-options="environment.name for environment in environments">
+          <option value="">Välj driftmiljö</option>
+        </select>
+      </div>
+    </div>
+    <!-- End row -->
+
+    <div ui-grid="gridOptions" ui-grid-selection class="grid"></div>
+  </div>
+
+  <h2>Konfigurera tjänstekontrakt</h2>
+  <h3>Koppla logiska adresser till tjänstekontrakt</h3>
+  <div class="jumbotron">
+
+    <div class="radio">
+      <label>
+        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+        Option one is this and that&mdash;be sure to include why it's great
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+        Option two can be something else and selecting it will deselect option one
+      </label>
+    </div>
+
+    <div class="row">
+      <select class="col-md-4" multiple="multiple">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+
+      <div class="col-md-3 form-group">
+        <div class="btn-group">
+          <button type="button" class="btn btn-default"> >> </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
