@@ -16,7 +16,8 @@ angular
     'ngSanitize',
     'ui.router',
     'ui.grid',
-    'ui.grid.selection'
+    'ui.grid.selection',
+    'ui.select'
   ])
   .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -29,4 +30,7 @@ angular
         templateUrl: 'views/tjansteproducent/anslut.html',
         controller: 'AnslutCtrl'
       });
+  })
+  .config(function(uiSelectConfig) {
+    uiSelectConfig.theme = 'bootstrap';
   });
