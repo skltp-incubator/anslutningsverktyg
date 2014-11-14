@@ -3,6 +3,8 @@ angular.module('avApp')
   .factory('ServiceDomain', function() {
     return {
       listDomains: function(serviceComponentId, environment, callback) {
+
+        //Obiviously mocked data
         if(serviceComponentId == 1 && environment === 'QA') {
           callback([
             {name: 'A random servicedomain'},
@@ -14,5 +16,5 @@ angular.module('avApp')
           ]);
         }
       }
-    }
+    };
   });

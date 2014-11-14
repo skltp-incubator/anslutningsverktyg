@@ -133,7 +133,7 @@
 
       <div class="col-md-4 form-group">
         <label for="environment">Tjänstedomän</label>
-        <select class="form-control" ng-model="selectedServiceDomain" ng-options="serviceDomain.name for serviceDomain in serviceDomains">
+        <select class="form-control" ng-model="selectedServiceDomain" ng-change="serviceDomainSelected()" ng-options="serviceDomain.name for serviceDomain in serviceDomains">
           <option value="">Välj tjänstedomän</option>
         </select>
       </div>

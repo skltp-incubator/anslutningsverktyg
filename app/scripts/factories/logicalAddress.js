@@ -1,9 +1,6 @@
-/**
- * Created by behmer on 14/11/14.
- */
-
+'use strict';
 angular.module('avApp')
   .factory('LogicalAddressFactory', function () {
     return {
-    }
+    };
   });

@@ -9,7 +9,7 @@
  */
 
 angular.module('avApp')
-  .controller('AnslutCtrl', ['$scope', 'ServiceDomain', function ($scope, ServiceDomain) {
+  .controller('AnslutCtrl', ['$scope', 'ServiceDomain', 'ServiceContract', function ($scope, ServiceDomain, ServiceContract) {
     $scope.serviceComponents = [
       {name: 'Tjänsteproducent 1', hsaid: '1'},
       {name: 'Tjänsteproducent 2', hsaid: '2'},
@@ -55,8 +55,20 @@ angular.module('avApp')
       }
     };
 
+    $scope.serviceDomainSelected = function() {
+      if($scope.selectedEnvironment && $scope.serviceComponent.selected && $scope.selectedServiceDomain) {
+        var serviceComponentId = $scope.serviceComponent.selected.hsaid;
+        var environment = $scope.selectedEnvironment.name;
+        var serviceDomain = $scope.selectedServiceDomain;
+
+        ServiceContract.listContracts(serviceComponentId, environment, serviceDomain, function(data) {
+          $scope.gridOptions.data = data;
+        });
+      }
+    };
+
     /*
-      Grid
+      Grid config
      */
 
     $scope.gridOptions = {
@@ -70,7 +82,4 @@ angular.module('avApp')
     ];
 
     $scope.gridOptions.multiSelect = true;
-    $scope.gridOptions.data = [{'kontrakt': 'tjanstekontrakt1', version: 1},
-      {'kontrakt': 'tjanstekontrakt2', version: 1},
-      {'kontrakt': 'tjanstekontrakt3', version: 1}];
   }]);
