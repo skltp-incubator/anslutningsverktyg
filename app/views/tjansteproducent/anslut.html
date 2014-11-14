@@ -125,24 +125,22 @@
     <div class="row">
 
       <div class="col-md-3 form-group">
-        <select class="form-control" ng-model="selectedEnvironment" ng-options="environment.name for environment in environments">
+        <label for="environment">Driftmiljö</label>
+        <select id="environment" class="form-control" ng-model="selectedEnvironment" ng-change="environmentSelected()" ng-options="environment.name for environment in environments">
           <option value="">Välj driftmiljö</option>
         </select>
       </div>
 
-    </div>
-    <!-- End row -->
-
-    <div class="row">
       <div class="col-md-4 form-group">
-        <select class="form-control" ng-model="selectedEnvironment" ng-options="environment.name for environment in environments">
-          <option value="">Välj driftmiljö</option>
+        <label for="environment">Tjänstedomän</label>
+        <select class="form-control" ng-model="selectedServiceDomain" ng-options="serviceDomain.name for serviceDomain in serviceDomains">
+          <option value="">Välj tjänstedomän</option>
         </select>
       </div>
-    </div>
-    <!-- End row -->
+    </div><!-- End row -->
 
     <div ui-grid="gridOptions" ui-grid-selection class="grid"></div>
+
   </div>
 
   <h2>Konfigurera tjänstekontrakt</h2>

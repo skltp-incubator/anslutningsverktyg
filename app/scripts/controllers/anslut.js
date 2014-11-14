@@ -9,23 +9,22 @@
  */
 
 angular.module('avApp')
-  .controller('AnslutCtrl', ['$scope', function ($scope) {
+  .controller('AnslutCtrl', ['$scope', 'ServiceDomain', function ($scope, ServiceDomain) {
     $scope.serviceComponents = [
-      {name: 'Tjänsteproducent 1'},
-      {name: 'Tjänsteproducent 2'},
-      {name: 'Tjänsteproducent 3'},
-      {name: 'asnsteproducent 2'},
-      {name: 'sdteproducent 2'},
-      {name: 'edefroducent 2'},
-      {name: 'fsdsdsteproducent 2'},
-      {name: 'dsdseproducent 2'},
-      {name: 'dsdsnsteproducent 2'},];
+      {name: 'Tjänsteproducent 1', hsaid: '1'},
+      {name: 'Tjänsteproducent 2', hsaid: '2'},
+      {name: 'Tjänsteproducent 3', hsaid: '3'},
+      {name: 'asnsteproducent 2', hsaid: '4'},
+      {name: 'sdteproducent 2', hsaid: '5'},
+      {name: 'edefroducent 2', hsaid: '5'},
+      {name: 'fsdsdsteproducent 2', hsaid: '6'},
+      {name: 'dsdseproducent 2', hsaid: '7'},
+      {name: 'dsdsnsteproducent 2', hsaid: '8'},];
 
     $scope.serviceComponent = {};
 
+    //This is just mock code for now
     $scope.$watch('serviceComponent.selected', function(newValue, oldValue) {
-        console.log("In here");
-        console.log(newValue);
         if(newValue && newValue.name === 'Tjänsteproducent 1' ) {
           $scope.serviceComponent.huvudansvarig = {name: 'A Bsson', mail: 'email@email.se', phone: '192912912'};
           $scope.serviceComponent.kontakt = {name: 'En kontakt', mail: 'email@email.se', phone: '192912912'};
@@ -42,6 +41,19 @@ angular.module('avApp')
       {name: 'QA'},
       {name: 'Test'}];
 
+    $scope.serviceDomains = {};
+
+    $scope.environmentSelected = function() {
+      if($scope.selectedEnvironment && $scope.serviceComponent.selected) {
+        var serviceComponentId = $scope.serviceComponent.selected.hsaid;
+        var environment = $scope.selectedEnvironment.name;
+
+        //Promises anyone?
+        ServiceDomain.listDomains(serviceComponentId, environment, function(data) {
+          $scope.serviceDomains = data;
+        });
+      }
+    };
 
     /*
       Grid

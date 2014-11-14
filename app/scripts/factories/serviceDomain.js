@@ -1,9 +1,18 @@
-/**
- * Created by behmer on 14/11/14.
- */
-
+'use strict';
 angular.module('avApp')
-  .factory('ServiceDomainFactory', function () {
+  .factory('ServiceDomain', function() {
     return {
+      listDomains: function(serviceComponentId, environment, callback) {
+        if(serviceComponentId == 1 && environment === 'QA') {
+          callback([
+            {name: 'A random servicedomain'},
+            {name: 'Another random domain'}]);
+        } else {
+          callback([
+            {name: 'Oasis is fantastic'},
+            {name: 'Blur is so great'}
+          ]);
+        }
+      }
     }
   });
