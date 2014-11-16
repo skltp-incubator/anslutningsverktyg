@@ -77,9 +77,36 @@ angular.module('avApp')
     };
 
     $scope.gridOptions.columnDefs = [
-      { name: 'Tjänstekontrakt', field: 'kontrakt' },
+      { name: 'Namn', field: 'kontrakt' },
       { name: 'version'}
     ];
 
     $scope.gridOptions.multiSelect = true;
+
+    $scope.selectedServiceContracts = [];
+
+    $scope.gridOptions.onRegisterApi = function(gridApi){
+      //set gridApi on scope
+      $scope.gridApi = gridApi;
+      gridApi.selection.on.rowSelectionChanged($scope,function(row){
+        updateSelectedServiceContracts(row);
+      });
+
+      gridApi.selection.on.rowSelectionChangedBatch($scope,function(rows){
+        _.forEach(rows, function(row) {
+          updateSelectedServiceContracts(row);
+        })
+      });
+    };
+
+    function updateSelectedServiceContracts(row) {
+      var where = { 'kontrakt': row.entity.kontrakt};
+      if(row.isSelected && !_.find($scope.selectedServiceContracts, where)) {
+        //Add
+        $scope.selectedServiceContracts.push(row.entity);
+      } else if(!row.isSelected && _.find($scope.selectedServiceContracts, where)){
+        //Remove
+        _.remove($scope.selectedServiceContracts, where);
+      }
+    }
   }]);

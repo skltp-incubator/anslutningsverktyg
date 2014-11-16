@@ -15,6 +15,14 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+
+    <!--[if lte IE 8]>
+    <script>
+      document.createElement('ui-select');
+      document.createElement('ui-select-match');
+      document.createElement('ui-select-choices');
+    </script>
+    <![endif]-->
   </head>
   <body ng-app="avApp">
     <!--[if lt IE 7]>
@@ -66,6 +74,7 @@
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
     <script src="bower_components/angular-ui-select/dist/select.js"></script>
+    <script src="bower_components/lodash/dist/lodash.compat.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
