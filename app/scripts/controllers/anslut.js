@@ -102,10 +102,8 @@ angular.module('avApp')
     function updateSelectedServiceContracts(row) {
       var where = { 'kontrakt': row.entity.kontrakt};
       if(row.isSelected && !_.find($scope.selectedServiceContracts, where)) {
-        //Add
         $scope.selectedServiceContracts.push(row.entity);
       } else if(!row.isSelected && _.find($scope.selectedServiceContracts, where)){
-        //Remove
         _.remove($scope.selectedServiceContracts, where);
       }
     }

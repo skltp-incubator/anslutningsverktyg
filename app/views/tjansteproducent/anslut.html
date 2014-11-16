@@ -186,6 +186,22 @@
   <div ng-repeat="contract in selectedServiceContracts">
     <div class="jumbotron">
       <h3>{{contract.kontrakt}}</h3>
+      <div class="row">
+
+        <div class="col-md-4">
+          <label for="rivtaVersion">Rivta version</label>
+          <select id="rivtaVersion" class="form-control">
+            <option value="">Välj rivta version</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label for="url">URL</label>
+          <input type="text" class="form-control" id="url"
+                 placeholder="skriv in url">
+        </div>
+
+      </div>
     </div>
   </div>
 
