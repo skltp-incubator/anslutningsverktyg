@@ -16,6 +16,9 @@ $color_celeste_approx: rgb(204, 204, 204);
 $color_alabaster_approx: rgb(249, 249, 249);
 $black: rgb(0, 0, 0);
 
+//box-shadow
+$box_shadow_opacity: rgba(0,0,0,0.5);
+
 .browsehappy {
   margin: 0.2em 0;
   background: $color_celeste_approx;
@@ -100,6 +103,18 @@ body {
 .container-fluid .jumbotron {
   border-radius: 20px;
   background-color: $color_alabaster_approx;
+  -webkit-box-shadow: 2px 5px 20px 0px $box_shadow_opacity;
+  -moz-box-shadow: 2px 5px 20px 0px $box_shadow_opacity;
+  box-shadow: 2px 5px 20px 0px $box_shadow_opacity;
+
+  background: rgba(255,255,255,1);
+  background: -moz-linear-gradient(-45deg, rgba(255,255,255,1) 0%, rgba(251,251,251,1) 23%, rgba(246,246,246,1) 53%, rgba(248,248,248,1) 91%, rgba(249,249,249,1) 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(23%, rgba(251,251,251,1)), color-stop(53%, rgba(246,246,246,1)), color-stop(91%, rgba(248,248,248,1)), color-stop(100%, rgba(249,249,249,1)));
+  background: -webkit-linear-gradient(-45deg, rgba(255,255,255,1) 0%, rgba(251,251,251,1) 23%, rgba(246,246,246,1) 53%, rgba(248,248,248,1) 91%, rgba(249,249,249,1) 100%);
+  background: -o-linear-gradient(-45deg, rgba(255,255,255,1) 0%, rgba(251,251,251,1) 23%, rgba(246,246,246,1) 53%, rgba(248,248,248,1) 91%, rgba(249,249,249,1) 100%);
+  background: -ms-linear-gradient(-45deg, rgba(255,255,255,1) 0%, rgba(251,251,251,1) 23%, rgba(246,246,246,1) 53%, rgba(248,248,248,1) 91%, rgba(249,249,249,1) 100%);
+  background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(251,251,251,1) 23%, rgba(246,246,246,1) 53%, rgba(248,248,248,1) 91%, rgba(249,249,249,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f9f9f9', GradientType=1 );
 }
 
 /*
