@@ -182,10 +182,10 @@
             <div class="form-group">
               <label>Lägg till ny logisk address</label>
               <ui-select ng-model="logicalAddress.selected" theme="bootstrap"
-                         reset-search-input="false">
-                <ui-select-match placeholder="Namn - HSA ID">{{$select.selected.name}}</ui-select-match>
-                <ui-select-choices repeat="logicalAddress in logicalAddresses track by $index"
-                  refresh="refreshLogicalAddresses($select.search)" refresh-delay="0">
+                         reset-search-input="true">
+                <ui-select-match placeholder="Namn - HSA ID">{{$select.selected.id}} - {{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="logicalAddress in filteredLogicalAddresses| filter: $select.search"
+                  refresh="filterLogicalAddresses($select.search)" refresh-delay="200">
                   <div ng-bind-html="logicalAddress.name | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
@@ -209,7 +209,7 @@
 
             <div class="form-group top25">
               <div class="btn-group">
-                <button type="button" class="btn btn-default">
+                <button type="button" class="btn btn-default" ng-click="addFilteredLogicalAddressToTags()">
                   <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
                 </button>
               </div>
@@ -243,8 +243,7 @@
 
         <div class="form-group col-md-4">
           <label>Valda logiska adresser</label>
-          <tags-input ng-model="tags"></tags-input>
-
+          <tags-input ng-model="logicalAddresses" display-property="name"></tags-input>
         </div>
 
       </div>

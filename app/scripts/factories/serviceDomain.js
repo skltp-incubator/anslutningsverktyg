@@ -25,7 +25,7 @@ angular.module('avApp')
       ];
 
       return {
-        listDomains: function (serviceComponentId, environment, callback) {
+        listDomains: function (serviceComponentId, environment) {
           console.log('serviceComponentId: ' + serviceComponentId + ', environment: ' + environment);
           var deferred = $q.defer();
           if (serviceComponentId == 1 && environment === 'QA') {

@@ -9,7 +9,7 @@
  */
 
 angular.module('avApp')
-  .controller('ConnectServiceProducerCtrl', ['$scope', '$log', 'ServiceDomain', 'ServiceContract', 'ServiceComponent', 'environments', 'rivtaVersions', function ($scope, $log, ServiceDomain, ServiceContract, ServiceComponent, environments, rivtaVersions) {
+  .controller('ConnectServiceProducerCtrl', ['$scope', '$log', 'ServiceDomain', 'ServiceContract', 'ServiceComponent', 'environments', 'rivtaVersions', 'LogicalAddress', function ($scope, $log, ServiceDomain, ServiceContract, ServiceComponent, environments, rivtaVersions, LogicalAddress) {
 
     $scope.connectServiceProducerRequest = {
       serviceComponent: {},
@@ -68,12 +68,20 @@ angular.module('avApp')
 
     $scope.logicalAddress = {};
 
+    $scope.filteredLogicalAddresses = [];
     $scope.logicalAddresses = [];
-    $scope.refreshLogicalAddresses = function(logicalAddress) {
-      //Implement this properly
-      console.log("Searching for logical addresses");
-      $scope.logicalAddresses = [{name: "dummy data"}];
+
+    $scope.filterLogicalAddresses = function(logicalAddressQuery) {
+      LogicalAddress.getFilteredLogicalAddresses(logicalAddressQuery).then(function(data) {
+          $scope.filteredLogicalAddresses = data;
+        }
+      );
     };
+
+    $scope.addFilteredLogicalAddressToTags = function() {
+      $scope.logicalAddresses.push($scope.logicalAddress.selected);
+    };
+
     /*
       Grid config
      */
