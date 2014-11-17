@@ -11,21 +11,24 @@
     <div class="jumbotron">
 
       <div class="row">
+        <div class="col-md-4">
+          <ui-select ng-model="selectedServiceComponent.selected" theme="bootstrap" reset-search-input="false">
+            <ui-select-match placeholder="Välj tjänsteproducent">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices
+              repeat="serviceComponent in filteredServiceComponents | filter: $select.search"
+              refresh="filterServiceComponents($select.search)"
+              refresh-delay="200"
+              >
+              <div ng-bind-html="serviceComponent.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
 
-        <ui-select class="col-md-3" ng-model="selectedServiceComponent.selected" theme="bootstrap" reset-search-input="false">
-          <ui-select-match placeholder="Välj tjänsteproducent">{{$select.selected.name}}</ui-select-match>
-          <ui-select-choices
-            repeat="serviceComponent in filteredServiceComponents | filter: $select.search"
-            refresh="filterServiceComponents($select.search)"
-            refresh-delay="200"
-            >
-            <div ng-bind-html="serviceComponent.name | highlight: $select.search"></div>
-          </ui-select-choices>
-        </ui-select>
-
-        <div class="col-md-3 form-group">
-          <div class="btn-group">
-            <button type="button" class="btn btn-default">Registrera ny tjänsteproducent</button>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="btn-group">
+              <button type="button" class="btn btn-default">Registrera ny tjänsteproducent</button>
+            </div>
           </div>
         </div>
       </div> <!-- End row -->
