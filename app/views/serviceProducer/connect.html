@@ -134,7 +134,7 @@
 
     <div class="row">
 
-      <div class="col-md-3 form-group">
+      <div class="col-md-4 form-group">
         <label for="environment">Driftmiljö</label>
         <select id="environment" class="form-control" ng-model="selectedEnvironment" ng-change="environmentSelected()" ng-options="environment.name for environment in environments">
           <option value="">Välj driftmiljö</option>
@@ -186,7 +186,7 @@
               <label>Lägg till ny logisk address</label>
               <ui-select ng-model="selectedLogicalAddress.selected" theme="bootstrap"
                          reset-search-input="true">
-                <ui-select-match placeholder="Namn - HSA ID">{{$select.selected.id}} - {{$select.selected.name}}</ui-select-match>
+                <ui-select-match placeholder="Namn - HSA ID">{{$select.selected.name}} - {{$select.selected.id}}</ui-select-match>
                 <ui-select-choices repeat="logicalAddress in filteredLogicalAddresses| filter: $select.search"
                   refresh="filterLogicalAddresses($select.search)" refresh-delay="200">
                   <div ng-bind-html="logicalAddress.name | highlight: $select.search"></div>
@@ -200,7 +200,9 @@
 
             <div class="form-group">
               <label for="selectExistingLogicalAddresses">Välj från befintliga logiska adresser</label>
-              <select class="form-control" id="selectExistingLogicalAddresses" multiple="multiple">
+              <select multiple ng-multiple="true" ng-model="selectedExistingLogicalAddresses"
+                      ng-options="logicalAddress.name +' - '+logicalAddress.id for logicalAddress in existingLogicalAddresses"
+                      class="form-control" id="selectExistingLogicalAddresses">
               </select>
             </div>
           </div>
@@ -263,14 +265,14 @@
       <h3>{{contract.name}}</h3>
       <div class="row">
 
-        <div class="col-md-2">
+        <div class="col-md-3">
           <label for="rivtaVersion">Rivta version</label>
           <select id="rivtaVersion" class="form-control" ng-model="contract.rivtaVersion" ng-options="rivtaVersion.name for rivtaVersion in rivtaVersions">
             <option value="">Välj rivta version</option>
           </select>
         </div>
 
-        <div class="col-md-10">
+        <div class="col-md-8">
           <label for="url">URL</label>
           <input type="text" class="form-control" id="url" ng-model="contract.url" placeholder="skriv in url">
         </div>

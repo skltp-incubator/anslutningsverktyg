@@ -16,11 +16,11 @@ angular.module('avApp')
       var OTHER_DOMAINS = [
         {
           id: 'riv:domain:c',
-          name: 'Oasis is fantastic'
+          name: 'Oasis are fantastic'
         },
         {
           id: 'riv:domain:d',
-          name: 'Blur is so great'
+          name: 'Blur are so great'
         }
       ];
 

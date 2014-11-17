@@ -32,7 +32,7 @@ angular.module('avApp')
       $scope.selectedLogicalAddress = {};
       $scope.filteredLogicalAddresses = [];
       $scope.logicalAddresses = [];
-
+      $scope.existingLogicalAddresses = [];
       $scope.selectedServiceContracts = [];
 
       $scope.gridOptions = {
@@ -79,7 +79,8 @@ angular.module('avApp')
           var serviceDomainId = $scope.selectedServiceDomain.id;
           $scope.connectServiceProducerRequest.serviceDomain = $scope.selectedServiceDomain;
           ServiceContract.listContracts(serviceComponentId, environmentId, serviceDomainId).then(function (contracts) {
-            $scope.gridOptions.data = contracts;
+            $scope.existingLogicalAddresses = contracts.existingLogicalAddresses;
+            $scope.gridOptions.data = contracts.serviceContracts;
           });
         }
       };
