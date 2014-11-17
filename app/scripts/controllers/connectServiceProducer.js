@@ -92,7 +92,14 @@ angular.module('avApp')
       };
 
       $scope.addFilteredLogicalAddressToTags = function () {
-        $scope.logicalAddresses.push($scope.selectedLogicalAddress.selected);
+        var logicalAddress = $scope.selectedLogicalAddress.selected;
+        var where = {id: logicalAddress.id};
+        if(!_.find($scope.logicalAddresses, where)) {
+          //Just pushing it did not previously exist
+          $scope.logicalAddresses.push(logicalAddress);
+        } else {
+          $log.log("Can't add a tag twice");
+        }
       };
 
       /*
