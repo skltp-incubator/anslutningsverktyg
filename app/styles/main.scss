@@ -2,22 +2,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
-
-
-//colors
-$color_wild_sand_approx: rgb(245, 245, 245);
-$color_gallery_approx: rgb(238, 238, 238);
-$white: rgb(255, 255, 255);
-$color_boston_blue_approx: rgb(66, 139, 202);
-$concrete: rgb(242, 242, 242);
-$color_log_cabin_approx: rgb(34, 34, 34);
-$color_woodsmoke_approx: rgb(17, 17, 17);
-$color_celeste_approx: rgb(204, 204, 204);
-$color_alabaster_approx: rgb(249, 249, 249);
-$black: rgb(0, 0, 0);
-
-//box-shadow
-$box_shadow_opacity: rgba(0,0,0,0.5);
+@import "./variables.scss";
 
 .browsehappy {
   margin: 0.2em 0;
@@ -119,6 +104,10 @@ body {
   > h3 {
     margin-top: -20px;
   }
+
+  select[multiple] {
+    height: 200px;
+  }
 }
 
 /*
@@ -142,6 +131,7 @@ body {
     border-right: 1px solid $color_gallery_approx;
   }
 }
+
 .nav-sidebar {
   margin-right: -21px;
   margin-bottom: 20px;

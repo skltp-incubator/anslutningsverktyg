@@ -147,37 +147,106 @@
   </div>
 
   <h2>Konfigurera tjänstekontrakt</h2>
-  <h3>Koppla logiska adresser till tjänstekontrakt</h3>
+
   <div class="jumbotron">
 
-    <div class="radio">
-      <label>
-        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-        Option one is this and that&mdash;be sure to include why it's great
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-        Option two can be something else and selecting it will deselect option one
-      </label>
+    <h3>Koppla logiska adresser till tjänstekontrakt</h3>
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+            Välj samma logiska adresser för alla tjänstekontrakt
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+            Välj logiska adresser individuellt för varje tjänstekontrakt
+          </label>
+        </div>
+      </div>
+
     </div>
 
     <div class="row">
-      <select class="col-md-4" multiple="multiple">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-      </select>
+      <div class="col-md-12">
+        <div class="col-md-4">
+          <div class="row">
+            <div class="form-group">
+              <label>Lägg till ny logisk address</label>
+              <ui-select ng-model="logicalAddress.selected" theme="bootstrap"
+                         reset-search-input="false">
+                <ui-select-match placeholder="Namn - HSA ID">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="logicalAddress in logicalAddresses track by $index"
+                  refresh="refreshLogicalAddresses($select.search)" refresh-delay="0">
+                  <div ng-bind-html="logicalAddress.name | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+            </div>
 
-      <div class="col-md-3 form-group">
-        <div class="btn-group">
-          <button type="button" class="btn btn-default"> >> </button>
+          </div>
+
+          <div class="row">
+
+            <div class="form-group">
+              <label for="selectExistingLogicalAddresses">Välj från befintliga logiska adresser</label>
+              <select class="form-control" id="selectExistingLogicalAddresses" multiple="multiple">
+              </select>
+            </div>
+          </div>
+
         </div>
+
+        <div class="col-md-2 col-md-offset-1">
+          <div class="row">
+
+            <div class="form-group top25">
+              <div class="btn-group">
+                <button type="button" class="btn btn-default">
+                  <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+
+            <div class="form-group top30">
+              <div class="btn-group">
+                <button type="button" class="btn btn-default">
+                  <label>Valda</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+
+            <div class="form-group top17">
+              <div class="btn-group">
+                <button type="button" class="btn btn-default">
+                  <label>Alla</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label>Valda logiska adresser</label>
+          <tags-input ng-model="tags"></tags-input>
+
+        </div>
+
       </div>
+
     </div>
+
   </div>
 
 

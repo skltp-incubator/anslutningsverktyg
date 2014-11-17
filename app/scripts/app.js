@@ -17,7 +17,8 @@ angular
     'ui.router',
     'ui.grid',
     'ui.grid.selection',
-    'ui.select'
+    'ui.select',
+    'ngTagsInput'
   ])
   .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -44,4 +45,11 @@ angular
   })
   .config(function(uiSelectConfig) {
     uiSelectConfig.theme = 'bootstrap';
+  })
+  .config(function(tagsInputConfigProvider) {
+    tagsInputConfigProvider
+      .setDefaults('tagsInput', {
+        placeholder: '',
+        addOnEnter: true
+      });
   });

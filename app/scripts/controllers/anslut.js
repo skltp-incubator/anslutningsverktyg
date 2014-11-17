@@ -20,7 +20,7 @@ angular.module('avApp')
       {name: 'edefroducent 2', hsaid: '5'},
       {name: 'fsdsdsteproducent 2', hsaid: '6'},
       {name: 'dsdseproducent 2', hsaid: '7'},
-      {name: 'dsdsnsteproducent 2', hsaid: '8'},];
+      {name: 'dsdsnsteproducent 2', hsaid: '8'}];
 
     $scope.serviceComponent = {};
 
@@ -63,6 +63,14 @@ angular.module('avApp')
       }
     };
 
+    $scope.logicalAddress = {};
+
+    $scope.logicalAddresses = [];
+    $scope.refreshLogicalAddresses = function(logicalAddress) {
+      //Implement this properly
+      console.log("Searching for logical addresses");
+      $scope.logicalAddresses = [{name: "dummy data"}];
+    };
     /*
       Grid config
      */
