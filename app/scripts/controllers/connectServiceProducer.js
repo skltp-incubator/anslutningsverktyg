@@ -120,7 +120,7 @@ angular.module('avApp')
         });
       };
 
-      function updateSelectedServiceContracts(row) {
+      var updateSelectedServiceContracts = function (row) {
         $log.info(row);
         var where = {'id': row.entity.id};
         if (row.isSelected && !_.find($scope.selectedServiceContracts, where)) {
