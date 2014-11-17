@@ -8,15 +8,18 @@ angular.module('avApp')
         var deferred = $q.defer();
         var data = [
           {
-            kontrakt: 'tjanstekontrakt1',
+            id: 'serviceContract1',
+            name: 'tjanstekontrakt1',
             version: 1
           },
           {
-            kontrakt: 'tjanstekontrakt2',
+            id: 'serviceContract2',
+            name: 'tjanstekontrakt2',
             version: 1
           },
           {
-            kontrakt: 'tjanstekontrakt3',
+            id: 'serviceContract3',
+            name: 'tjanstekontrakt3',
             version: 1
           }
         ];

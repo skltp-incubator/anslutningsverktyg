@@ -26,10 +26,10 @@ angular
 
     // Now set up the states
     $stateProvider
-      .state('anslut', {
-        url: '/anslut',
-        templateUrl: 'views/tjansteproducent/anslut.html',
-        controller: 'AnslutCtrl',
+      .state('connectServiceProducer', {
+        url: '/connectServiceProducer',
+        templateUrl: 'views/serviceProducer/connect.html',
+        controller: 'ConnectServiceProducerCtrl',
         resolve: {
           environments: ['Environment',
             function(EnvironmentFactory) {

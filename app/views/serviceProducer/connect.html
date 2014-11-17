@@ -14,7 +14,11 @@
 
         <ui-select class="col-md-3" ng-model="serviceComponent.selected" theme="bootstrap" reset-search-input="false">
           <ui-select-match placeholder="Välj tjänsteproducent">{{$select.selected.name}}</ui-select-match>
-          <ui-select-choices repeat="serviceComponent in serviceComponents | filter: $select.search">
+          <ui-select-choices
+            repeat="serviceComponent in filteredServiceComponents | filter: $select.search"
+            refresh="filterServiceComponents($select.search)"
+            refresh-delay="200"
+            >
             <div ng-bind-html="serviceComponent.name | highlight: $select.search"></div>
           </ui-select-choices>
         </ui-select>
@@ -254,24 +258,36 @@
 
   <div ng-repeat="contract in selectedServiceContracts">
     <div class="jumbotron">
-      <h3>{{contract.kontrakt}}</h3>
+      <h3>{{contract.name}}</h3>
       <div class="row">
 
-        <div class="col-md-4">
+        <div class="col-md-2">
           <label for="rivtaVersion">Rivta version</label>
-          <select id="rivtaVersion" class="form-control">
+          <select id="rivtaVersion" class="form-control" ng-model="contract.rivtaVersion" ng-options="rivtaVersion.name for rivtaVersion in rivtaVersions">
             <option value="">Välj rivta version</option>
           </select>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-10">
           <label for="url">URL</label>
-          <input type="text" class="form-control" id="url"
-                 placeholder="skriv in url">
+          <input type="text" class="form-control" id="url" ng-model="contract.url" placeholder="skriv in url">
         </div>
 
       </div>
+      <div class="row" ng-show="contract.rivtaVersion != null">
+        <div class="col-md-12">
+          <span>{{contract.rivtaVersion.name}}</span> <span ng-show="contract.url != null && contract.url != ''">- {{contract.url}}</span>
+        </div>
+      </div>
     </div>
   </div>
+
+  <h3>sammanfattning:</h3>
+  <div class="jumbotron">
+    {{connectServiceProducerRequest | json}}
+  </div>
+
+
+
 
 </div>
