@@ -9,7 +9,8 @@
  */
 
 angular.module('avApp')
-  .controller('AnslutCtrl', ['$scope', 'ServiceDomain', 'ServiceContract', function ($scope, ServiceDomain, ServiceContract) {
+  .controller('AnslutCtrl', ['$scope', 'ServiceDomain', 'ServiceContract', 'environments', 'rivtaVersions', function ($scope, ServiceDomain, ServiceContract, environments, rivtaVersions) {
+
     $scope.serviceComponents = [
       {name: 'Tjänsteproducent 1', hsaid: '1'},
       {name: 'Tjänsteproducent 2', hsaid: '2'},
@@ -36,21 +37,17 @@ angular.module('avApp')
       }
     );
 
-    $scope.environments = [
-      {name: 'Produktion'},
-      {name: 'QA'},
-      {name: 'Test'}];
+    $scope.environments = environments;
+    $scope.rivtaVersions = rivtaVersions;
 
     $scope.serviceDomains = {};
 
     $scope.environmentSelected = function() {
       if($scope.selectedEnvironment && $scope.serviceComponent.selected) {
         var serviceComponentId = $scope.serviceComponent.selected.hsaid;
-        var environment = $scope.selectedEnvironment.name;
-
-        //Promises anyone?
-        ServiceDomain.listDomains(serviceComponentId, environment, function(data) {
-          $scope.serviceDomains = data;
+        var environmentId = $scope.selectedEnvironment.id;
+        ServiceDomain.listDomains(serviceComponentId, environmentId).then(function(domains){
+          $scope.serviceDomains = domains;
         });
       }
     };
@@ -58,11 +55,10 @@ angular.module('avApp')
     $scope.serviceDomainSelected = function() {
       if($scope.selectedEnvironment && $scope.serviceComponent.selected && $scope.selectedServiceDomain) {
         var serviceComponentId = $scope.serviceComponent.selected.hsaid;
-        var environment = $scope.selectedEnvironment.name;
-        var serviceDomain = $scope.selectedServiceDomain;
-
-        ServiceContract.listContracts(serviceComponentId, environment, serviceDomain, function(data) {
-          $scope.gridOptions.data = data;
+        var environmentId = $scope.selectedEnvironment.id;
+        var serviceDomainId = $scope.selectedServiceDomain.id;
+        ServiceContract.listContracts(serviceComponentId, environmentId, serviceDomainId).then(function(contracts){
+          $scope.gridOptions.data = contracts;
         });
       }
     };

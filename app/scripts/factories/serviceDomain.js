@@ -1,20 +1,39 @@
 'use strict';
 angular.module('avApp')
-  .factory('ServiceDomain', function() {
-    return {
-      listDomains: function(serviceComponentId, environment, callback) {
-
-        //Obiviously mocked data
-        if(serviceComponentId == 1 && environment === 'QA') {
-          callback([
-            {name: 'A random servicedomain'},
-            {name: 'Another random domain'}]);
-        } else {
-          callback([
-            {name: 'Oasis is fantastic'},
-            {name: 'Blur is so great'}
-          ]);
+  .factory('ServiceDomain', ['$q',
+    function ($q) {
+      var QA_DOMAINS = [
+        {
+          id: 'riv:domain:a',
+          name: 'A random servicedomain'
+        },
+        {
+          id: 'riv:domain:b',
+          name: 'Another random domain'
         }
-      }
-    };
-  });
+      ];
+
+      var OTHER_DOMAINS = [
+        {
+          id: 'riv:domain:c',
+          name: 'Oasis is fantastic'
+        },
+        {
+          id: 'riv:domain:d',
+          name: 'Blur is so great'
+        }
+      ];
+
+      return {
+        listDomains: function (serviceComponentId, environment, callback) {
+          console.log('serviceComponentId: ' + serviceComponentId + ', environment: ' + environment);
+          var deferred = $q.defer();
+          if (serviceComponentId == 1 && environment === 'QA') {
+            deferred.resolve(QA_DOMAINS);
+          } else {
+            deferred.resolve(OTHER_DOMAINS);
+          }
+          return deferred.promise;
+        }
+      };
+    }]);

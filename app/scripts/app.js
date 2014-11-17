@@ -28,7 +28,18 @@ angular
       .state('anslut', {
         url: '/anslut',
         templateUrl: 'views/tjansteproducent/anslut.html',
-        controller: 'AnslutCtrl'
+        controller: 'AnslutCtrl',
+        resolve: {
+          environments: ['Environment',
+            function(EnvironmentFactory) {
+              return EnvironmentFactory.getAvailableEnvironments();
+            }],
+          rivtaVersions: ['RivtaVersion',
+            function(RivtaVersionFactory) {
+              return RivtaVersionFactory.getAvailableVersions();
+            }
+          ]
+        }
       });
   })
   .config(function(uiSelectConfig) {

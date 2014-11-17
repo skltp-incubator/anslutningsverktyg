@@ -1,6 +1,7 @@
 'use strict';
 angular.module('avApp')
-  .factory('ServiceComponentFactory', function () {
+  .factory('ServiceComponent', ['$q',
+    function ($q) {
     return {
     };
-  });
+  }]);
