@@ -11,6 +11,9 @@
 angular.module('avApp')
   .controller('ConnectServiceProducerCtrl', ['$scope', '$log', 'ServiceDomain', 'ServiceContract', 'ServiceComponent', 'environments', 'rivtaVersions', 'LogicalAddress', function ($scope, $log, ServiceDomain, ServiceContract, ServiceComponent, environments, rivtaVersions, LogicalAddress) {
 
+    $scope.environments = environments;
+    $scope.rivtaVersions = rivtaVersions;
+
     $scope.connectServiceProducerRequest = {
       serviceComponent: {},
       environment: {},
@@ -18,15 +21,34 @@ angular.module('avApp')
       serviceContracts: []
     };
 
+    $scope.selectedServiceComponent = {};
     $scope.filteredServiceComponents = [];
+    $scope.serviceDomains = [];
+
+    $scope.selectedEnvironment = {};
+    $scope.selectedServiceDomain = {};
+
+    $scope.selectedLogicalAddress = {};
+    $scope.filteredLogicalAddresses = [];
+    $scope.logicalAddresses = [];
+
+    $scope.selectedServiceContracts = [];
+
+    $scope.gridOptions = {
+      enableRowSelection: true,
+      enableSelectAll: true,
+      multiSelect: true,
+      columnDefs: [
+        { name: 'Namn', field: 'name' },
+        { name: 'version'}
+      ]
+    };
 
     $scope.filterServiceComponents = function(query) {
       ServiceComponent.getFilteredServiceComponents(query).then(function(result) {
         $scope.filteredServiceComponents = result;
       });
     };
-
-    $scope.selectedServiceComponent = {};
 
     $scope.$watch('selectedServiceComponent.selected', function(newValue, oldValue) {
         if (newValue) {
@@ -37,11 +59,6 @@ angular.module('avApp')
         }
       }
     );
-
-    $scope.environments = environments;
-    $scope.rivtaVersions = rivtaVersions;
-
-    $scope.serviceDomains = {};
 
     $scope.environmentSelected = function() {
       if($scope.selectedEnvironment && $scope.selectedServiceComponent.selected) {
@@ -66,11 +83,6 @@ angular.module('avApp')
       }
     };
 
-    $scope.logicalAddress = {};
-
-    $scope.filteredLogicalAddresses = [];
-    $scope.logicalAddresses = [];
-
     $scope.filterLogicalAddresses = function(logicalAddressQuery) {
       LogicalAddress.getFilteredLogicalAddresses(logicalAddressQuery).then(function(data) {
           $scope.filteredLogicalAddresses = data;
@@ -79,26 +91,12 @@ angular.module('avApp')
     };
 
     $scope.addFilteredLogicalAddressToTags = function() {
-      $scope.logicalAddresses.push($scope.logicalAddress.selected);
+      $scope.logicalAddresses.push($scope.selectedLogicalAddress.selected);
     };
 
     /*
       Grid config
      */
-
-    $scope.gridOptions = {
-      enableRowSelection: true,
-      enableSelectAll: true
-    };
-
-    $scope.gridOptions.columnDefs = [
-      { name: 'Namn', field: 'name' },
-      { name: 'version'}
-    ];
-
-    $scope.gridOptions.multiSelect = true;
-
-    $scope.selectedServiceContracts = [];
 
     $scope.gridOptions.onRegisterApi = function(gridApi){
       //set gridApi on scope
@@ -127,8 +125,9 @@ angular.module('avApp')
     }
 
     var reset = function() {
-      delete $scope.selectedEnvironment;
-      delete $scope.selectedServiceDomain;
+      $scope.selectedEnvironment = {};
+      $scope.selectedServiceDomain = {};
+      $scope.selectedLogicalAddress = {};
       $scope.connectServiceProducerRequest = {};
       $scope.gridOptions.data = [];
       $scope.selectedServiceContracts = [];
