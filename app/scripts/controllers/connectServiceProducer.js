@@ -21,27 +21,20 @@ angular.module('avApp')
     $scope.filteredServiceComponents = [];
 
     $scope.filterServiceComponents = function(query) {
-
-      //$scope.filteredServiceComponents = _.filter(serviceComponents, function(serviceComponent) {
-      //  return serviceComponent.name.toLowerCase().indexOf(lowerCaseQuery) == 0;
-      //});
-
-      $scope.filteredServiceComponents = ServiceComponent.getFilteredServiceComponents(query);
+      ServiceComponent.getFilteredServiceComponents(query).then(function(result) {
+        $scope.filteredServiceComponents = result;
+      });
     };
 
-    $scope.serviceComponent = {};
+    $scope.selectedServiceComponent = {};
 
     //This is just mock code for now
-    $scope.$watch('serviceComponent.selected', function(newValue, oldValue) {
-        if(newValue && newValue.name === 'Tjänsteproducent 1' ) {
-          $scope.serviceComponent.huvudansvarig = {name: 'A Bsson', mail: 'email@email.se', phone: '192912912'};
-          $scope.connectServiceProducerRequest.serviceComponent.huvudansvarig = {name: 'A Bsson', mail: 'email@email.se', phone: '192912912'};
-          $scope.serviceComponent.kontakt = {name: 'En kontakt', mail: 'email@email.se', phone: '192912912'};
-          $scope.connectServiceProducerRequest.serviceComponent.kontakt = {name: 'En kontakt', mail: 'email@email.se', phone: '192912912'};
-          $scope.serviceComponent.brevlada = {mail: 'funktion@email.se', phone: '192912912'};
-          $scope.connectServiceProducerRequest.serviceComponent.brevlada = {mail: 'funktion@email.se', phone: '192912912'};
-          $scope.serviceComponent.ovrigt = {ip: '127.0.0.1'};
-          $scope.connectServiceProducerRequest.serviceComponent.ovrigt = {ip: '127.0.0.1'};
+    $scope.$watch('selectedServiceComponent.selected', function(newValue, oldValue) {
+        if (newValue) {
+          console.log(newValue);
+          $scope.connectServiceProducerRequest = {}; //reset everything when select new service component
+          $scope.connectServiceProducerRequest.serviceComponent = newValue;
+          reset();
         } else {
           $scope.serviceComponent = {};
           $scope.connectServiceProducerRequest.serviceComponent = {};
@@ -55,8 +48,8 @@ angular.module('avApp')
     $scope.serviceDomains = {};
 
     $scope.environmentSelected = function() {
-      if($scope.selectedEnvironment && $scope.serviceComponent.selected) {
-        var serviceComponentId = $scope.serviceComponent.selected.hsaid;
+      if($scope.selectedEnvironment && $scope.selectedServiceComponent.selected) {
+        var serviceComponentId = $scope.selectedServiceComponent.selected.hsaid;
         var environmentId = $scope.selectedEnvironment.id;
         $scope.connectServiceProducerRequest.environment = $scope.selectedEnvironment;
         ServiceDomain.listDomains(serviceComponentId, environmentId).then(function(domains){
@@ -66,8 +59,8 @@ angular.module('avApp')
     };
 
     $scope.serviceDomainSelected = function() {
-      if($scope.selectedEnvironment && $scope.serviceComponent.selected && $scope.selectedServiceDomain) {
-        var serviceComponentId = $scope.serviceComponent.selected.hsaid;
+      if($scope.selectedEnvironment && $scope.selectedServiceComponent.selected && $scope.selectedServiceDomain) {
+        var serviceComponentId = $scope.selectedServiceComponent.selected.hsaid;
         var environmentId = $scope.selectedEnvironment.id;
         var serviceDomainId = $scope.selectedServiceDomain.id;
         $scope.connectServiceProducerRequest.serviceDomain = $scope.selectedServiceDomain;
@@ -128,4 +121,11 @@ angular.module('avApp')
       $scope.connectServiceProducerRequest.serviceContracts = $scope.selectedServiceContracts;
       $log.info($scope.selectedServiceContracts);
     }
+
+    var reset = function() {
+      delete $scope.selectedEnvironment;
+      delete $scope.selectedServiceDomain;
+      $scope.gridOptions.data = [];
+      $scope.selectedServiceContracts = [];
+    };
   }]);
