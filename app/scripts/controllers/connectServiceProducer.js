@@ -28,16 +28,12 @@ angular.module('avApp')
 
     $scope.selectedServiceComponent = {};
 
-    //This is just mock code for now
     $scope.$watch('selectedServiceComponent.selected', function(newValue, oldValue) {
         if (newValue) {
-          console.log(newValue);
-          $scope.connectServiceProducerRequest = {}; //reset everything when select new service component
-          $scope.connectServiceProducerRequest.serviceComponent = newValue;
           reset();
+          $scope.connectServiceProducerRequest.serviceComponent = newValue;
         } else {
-          $scope.serviceComponent = {};
-          $scope.connectServiceProducerRequest.serviceComponent = {};
+          reset();
         }
       }
     );
@@ -125,6 +121,7 @@ angular.module('avApp')
     var reset = function() {
       delete $scope.selectedEnvironment;
       delete $scope.selectedServiceDomain;
+      $scope.connectServiceProducerRequest = {};
       $scope.gridOptions.data = [];
       $scope.selectedServiceContracts = [];
     };
