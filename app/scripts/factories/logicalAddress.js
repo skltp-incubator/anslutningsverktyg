@@ -21,6 +21,22 @@ angular.module('avApp')
         ];
         deferred.resolve(data);
         return deferred.promise;
+      },
+      getLogicalAddressesForServiceDomain: function(serviceDomainId) {
+        console.log(serviceDomainId);
+        var deferred = $q.defer();
+        var data = [
+          {
+            "id": "hsaId9",
+            "name": "Gnosjö"
+          },
+          {
+            "id": "hsaId261",
+            "name": "Landskrona"
+          }
+        ];
+        deferred.resolve(data);
+        return deferred.promise;
       }
     };
   }]);
