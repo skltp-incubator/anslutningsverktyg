@@ -164,13 +164,13 @@
 
         <div class="radio">
           <label>
-            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+            <input ng-model="individualLogicalAddress" ng-value="false" type="radio" name="optionsRadios" id="optionsRadios1">
             Välj samma logiska adresser för alla tjänstekontrakt
           </label>
         </div>
         <div class="radio">
           <label>
-            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+            <input ng-model="individualLogicalAddress" ng-value="true" type="radio" name="optionsRadios" id="optionsRadios2">
             Välj logiska adresser individuellt för varje tjänstekontrakt
           </label>
         </div>
@@ -283,7 +283,9 @@
 
   <h3>sammanfattning:</h3>
   <div class="jumbotron">
-    {{connectServiceProducerRequest | json}}
+    <pre>
+{{connectServiceProducerRequest | json}}
+    </pre>
   </div>
 
 

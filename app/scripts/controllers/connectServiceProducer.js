@@ -35,6 +35,8 @@ angular.module('avApp')
       $scope.existingLogicalAddresses = [];
       $scope.selectedServiceContracts = [];
 
+      $scope.individualLogicalAddress = false;
+
       $scope.gridOptions = {
         enableRowSelection: true,
         enableSelectAll: true,
@@ -140,6 +142,7 @@ angular.module('avApp')
         $scope.connectServiceProducerRequest = {};
         $scope.gridOptions.data = [];
         $scope.selectedServiceContracts = [];
+        $scope.individualLogicalAddress = false;
       };
     }
   ]
