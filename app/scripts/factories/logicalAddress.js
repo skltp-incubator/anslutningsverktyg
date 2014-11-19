@@ -4,6 +4,7 @@ angular.module('avApp')
 
     return {
       getFilteredLogicalAddresses: function(query) {
+      console.log('getFilteredLogicalAddresses(query[' + query + '])');
         var deferred = $q.defer();
         var data = [
           {
@@ -27,12 +28,12 @@ angular.module('avApp')
         var deferred = $q.defer();
         var data = [
           {
-            "id": "hsaId9",
-            "name": "Gnosjö"
+            'id': 'hsaId9',
+            'name': 'Gnosjö'
           },
           {
-            "id": "hsaId261",
-            "name": "Landskrona"
+            'id': 'hsaId261',
+            'name': 'Landskrona'
           }
         ];
         deferred.resolve(data);

@@ -60,7 +60,7 @@ angular.module('avApp')
           console.log('getFilteredServiceComponents: ' + query);
           var lowerCaseQuery = query.toLowerCase();
           deferred.resolve(_.filter(serviceComponents, function(serviceComponent) {
-            return serviceComponent.name.toLowerCase().indexOf(lowerCaseQuery) == 0;
+            return serviceComponent.name.toLowerCase().indexOf(lowerCaseQuery) === 0;
           }));
           return deferred.promise;
         }

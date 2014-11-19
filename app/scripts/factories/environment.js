@@ -8,21 +8,21 @@ angular.module('avApp')
         var deferred = $q.defer(); //forcing the use of a promise to set the interface for later
         var envs = [
           {
-            id: "Test",
-            name: "Test"
+            id: 'Test',
+            name: 'Test'
           },
           {
-            id: "QA",
-            name: "Quality Assurance (QA)"
+            id: 'QA',
+            name: 'Quality Assurance (QA)'
 
           },
           {
-            id: "PROD",
-            name: "Production"
+            id: 'PROD',
+            name: 'Production'
           }
         ];
         deferred.resolve(envs);
         return deferred.promise;
       }
-    }
+    };
   }]);

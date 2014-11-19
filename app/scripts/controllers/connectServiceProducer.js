@@ -53,7 +53,7 @@ angular.module('avApp')
         });
       };
 
-      $scope.$watch('selectedServiceComponent.selected', function (newValue, oldValue) {
+      $scope.$watch('selectedServiceComponent.selected', function (newValue) {
           if (newValue) {
             reset();
             $scope.connectServiceProducerRequest.serviceComponent = newValue;
@@ -165,7 +165,7 @@ angular.module('avApp')
         gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
           _.forEach(rows, function (row) {
             updateSelectedServiceContracts(row);
-          })
+          });
         });
       };
 
@@ -195,7 +195,7 @@ angular.module('avApp')
         $log.info('resetLogicalAddressesForServiceContracts()');
         _.forEach($scope.connectServiceProducerRequest.serviceContracts, function(serviceContract) {
           serviceContract.logicalAddresses = [];
-        })
+        });
       };
     }
   ]

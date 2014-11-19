@@ -7,7 +7,7 @@ angular.module('avApp')
         console.log('serviceComponentId: ' + serviceComponentId + ', environmentId: ' + environmentId + ', serviceDomainId: ' + serviceDomainId);
         var deferred = $q.defer();
         var response = {
-          "serviceContracts": [
+          serviceContracts: [
             {
               id: 'serviceContract1',
               name: 'tjanstekontrakt1',
@@ -24,14 +24,14 @@ angular.module('avApp')
               version: 1
             }
           ],
-          "existingLogicalAddresses": [
+          existingLogicalAddresses: [
           {
-            "id": "hsaId5",
-            "name": "Varberg"
+            id: 'hsaId5',
+            name: 'Varberg'
           },
           {
-            "id": "hsaId7",
-            "name": "Vallda"
+            id: 'hsaId7',
+            name: 'Vallda'
           }
         ]};
 

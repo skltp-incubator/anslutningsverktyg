@@ -28,7 +28,7 @@ angular.module('avApp')
         listDomains: function (serviceComponentId, environment) {
           console.log('serviceComponentId: ' + serviceComponentId + ', environment: ' + environment);
           var deferred = $q.defer();
-          if (serviceComponentId == 1 && environment === 'QA') {
+          if (serviceComponentId === 1 && environment === 'QA') {
             deferred.resolve(QA_DOMAINS);
           } else {
             deferred.resolve(OTHER_DOMAINS);
