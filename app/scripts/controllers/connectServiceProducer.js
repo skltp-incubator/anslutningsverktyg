@@ -63,6 +63,10 @@ angular.module('avApp')
         }
       );
 
+      $scope.$watch('individualLogicalAddress', function() {
+        resetLogicalAddressesForServiceContracts();
+      });
+
       $scope.environmentSelected = function () {
         if ($scope.selectedEnvironment && $scope.selectedServiceComponent.selected) {
           var serviceComponentId = $scope.selectedServiceComponent.selected.hsaid;
@@ -94,40 +98,38 @@ angular.module('avApp')
         );
       };
 
-      $scope.addFilteredLogicalAddressToTags = function (serviceContractId) {
+      $scope.addFilteredLogicalAddressToAllServiceContracts = function () {
         var logicalAddress = $scope.selectedLogicalAddress.selected;
         var where = {id: logicalAddress.id};
         if (!_.find($scope.logicalAddresses, where)) {
-          //Just pushing it did not previously exist
-          $scope.logicalAddresses.push(logicalAddress);
+          $scope.logicalAddresses.push(logicalAddress); //$scope.logicalAddresses is used to display the logical addresses in the tags-input
         } else {
-          $log.log("Can't add a tag twice");
+          $log.log('Can\'t add a tag twice');
         }
-        if (!serviceContractId) { //add to all service contracts
-          console.log('adding logical address to all service contracts');
-          _.forEach($scope.connectServiceProducerRequest.serviceContracts, function(serviceContract) {
-            if (!angular.isDefined(serviceContract.logicalAddresses)) {
-              serviceContract.logicalAddresses = [];
-            }
-            if (!_.find(serviceContract.logicalAddresses, where)) {
-              serviceContract.logicalAddresses.push(logicalAddress);
-            } else {
-              $log.log("Can't add a tag twice");
-            }
-          });
-
-
-        } else { //add to specific service contracts
-          console.log('adding logical address to service contract with id=' + serviceContractId);
-          var serviceContract = _.find($scope.connectServiceProducerRequest.serviceContracts, {id: serviceContractId});
+        console.log('adding logical address to all service contracts');
+        _.forEach($scope.connectServiceProducerRequest.serviceContracts, function (serviceContract) {
           if (!angular.isDefined(serviceContract.logicalAddresses)) {
             serviceContract.logicalAddresses = [];
           }
           if (!_.find(serviceContract.logicalAddresses, where)) {
             serviceContract.logicalAddresses.push(logicalAddress);
           } else {
-            $log.log("Can't add a tag twice");
+            $log.log('Can\'t add a tag twice');
           }
+        });
+      };
+
+      $scope.addFilteredLogicalAddressToServiceContract = function (ngRepeatScope, serviceContractId) {
+        var logicalAddress = ngRepeatScope.selectedLogicalAddress;
+        console.log('adding logical address to service contract with id=' + serviceContractId);
+        var serviceContract = _.find($scope.connectServiceProducerRequest.serviceContracts, {id: serviceContractId});
+        if (!angular.isDefined(serviceContract.logicalAddresses)) {
+          serviceContract.logicalAddresses = [];
+        }
+        if (!_.find(serviceContract.logicalAddresses, {id: logicalAddress.id})) {
+          serviceContract.logicalAddresses.push(logicalAddress);
+        } else {
+          $log.log('Can\'t add a tag twice');
         }
       };
 
@@ -187,6 +189,13 @@ angular.module('avApp')
         $scope.gridOptions.data = [];
         $scope.selectedServiceContracts = [];
         $scope.individualLogicalAddress = false;
+      };
+
+      var resetLogicalAddressesForServiceContracts = function() {
+        $log.info('resetLogicalAddressesForServiceContracts()');
+        _.forEach($scope.connectServiceProducerRequest.serviceContracts, function(serviceContract) {
+          serviceContract.logicalAddresses = [];
+        })
       };
     }
   ]

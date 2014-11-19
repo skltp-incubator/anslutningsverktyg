@@ -216,7 +216,7 @@
 
             <div class="form-group top25">
               <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-click="addFilteredLogicalAddressToTags()">
+                <button type="button" class="btn btn-default" ng-click="addFilteredLogicalAddressToAllServiceContracts()">
                   <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
                 </button>
               </div>
@@ -292,7 +292,7 @@
             <div class="row">
               <div class="form-group">
                 <label>Lägg till ny logisk address</label>
-                <ui-select ng-model="selectedLogicalAddress.selected" theme="bootstrap"
+                <ui-select ng-model="$parent.selectedLogicalAddress" theme="bootstrap"
                            reset-search-input="true">
                   <ui-select-match placeholder="Namn - HSA ID">{{$select.selected.name}} - {{$select.selected.id}}</ui-select-match>
                   <ui-select-choices repeat="logicalAddress in filteredLogicalAddresses| filter: $select.search"
@@ -322,7 +322,7 @@
 
               <div class="form-group top25">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default" ng-click="addFilteredLogicalAddressToTags(contract.id)">
+                  <button type="button" class="btn btn-default" ng-click="addFilteredLogicalAddressToServiceContract(this, contract.id)">
                     <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
                   </button>
                 </div>
