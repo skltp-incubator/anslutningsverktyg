@@ -24,6 +24,7 @@ angular.module('avApp')
         return deferred.promise;
       },
       getLogicalAddressesForServiceDomain: function(serviceDomainId) {
+        console.log('getLogicalAddressesForServiceDoamin(serviceDomainId[' + serviceDomainId + '])');
         console.log(serviceDomainId);
         var deferred = $q.defer();
         var data = [

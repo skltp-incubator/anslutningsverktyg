@@ -227,7 +227,7 @@
 
             <div class="form-group top30">
               <div class="btn-group">
-                <button type="button" class="btn btn-default">
+                <button type="button" class="btn btn-default" ng-click="addSelectedExistingLogicalAddressesToAllServiceContracts()">
                   <label>Valda</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
                 </button>
               </div>
@@ -239,7 +239,7 @@
 
             <div class="form-group top17">
               <div class="btn-group">
-                <button type="button" class="btn btn-default">
+                <button type="button" class="btn btn-default" ng-click="addAllExistingLogicalAddressesToAllServiceContracts()">
                   <label>Alla</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
                 </button>
               </div>
@@ -333,7 +333,7 @@
 
               <div class="form-group top30">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default">
+                  <button type="button" class="btn btn-default" ng-click="addSelectedExistingLogicalAddressesToServiceContract(this, contract.id)">
                     <label>Valda</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
                   </button>
                 </div>
@@ -345,7 +345,7 @@
 
               <div class="form-group top17">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default">
+                  <button type="button" class="btn btn-default" ng-click="addAllExistingLogicalAddressesToServiceContract(contract.id)">
                     <label>Alla</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
                   </button>
                 </div>
@@ -365,8 +365,8 @@
     </div>
   </div>
 
-  <h3>sammanfattning:</h3>
-  <div class="jumbotron">
+  <h3 ng-show="showDevStuff">sammanfattning:</h3>
+  <div ng-show="showDevStuff" class="jumbotron">
     <pre>
 {{connectServiceProducerRequest | json}}
     </pre>
