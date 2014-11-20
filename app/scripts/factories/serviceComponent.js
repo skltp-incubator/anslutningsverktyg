@@ -1,7 +1,7 @@
 'use strict';
 angular.module('avApp')
-  .factory('ServiceComponent', ['$q',
-    function ($q) {
+  .factory('ServiceComponent', ['$q', '$http',
+    function ($q, $http) {
 
       var serviceComponents = [
         {
@@ -58,10 +58,44 @@ angular.module('avApp')
         getFilteredServiceComponents: function (query) {
           var deferred = $q.defer();
           console.log('getFilteredServiceComponents: ' + query);
-          var lowerCaseQuery = query.toLowerCase();
-          deferred.resolve(_.filter(serviceComponents, function(serviceComponent) {
-            return serviceComponent.name.toLowerCase().indexOf(lowerCaseQuery) === 0;
-          }));
+          if (query) {
+            var lowerCaseQuery = query.toLowerCase();
+            $http.get("http://localhost:8080/anslutningsverktyg/api/serviceComponents", {
+              params: {
+                query: lowerCaseQuery
+              }
+            }).success(function (data) {
+              var serviceComponents = _.transform(data, function (result, serverServiceComponent) {
+                var serviceComponent = {
+                  name: serverServiceComponent.hsaId,
+                  hsaid: serverServiceComponent.hsaId,
+                  personInCharge: {
+                    name: 'unknown',
+                    mail: 'unknown',
+                    phone: '0'
+                  },
+                  contact: {
+                    name: serverServiceComponent.tekniskKontaktNamn,
+                    mail: serverServiceComponent.tekniskKontaktEpost,
+                    phone: serverServiceComponent.tekniskKontaktTelefon
+                  },
+                  mailbox: {
+                    mail: serverServiceComponent.funktionsBrevladaEpost,
+                    phone: serverServiceComponent.funktionsBrevladaTelefon
+                  },
+                  other: {
+                    ip: serverServiceComponent.ipadress
+                  }
+                };
+                result.push(serviceComponent);
+              });
+              deferred.resolve(serviceComponents);
+            }).error(function (data, status, headers) { //TODO: error handling
+              deferred.reject();
+            });
+          } else {
+            deferred.resolve([]);
+          }
           return deferred.promise;
         }
       };
