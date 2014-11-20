@@ -9,9 +9,8 @@
  */
 
 angular.module('avApp')
-  .controller('ConnectServiceProducerCtrl', ['$scope', '$log', 'ServiceDomain', 'ServiceContract', 'ServiceComponent', 'environments', 'rivtaVersions', 'LogicalAddress',
-    function ($scope, $log, ServiceDomain, ServiceContract, ServiceComponent, environments, rivtaVersions, LogicalAddress) {
-
+  .controller('ConnectServiceProducerCtrl', ['$rootScope', '$scope', '$log', 'ServiceDomain', 'ServiceContract', 'ServiceComponent', 'environments', 'rivtaVersions', 'LogicalAddress',
+    function ($rootScope, $scope, $log, ServiceDomain, ServiceContract, ServiceComponent, environments, rivtaVersions, LogicalAddress) {
       $scope.environments = environments;
       $scope.rivtaVersions = rivtaVersions;
 
@@ -59,7 +58,12 @@ angular.module('avApp')
       $scope.$watch('selectedServiceComponent.selected', function (newValue) {
           if (newValue) {
             reset();
-            $scope.connectServiceProducerRequest.serviceComponent = newValue;
+            console.log('new service component selected:');
+            console.log(newValue);
+            ServiceComponent.getServiceComponent(newValue.id).then(function (result) {
+              console.log(result);
+              $scope.connectServiceProducerRequest.serviceComponent = result;
+            });
           } else {
             reset();
           }
@@ -71,8 +75,8 @@ angular.module('avApp')
       });
 
       $scope.environmentSelected = function () {
-        if ($scope.selectedEnvironment && $scope.selectedServiceComponent.selected) {
-          var serviceComponentId = $scope.selectedServiceComponent.selected.hsaid;
+        if ($scope.selectedEnvironment && $scope.connectServiceProducerRequest.serviceComponent) {
+          var serviceComponentId = $scope.connectServiceProducerRequest.serviceComponent.hsaId;
           var environmentId = $scope.selectedEnvironment.id;
           $scope.connectServiceProducerRequest.environment = $scope.selectedEnvironment;
           ServiceDomain.listDomains(serviceComponentId, environmentId).then(function (domains) {
@@ -82,8 +86,8 @@ angular.module('avApp')
       };
 
       $scope.serviceDomainSelected = function () {
-        if ($scope.selectedEnvironment && $scope.selectedServiceComponent.selected && $scope.selectedServiceDomain) {
-          var serviceComponentId = $scope.selectedServiceComponent.selected.hsaid;
+        if ($scope.selectedEnvironment && $scope.connectServiceProducerRequest.serviceComponent && $scope.selectedServiceDomain) {
+          var serviceComponentId = $scope.connectServiceProducerRequest.serviceComponent.hsaId;
           var environmentId = $scope.selectedEnvironment.id;
           var serviceDomainId = $scope.selectedServiceDomain.id;
           $scope.connectServiceProducerRequest.serviceDomain = $scope.selectedServiceDomain;

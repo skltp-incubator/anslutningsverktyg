@@ -13,13 +13,13 @@
       <div class="row">
         <div class="col-md-4">
           <ui-select ng-model="selectedServiceComponent.selected" theme="bootstrap" reset-search-input="false">
-            <ui-select-match placeholder="Välj tjänsteproducent">{{$select.selected.name}}</ui-select-match>
+            <ui-select-match placeholder="Välj tjänsteproducent">{{$select.selected.namn}}</ui-select-match>
             <ui-select-choices
               repeat="serviceComponent in filteredServiceComponents | filter: $select.search"
               refresh="filterServiceComponents($select.search)"
               refresh-delay="200"
               >
-              <div ng-bind-html="serviceComponent.name | highlight: $select.search"></div>
+              <div ng-bind-html="serviceComponent.namn | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
 
@@ -54,7 +54,7 @@
             <div class="form-group">
               <label for="brevladaEmail">Mail</label>
               <input type="email" class="form-control" id="brevladaEmail"
-                     placeholder="" readonly value="{{connectServiceProducerRequest.serviceComponent.mailbox.mail}}">
+                     placeholder="" readonly value="{{connectServiceProducerRequest.serviceComponent.funktionsBrevladaEpost}}">
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@
             <div class="form-group">
               <label for="brevladaTelefon">Telefon</label>
               <input type="text" class="form-control" id="brevladaTelefon"
-                     placeholder="" readonly value="{{connectServiceProducerRequest.serviceComponent.mailbox.phone}}">
+                     placeholder="" readonly value="{{connectServiceProducerRequest.serviceComponent.funktionsBrevladaTelefon}}">
             </div>
           </div>
         </div>
@@ -96,14 +96,14 @@
             <div class="form-group">
               <label for="kontaktNamn">Namn</label>
               <input type="text" class="form-control" id="kontaktNamn" placeholder=""
-                     readonly value="{{connectServiceProducerRequest.serviceComponent.contact.name}}">
+                     readonly value="{{connectServiceProducerRequest.serviceComponent.tekniskKontaktNamn}}">
             </div>
           </div>
           <div class="col-md-4 col-md-offset-2">
             <div class="form-group">
               <label for="ovrigtIP">IP nummer</label>
               <input type="text" class="form-control" id="ovrigtIP"
-                     placeholder="" readonly value="{{connectServiceProducerRequest.serviceComponent.other.ip}}">
+                     placeholder="" readonly value="{{connectServiceProducerRequest.serviceComponent.ipadress}}">
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@
             <div class="form-group">
               <label for="kontaktMail">Mail</label>
               <input type="email" class="form-control" id="kontaktMail" placeholder=""
-                     readonly value="{{connectServiceProducerRequest.serviceComponent.contact.mail}}">
+                     readonly value="{{connectServiceProducerRequest.serviceComponent.tekniskKontaktEpost}}">
             </div>
           </div>
         </div>
@@ -121,7 +121,7 @@
             <div class="form-group">
               <label for="kontaktTelefon">Telefon</label>
               <input type="text" class="form-control" id="kontaktTelefon" placeholder=""
-                     readonly value="{{connectServiceProducerRequest.serviceComponent.contact.phone}}">
+                     readonly value="{{connectServiceProducerRequest.serviceComponent.tekniskKontaktTelefon}}">
             </div>
           </div>
         </div>
