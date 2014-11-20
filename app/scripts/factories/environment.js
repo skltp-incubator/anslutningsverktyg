@@ -1,27 +1,17 @@
 'use strict';
 
 angular.module('avApp')
-  .factory('Environment', ['$q',
-    function ($q) {
+  .factory('Environment', ['$q', '$http',
+    function ($q, $http) {
     return {
       getAvailableEnvironments: function() {
         var deferred = $q.defer(); //forcing the use of a promise to set the interface for later
-        var envs = [
-          {
-            id: 'Test',
-            name: 'Test'
-          },
-          {
-            id: 'QA',
-            name: 'Quality Assurance (QA)'
-
-          },
-          {
-            id: 'PROD',
-            name: 'Production'
-          }
-        ];
-        deferred.resolve(envs);
+        console.log('getAvailableEnvironments');
+        $http.get('http://localhost:8080/anslutningsverktyg/api/environments').success(function(data) {
+          deferred.resolve(data);
+        }).error(function (data, status, headers) { //TODO: error handling
+          deferred.reject();
+        });
         return deferred.promise;
       }
     };
