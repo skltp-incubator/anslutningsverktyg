@@ -292,9 +292,7 @@
 
         <div class="col-md-3">
           <label for="rivtaVersion">Rivta version</label>
-          <select id="rivtaVersion" class="form-control" ng-model="contract.rivtaVersion" ng-options="rivtaVersion.name for rivtaVersion in rivtaVersions">
-            <option value="">Välj rivta version</option>
-          </select>
+          <select id="rivtaVersion" class="form-control" ng-model="contract.rivtaVersion" ng-options="rivtaVersion.name for rivtaVersion in rivtaVersions | orderBy:'name':true" ng-init="contract.rivtaVersion = (rivtaVersions | orderBy:'name':true)[0]"></select>
         </div>
 
         <div class="col-md-8">
