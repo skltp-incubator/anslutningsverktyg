@@ -245,14 +245,24 @@ angular.module('avApp')
 
       var updateSelectedServiceContracts = function (row) {
         $log.info(row);
-        var where = {'id': row.entity.id};
-        if (row.isSelected && !_.find($scope.selectedServiceContracts, where)) {
-          $scope.selectedServiceContracts.push(row.entity);
-        } else if (!row.isSelected && _.find($scope.selectedServiceContracts, where)) {
-          _.remove($scope.selectedServiceContracts, where);
+        var serviceContract = _cleanServiceContract(row.entity);
+        var serviceContractIdentifier = {
+          namnrymd: serviceContract.namnrymd,
+          majorVersion: serviceContract.majorVersion,
+          minorVersion: serviceContract.minorVersion
+        };
+        if (row.isSelected && !_.find($scope.selectedServiceContracts, serviceContractIdentifier)) {
+          $scope.selectedServiceContracts.push(serviceContract);
+        } else if (!row.isSelected && _.find($scope.selectedServiceContracts, serviceContractIdentifier)) {
+          _.remove($scope.selectedServiceContracts, serviceContractIdentifier);
         }
         $scope.connectServiceProducerRequest.serviceContracts = $scope.selectedServiceContracts;
         $log.info($scope.selectedServiceContracts);
+      };
+
+      var _cleanServiceContract = function(serviceContract) {
+        delete serviceContract.getVersion;
+        return serviceContract;
       };
 
       var reset = function () {
