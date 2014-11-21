@@ -18,6 +18,7 @@ angular.module('avApp')
         }).error(function(data, status, headers) { //TODO: handle errors
           deferred.reject();
         });
+        return deferred.promise;
       }
     };
   }]);
