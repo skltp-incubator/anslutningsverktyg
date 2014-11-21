@@ -1,38 +1,22 @@
 'use strict';
 angular.module('avApp')
-  .factory('ServiceDomain', ['$q',
-    function ($q) {
-      var QA_DOMAINS = [
-        {
-          id: 'riv:domain:a',
-          name: 'A random servicedomain'
-        },
-        {
-          id: 'riv:domain:b',
-          name: 'Another random domain'
-        }
-      ];
-
-      var OTHER_DOMAINS = [
-        {
-          id: 'riv:domain:c',
-          name: 'Oasis are fantastic'
-        },
-        {
-          id: 'riv:domain:d',
-          name: 'Blur are so great'
-        }
-      ];
-
+  .factory('ServiceDomain', ['$q', '$http',
+    function ($q, $http) {
       return {
-        listDomains: function (serviceComponentId, environment) {
-          console.log('serviceComponentId: ' + serviceComponentId + ', environment: ' + environment);
+        listDomains: function (serviceComponentHsaId, environmentId) {
+          console.log('listDomains: serviceComponentHsaId[' + serviceComponentHsaId + '], environmentId[' + environmentId + ']');
           var deferred = $q.defer();
-          if (serviceComponentId === 1 && environment === 'QA') {
-            deferred.resolve(QA_DOMAINS);
-          } else {
-            deferred.resolve(OTHER_DOMAINS);
-          }
+          $http.get('http://localhost:8080/anslutningsverktyg/api/serviceDomains', {
+            params: {
+              hsaId: serviceComponentHsaId,
+              environmentId: environmentId
+            }
+          }).success(function(data) {
+            console.log(data);
+            deferred.resolve(data);
+          }).error(function(data, status, headers) { //TODO: handle errors
+            deferred.reject();
+          });
           return deferred.promise;
         }
       };
