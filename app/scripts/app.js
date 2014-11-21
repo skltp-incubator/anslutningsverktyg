@@ -52,4 +52,12 @@ angular
         placeholder: '',
         addOnEnter: true
       });
-  });
+  }).value('config', {})
+  .run(['Configuration','config', function(Configuration, config) {
+    Configuration.getConfig().then(function(appConfig) {
+      //Copy props to our value object;
+      for(var propName in appConfig) {
+        config[propName]=appConfig[propName];
+      }
+    });
+  }]);
