@@ -31,101 +31,121 @@
             </div>
           </div>
         </div>
-      </div> <!-- End row -->
+      </div>
 
       <form role="form">
         <div class="row">
-          <div class="col-md-4">
-            <h4>Huvudansvarig</h4>
+
+          <div class="col-md-12">
+
+            <div class="col-md-4">
+
+              <div class="row">
+                <h4>Huvudansvarig</h4>
+              </div>
+
+              <div class="row">
+                <div class="form-group">
+                  <label for="huvudansvarigNamn">Namn</label>
+                  <input type="text" class="form-control" id="huvudansvarigNamn" placeholder=""
+                         readonly value="{{connectServiceProducerRequest.serviceComponent.personInCharge.name}}">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group">
+                  <label for="huvudansvarigEmail">Mail</label>
+                  <input type="email" class="form-control" id="huvudansvarigEmail"
+                         placeholder="" readonly value="{{connectServiceProducerRequest.serviceComponent.personInCharge.mail}}">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group">
+                  <label for="huvudansvarigTelefon">Telefon</label>
+                  <input type="text" class="form-control" id="huvudansvarigTelefon" placeholder=""
+                         readonly value="{{connectServiceProducerRequest.serviceComponent.personInCharge.phone}}">
+                </div>
+              </div>
+
+              <div class="row">
+                <h4>Funktionsbrevlåda</h4>
+              </div>
+
+              <div class="row">
+                <div class="form-group">
+                  <label for="brevladaEmail">Mail</label>
+                  <input type="email" class="form-control" id="brevladaEmail"
+                         placeholder="" readonly value="{{connectServiceProducerRequest.serviceComponent.funktionsBrevladaEpost}}">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group">
+                  <label for="brevladaTelefon">Telefon</label>
+                  <input type="text" class="form-control" id="brevladaTelefon"
+                         placeholder="" readonly value="{{connectServiceProducerRequest.serviceComponent.funktionsBrevladaTelefon}}">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-md-offset-3">
+              <div class="row">
+                <h4>Kontakt, teknik</h4>
+              </div>
+
+              <div class="row">
+                <div class="form-group">
+                  <label for="kontaktNamn">Namn</label>
+                  <input type="text" class="form-control" id="kontaktNamn" placeholder=""
+                         readonly value="{{connectServiceProducerRequest.serviceComponent.tekniskKontaktNamn}}">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group">
+                  <label for="kontaktMail">Mail</label>
+                  <input type="email" class="form-control" id="kontaktMail" placeholder=""
+                         readonly value="{{connectServiceProducerRequest.serviceComponent.tekniskKontaktEpost}}">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group">
+                  <label for="kontaktTelefon">Telefon</label>
+                  <input type="text" class="form-control" id="kontaktTelefon" placeholder=""
+                         readonly value="{{connectServiceProducerRequest.serviceComponent.tekniskKontaktTelefon}}">
+                </div>
+              </div>
+
+              <div class="row">
+                <h4>Övrigt</h4>
+              </div>
+
+              <div class="row">
+                <div class="form-group">
+                  <label for="ipAddress">IP nummer</label>
+                  <input type="text" class="form-control" id="ipAddress"
+                         placeholder="" readonly value="{{connectServiceProducerRequest.serviceComponent.ipadress}}">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group">
+                  <label for="pingForConfiguration">PingForConfiguration URL</label>
+                  <input type="text" class="form-control" id="pingForConfiguration"
+                         placeholder="" readonly value="{{connectServiceProducerRequest.serviceComponent.pingForConfiguration}}">
+                </div>
+              </div>
+            </div>
+
+
           </div>
-          <div class="col-md-4 col-md-offset-2">
-            <h4>Funktionsbrevlåda</h4>
-          </div>
+
+
         </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="huvudansvarigNamn">Namn</label>
-              <input type="text" class="form-control" id="huvudansvarigNamn" placeholder=""
-                     readonly value="{{connectServiceProducerRequest.serviceComponent.personInCharge.name}}">
-            </div>
-          </div>
-          <div class="col-md-4 col-md-offset-2">
-            <div class="form-group">
-              <label for="brevladaEmail">Mail</label>
-              <input type="email" class="form-control" id="brevladaEmail"
-                     placeholder="" readonly value="{{connectServiceProducerRequest.serviceComponent.funktionsBrevladaEpost}}">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="huvudansvarigEmail">Mail</label>
-              <input type="email" class="form-control" id="huvudansvarigEmail"
-                     placeholder="" readonly value="{{connectServiceProducerRequest.serviceComponent.personInCharge.mail}}">
-            </div>
-          </div>
-          <div class="col-md-4 col-md-offset-2">
-            <div class="form-group">
-              <label for="brevladaTelefon">Telefon</label>
-              <input type="text" class="form-control" id="brevladaTelefon"
-                     placeholder="" readonly value="{{connectServiceProducerRequest.serviceComponent.funktionsBrevladaTelefon}}">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="huvudansvarigTelefon">Telefon</label>
-              <input type="text" class="form-control" id="huvudansvarigTelefon" placeholder=""
-                     readonly value="{{connectServiceProducerRequest.serviceComponent.personInCharge.phone}}">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <h4>Kontakt, teknik</h4>
-          </div>
-          <div class="col-md-4 col-md-offset-2">
-            <h4>Övrigt</h4>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="kontaktNamn">Namn</label>
-              <input type="text" class="form-control" id="kontaktNamn" placeholder=""
-                     readonly value="{{connectServiceProducerRequest.serviceComponent.tekniskKontaktNamn}}">
-            </div>
-          </div>
-          <div class="col-md-4 col-md-offset-2">
-            <div class="form-group">
-              <label for="ovrigtIP">IP nummer</label>
-              <input type="text" class="form-control" id="ovrigtIP"
-                     placeholder="" readonly value="{{connectServiceProducerRequest.serviceComponent.ipadress}}">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="kontaktMail">Mail</label>
-              <input type="email" class="form-control" id="kontaktMail" placeholder=""
-                     readonly value="{{connectServiceProducerRequest.serviceComponent.tekniskKontaktEpost}}">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="kontaktTelefon">Telefon</label>
-              <input type="text" class="form-control" id="kontaktTelefon" placeholder=""
-                     readonly value="{{connectServiceProducerRequest.serviceComponent.tekniskKontaktTelefon}}">
-            </div>
-          </div>
-        </div>
-      </form>
+
+      </form> 
     </div>
 
   <h2 ng-show="connectServiceProducerRequest.serviceComponent">Välj tjänstekontrakt</h2>
