@@ -1,42 +1,23 @@
 'use strict';
 angular.module('avApp')
-  .factory('ServiceContract', ['$q',
-    function ($q) {
+  .factory('ServiceContract', ['$q', '$http',
+    function ($q, $http) {
     return {
       listContracts: function(serviceComponentId, environmentId, serviceDomainId) {
         console.log('serviceComponentId: ' + serviceComponentId + ', environmentId: ' + environmentId + ', serviceDomainId: ' + serviceDomainId);
         var deferred = $q.defer();
-        var response = {
-          serviceContracts: [
-            {
-              id: 'serviceContract1',
-              name: 'tjanstekontrakt1',
-              version: 1
-            },
-            {
-              id: 'serviceContract2',
-              name: 'tjanstekontrakt2',
-              version: 1
-            },
-            {
-              id: 'serviceContract3',
-              name: 'tjanstekontrakt3',
-              version: 1
-            }
-          ],
-          existingLogicalAddresses: [
-          {
-            id: 'hsaId5',
-            name: 'Varberg'
-          },
-          {
-            id: 'hsaId7',
-            name: 'Vallda'
+        $http.get('http://localhost:8080/anslutningsverktyg/api/serviceContracts', {
+          params: {
+            hsaId: serviceComponentId,
+            environmentId: environmentId,
+            serviceDomainId: serviceDomainId
           }
-        ]};
-
-        deferred.resolve(response);
-        return deferred.promise;
+        }).success(function(data) {
+          console.log(data);
+          deferred.resolve(data);
+        }).error(function(data, status, headers) { //TODO: handle errors
+          deferred.reject();
+        });
       }
     };
   }]);

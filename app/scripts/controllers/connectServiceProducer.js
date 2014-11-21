@@ -44,8 +44,8 @@ angular.module('avApp')
         enableSelectAll: true,
         multiSelect: true,
         columnDefs: [
-          {name: 'Namn', field: 'name'},
-          {name: 'version'}
+          {name: 'Namn', field: 'namn'},
+          {name: 'version', field: 'getVersion()'}
         ]
       };
 
@@ -92,8 +92,12 @@ angular.module('avApp')
           var serviceDomainId = $scope.selectedServiceDomain.id;
           $scope.connectServiceProducerRequest.serviceDomain = $scope.selectedServiceDomain;
           ServiceContract.listContracts(serviceComponentId, environmentId, serviceDomainId).then(function (contracts) {
-            //$scope.existingLogicalAddresses = contracts.existingLogicalAddresses;
-            $scope.gridOptions.data = contracts.serviceContracts;
+            $scope.gridOptions.data = contracts;
+            _.each($scope.gridOptions.data, function(contractData) { //ui-grid doesn't seem to support composite field values in any other way
+              contractData.getVersion = function() {
+                return this.majorVersion + '.' + this.minorVersion;
+              }
+            })
           });
           LogicalAddress.getLogicalAddressesForServiceDomain(serviceDomainId).then(function(logicalAddresses) {
             $scope.existingLogicalAddresses = logicalAddresses;
