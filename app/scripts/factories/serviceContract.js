@@ -1,12 +1,12 @@
 'use strict';
 angular.module('avApp')
-  .factory('ServiceContract', ['$q', '$http',
-    function ($q, $http) {
+  .factory('ServiceContract', ['$q', '$http', 'config',
+    function ($q, $http, config) {
     return {
       listContracts: function(serviceComponentId, environmentId, serviceDomainId) {
         console.log('serviceComponentId: ' + serviceComponentId + ', environmentId: ' + environmentId + ', serviceDomainId: ' + serviceDomainId);
         var deferred = $q.defer();
-        $http.get('http://localhost:8080/anslutningsplattform/api/serviceContracts', {
+        $http.get(config.apiHost + '/anslutningsplattform/api/serviceContracts', {
           params: {
             hsaId: serviceComponentId,
             environmentId: environmentId,
