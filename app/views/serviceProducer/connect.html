@@ -184,13 +184,13 @@
 
         <div class="radio">
           <label>
-            <input ng-model="individualLogicalAddress" ng-value="false" type="radio" name="optionsRadios" id="optionsRadios1">
+            <input ng-model="individualLogicalAddress" ng-value="false" type="radio" name="individualLogicalAddressRadios" id="optionsRadios1">
             Välj samma logiska adresser för alla tjänstekontrakt
           </label>
         </div>
         <div class="radio">
           <label>
-            <input ng-model="individualLogicalAddress" ng-value="true" type="radio" name="optionsRadios" id="optionsRadios2">
+            <input ng-model="individualLogicalAddress" ng-value="true" type="radio" name="individualLogicalAddressRadios" id="optionsRadios2">
             Välj logiska adresser individuellt för varje tjänstekontrakt
           </label>
         </div>
@@ -208,10 +208,10 @@
               <label>Lägg till ny logisk address</label>
               <ui-select ng-model="selectedLogicalAddress.selected" theme="bootstrap"
                          reset-search-input="true">
-                <ui-select-match placeholder="Namn - HSA ID">{{$select.selected.name}} - {{$select.selected.id}}</ui-select-match>
+                <ui-select-match placeholder="Namn - HSA ID">{{$select.selected.namn}} - {{$select.selected.hsaId}}</ui-select-match>
                 <ui-select-choices repeat="logicalAddress in filteredLogicalAddresses| filter: $select.search"
                   refresh="filterLogicalAddresses($select.search)" refresh-delay="200">
-                  <div ng-bind-html="logicalAddress.name | highlight: $select.search"></div>
+                  <div ng-bind-html="logicalAddress.namn | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
             </div>
@@ -223,7 +223,7 @@
             <div class="form-group">
               <label for="selectExistingLogicalAddresses">Välj från befintliga logiska adresser</label>
               <select multiple ng-multiple="true" ng-model="selectedExistingLogicalAddresses"
-                      ng-options="logicalAddress.name +' - '+logicalAddress.id for logicalAddress in existingLogicalAddresses"
+                      ng-options="logicalAddress.namn +' - '+logicalAddress.hsaId for logicalAddress in existingLogicalAddresses"
                       class="form-control" id="selectExistingLogicalAddresses">
               </select>
             </div>
@@ -270,7 +270,7 @@
 
         <div class="form-group col-md-4">
           <label>Valda logiska adresser</label>
-          <tags-input ng-model="logicalAddresses" display-property="name" on-tag-removed="removeLogicalAddressFromAllServiceContracts($tag)"></tags-input>
+          <tags-input ng-model="logicalAddresses" display-property="namn" on-tag-removed="removeLogicalAddressFromAllServiceContracts($tag)"></tags-input>
         </div>
 
       </div>
@@ -312,7 +312,7 @@
                 <label>Lägg till ny logisk address</label>
                 <ui-select ng-model="$parent.selectedLogicalAddress" theme="bootstrap"
                            reset-search-input="true">
-                  <ui-select-match placeholder="Namn - HSA ID">{{$select.selected.name}} - {{$select.selected.id}}</ui-select-match>
+                  <ui-select-match placeholder="Namn - HSA ID">{{$select.selected.namn}} - {{$select.selected.hsaId}}</ui-select-match>
                   <ui-select-choices repeat="logicalAddress in filteredLogicalAddresses| filter: $select.search"
                                      refresh="filterLogicalAddresses($select.search)" refresh-delay="200">
                     <div ng-bind-html="logicalAddress.name | highlight: $select.search"></div>
@@ -327,7 +327,7 @@
               <div class="form-group">
                 <label for="selectExistingLogicalAddresses-{{contract.id}}">Välj från befintliga logiska adresser</label>
                 <select multiple ng-multiple="true" ng-model="selectedExistingLogicalAddresses"
-                        ng-options="logicalAddress.name +' - '+logicalAddress.id for logicalAddress in existingLogicalAddresses"
+                        ng-options="logicalAddress.namn +' - '+logicalAddress.hsaId for logicalAddress in existingLogicalAddresses"
                         class="form-control" id="selectExistingLogicalAddresses-{{contract.id}}">
                 </select>
               </div>
@@ -374,7 +374,7 @@
 
           <div class="form-group col-md-4">
             <label>Valda logiska adresser</label>
-            <tags-input ng-model="contract.logicalAddresses" display-property="name" on-tag-removed="removeLogicalAddressFromServiceContract($tag, contract.id)"></tags-input>
+            <tags-input ng-model="contract.logicalAddresses" display-property="namn" on-tag-removed="removeLogicalAddressFromServiceContract($tag, contract.id)"></tags-input>
           </div>
 
         </div>
@@ -394,14 +394,14 @@
 
           <div class="radio">
             <label>
-              <input ng-model="slaFullfilled" ng-value="false" type="radio" name="optionsRadios"
+              <input ng-model="slaFullfilled" ng-value="false" type="radio" name="slaFullfilledRadios"
                      id="slaFullFilledRadios1">
               Ja
             </label>
           </div>
           <div class="radio">
             <label>
-              <input ng-model="slaFullfilled" ng-value="true" type="radio" name="optionsRadios" id="slaFullFilledRadios2">
+              <input ng-model="slaFullfilled" ng-value="true" type="radio" name="slaFullfilledRadios" id="slaFullFilledRadios2">
               Nej
             </label>
           </div>

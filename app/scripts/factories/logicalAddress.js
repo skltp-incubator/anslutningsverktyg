@@ -1,43 +1,40 @@
 'use strict';
 angular.module('avApp')
-  .factory('LogicalAddress', ['$q', function ($q) {
-
+  .factory('LogicalAddress', ['$q', '$http',
+    function ($q, $http) {
     return {
       getFilteredLogicalAddresses: function(query) {
-      console.log('getFilteredLogicalAddresses(query[' + query + '])');
         var deferred = $q.defer();
-        var data = [
-          {
-            id: 'hsaId1',
-            name: 'Nässjö'
-          },
-          {
-            id: 'hsaId2',
-            name: 'Mölndal'
-          },
-          {
-            id: 'hsaId3',
-            name: 'Älvängen'
-          }
-        ];
-        deferred.resolve(data);
+        console.log('getFilteredLogicalAddresses query[' + query + ']');
+        if (query) {
+          var lowerCaseQuery = query.toLowerCase();
+          $http.get('http://localhost:8080/anslutningsverktyg/api/logicalAddresses', {
+            params: {
+              query: lowerCaseQuery
+            }
+          }).success(function (data) {
+            deferred.resolve(data);
+          }).error(function (data, status, headers) { //TODO: error handling
+            deferred.reject();
+          });
+        }
         return deferred.promise;
       },
-      getLogicalAddressesForServiceDomain: function(serviceDomainId) {
-        console.log('getLogicalAddressesForServiceDoamin(serviceDomainId[' + serviceDomainId + '])');
-        console.log(serviceDomainId);
+      getLogicalAddressesForEnvironmentAndServiceDomain: function(environmentId, serviceDomainId) {
         var deferred = $q.defer();
-        var data = [
-          {
-            'id': 'hsaId9',
-            'name': 'Gnosjö'
-          },
-          {
-            'id': 'hsaId261',
-            'name': 'Landskrona'
-          }
-        ];
-        deferred.resolve(data);
+        console.log('getLogicalAddressesForEnvironmentAndServiceDomain: environmentId[' + environmentId + '], serviceDomainId[' + serviceDomainId + ']');
+        if (environmentId && serviceDomainId) {
+          $http.get('http://localhost:8080/anslutningsverktyg/api/logicalAddresses', {
+            params: {
+              environmentId: environmentId,
+              serviceDomainId: serviceDomainId
+            }
+          }).success(function (data) {
+            deferred.resolve(data);
+          }).error(function (data, status, headers) { //TODO: error handling
+            deferred.reject();
+          });
+        }
         return deferred.promise;
       }
     };
