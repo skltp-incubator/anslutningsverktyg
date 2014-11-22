@@ -20,7 +20,7 @@ angular
     'ui.select',
     'ngTagsInput'
   ])
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/');
 
@@ -42,17 +42,20 @@ angular
           ]
         }
       });
-  })
-  .config(function(uiSelectConfig) {
+  }])
+  .config(['uiSelectConfig', function(uiSelectConfig) {
     uiSelectConfig.theme = 'bootstrap';
-  })
-  .config(function(tagsInputConfigProvider) {
+  }])
+  .config(['tagsInputConfigProvider', function(tagsInputConfigProvider) {
     tagsInputConfigProvider
       .setDefaults('tagsInput', {
         placeholder: '',
         addOnEnter: true
       });
-  }).value('config', {})
+  }]).config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.interceptors.push('SessionInterceptor');
+  }])
+  .value('config', {})
   .run(['Configuration','config', function(Configuration, config) {
     Configuration.getConfig().then(function(appConfig) {
       //Copy props to our value object;
