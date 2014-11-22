@@ -6,7 +6,7 @@ angular.module('avApp')
         listDomains: function (serviceComponentHsaId, environmentId) {
           console.log('listDomains: serviceComponentHsaId[' + serviceComponentHsaId + '], environmentId[' + environmentId + ']');
           var deferred = $q.defer();
-          $http.get('http://localhost:8080/anslutningsverktyg/api/serviceDomains', {
+          $http.get('http://localhost:8080/anslutningsplattform/api/serviceDomains', {
             params: {
               hsaId: serviceComponentHsaId,
               environmentId: environmentId

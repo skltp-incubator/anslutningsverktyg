@@ -8,7 +8,7 @@ angular.module('avApp')
         console.log('getFilteredLogicalAddresses query[' + query + ']');
         if (query) {
           var lowerCaseQuery = query.toLowerCase();
-          $http.get('http://localhost:8080/anslutningsverktyg/api/logicalAddresses', {
+          $http.get('http://localhost:8080/anslutningsplattform/api/logicalAddresses', {
             params: {
               query: lowerCaseQuery
             }
@@ -24,7 +24,7 @@ angular.module('avApp')
         var deferred = $q.defer();
         console.log('getLogicalAddressesForEnvironmentAndServiceDomain: environmentId[' + environmentId + '], serviceDomainId[' + serviceDomainId + ']');
         if (environmentId && serviceDomainId) {
-          $http.get('http://localhost:8080/anslutningsverktyg/api/logicalAddresses', {
+          $http.get('http://localhost:8080/anslutningsplattform/api/logicalAddresses', {
             params: {
               environmentId: environmentId,
               serviceDomainId: serviceDomainId
