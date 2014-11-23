@@ -1,7 +1,7 @@
 'use strict';
 angular.module('avApp')
-  .factory('ServiceComponent', ['$q', '$http', 'config',
-    function ($q, $http, config) {
+  .factory('ServiceComponent', ['$q', '$http', 'appConfig',
+    function ($q, $http, appConfig) {
 
       var serviceComponents = [
         {
@@ -60,7 +60,7 @@ angular.module('avApp')
           console.log('getFilteredServiceComponents: ' + query);
           if (query) {
             var lowerCaseQuery = query.toLowerCase();
-            $http.get(config.apiHost + '/anslutningsplattform/api/serviceComponents', {
+            $http.get(appConfig.apiHost + '/anslutningsplattform/api/serviceComponents', {
               params: {
                 query: lowerCaseQuery
               }
@@ -77,7 +77,7 @@ angular.module('avApp')
         getServiceComponent: function (serviceComponentId) {
           var deferred = $q.defer();
           console.log('getServiceComponent: ' + serviceComponentId);
-          $http.get(config.apiHost + '/anslutningsplattform/api/serviceComponents/'+serviceComponentId).success(function (data) {
+          $http.get(appConfig.apiHost + '/anslutningsplattform/api/serviceComponents/'+serviceComponentId).success(function (data) {
             deferred.resolve(data);
           }).error(function (data, status, headers) { //TODO: error handling
             deferred.reject();

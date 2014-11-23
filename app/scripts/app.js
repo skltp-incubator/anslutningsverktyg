@@ -55,12 +55,13 @@ angular
   }]).config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push('SessionInterceptor');
   }])
-  .value('config', {})
-  .run(['Configuration','config', function(Configuration, config) {
-    Configuration.getConfig().then(function(appConfig) {
+  .value('appConfig', {})
+  .run(['Configuration','appConfig', function(Configuration, appConfig) {
+    Configuration.getConfig().then(function(config) {
       //Copy props to our value object;
-      for(var propName in appConfig) {
-        config[propName]=appConfig[propName];
+      for(var propName in config) {
+        appConfig[propName]=config[propName];
       }
+      console.log(appConfig);
     });
   }]);
