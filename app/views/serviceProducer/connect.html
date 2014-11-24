@@ -325,10 +325,10 @@
             <div class="row">
 
               <div class="form-group">
-                <label for="selectExistingLogicalAddresses-{{contract.id}}">Välj från befintliga logiska adresser</label>
+                <label for="selectExistingLogicalAddresses-{{$index}}">Välj från befintliga logiska adresser</label>
                 <select multiple ng-multiple="true" ng-model="selectedExistingLogicalAddresses"
                         ng-options="logicalAddress.namn +' - '+logicalAddress.hsaId for logicalAddress in existingLogicalAddresses"
-                        class="form-control" id="selectExistingLogicalAddresses-{{contract.id}}">
+                        class="form-control" id="selectExistingLogicalAddresses-{{$index}}">
                 </select>
               </div>
             </div>
@@ -374,7 +374,7 @@
 
           <div class="form-group col-md-4">
             <label>Valda logiska adresser</label>
-            <tags-input ng-model="contract.logicalAddresses" display-property="namn" on-tag-removed="removeLogicalAddressFromServiceContract($tag, contract.id)"></tags-input>
+            <tags-input ng-model="contract.logicalAddresses" display-property="namn" on-tag-removed="removeLogicalAddressFromServiceContract($tag, contract)"></tags-input>
           </div>
 
         </div>

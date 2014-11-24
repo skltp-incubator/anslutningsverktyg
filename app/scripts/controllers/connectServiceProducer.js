@@ -178,9 +178,8 @@ angular.module('avApp')
         });
       };
 
-      $scope.removeLogicalAddressFromServiceContract = function(tag, serviceContractId) {
+      $scope.removeLogicalAddressFromServiceContract = function(tag, serviceContract) {
         var logicalAddressId = tag.hsaId;
-        var serviceContract = _.find($scope.connectServiceProducerRequest.serviceContracts, {id: serviceContractId});
         if (angular.isDefined(serviceContract.logicalAddresses)) {
           _.remove(serviceContract.logicalAddresses, {hsaId: logicalAddressId});
         }
