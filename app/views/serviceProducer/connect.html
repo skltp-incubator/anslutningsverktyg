@@ -13,13 +13,13 @@
       <div class="row">
         <div class="col-md-4">
           <ui-select ng-model="selectedServiceComponent.selected" theme="bootstrap" reset-search-input="false">
-            <ui-select-match placeholder="Välj tjänsteproducent">{{$select.selected.namn}}</ui-select-match>
+            <ui-select-match placeholder="Välj tjänsteproducent">{{$select.selected.namn}} - {{$select.selected.hsaId}}</ui-select-match>
             <ui-select-choices
               repeat="serviceComponent in filteredServiceComponents | filter: $select.search"
               refresh="filterServiceComponents($select.search)"
               refresh-delay="200"
               >
-              <div ng-bind-html="serviceComponent.namn | highlight: $select.search"></div>
+              <div ng-bind-html="(serviceComponent.namn + ' - ' + serviceComponent.hsaId) | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
 
@@ -315,7 +315,7 @@
                   <ui-select-match placeholder="Namn - HSA ID">{{$select.selected.namn}} - {{$select.selected.hsaId}}</ui-select-match>
                   <ui-select-choices repeat="logicalAddress in filteredLogicalAddresses| filter: $select.search"
                                      refresh="filterLogicalAddresses($select.search)" refresh-delay="200">
-                    <div ng-bind-html="logicalAddress.name | highlight: $select.search"></div>
+                    <div ng-bind-html="logicalAddress.namn | highlight: $select.search"></div>
                   </ui-select-choices>
                 </ui-select>
               </div>
@@ -340,7 +340,7 @@
 
               <div class="form-group top25">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default" ng-click="addFilteredLogicalAddressToServiceContract(this, contract.id)">
+                  <button type="button" class="btn btn-default" ng-click="addFilteredLogicalAddressToServiceContract(this, contract)">
                     <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
                   </button>
                 </div>
@@ -351,7 +351,7 @@
 
               <div class="form-group top30">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default" ng-click="addSelectedExistingLogicalAddressesToServiceContract(this, contract.id)">
+                  <button type="button" class="btn btn-default" ng-click="addSelectedExistingLogicalAddressesToServiceContract(this, contract)">
                     <label>Valda</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
                   </button>
                 </div>
@@ -363,7 +363,7 @@
 
               <div class="form-group top17">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default" ng-click="addAllExistingLogicalAddressesToServiceContract(contract.id)">
+                  <button type="button" class="btn btn-default" ng-click="addAllExistingLogicalAddressesToServiceContract(contract)">
                     <label>Alla</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
                   </button>
                 </div>
