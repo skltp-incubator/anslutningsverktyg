@@ -178,6 +178,26 @@ angular.module('avApp')
         });
       };
 
+      $scope.addNewLogicalAddressForAllServiceContracts = function() {
+          var logicalAddress = {
+            hsaId: $scope.newLogicalAddressHSAID,
+            namn: $scope.newLogicalAddressName
+          };
+
+          if (!_.find($scope.logicalAddresses, {hsaId: logicalAddress.hsaId})) {
+            $scope.logicalAddresses.push(logicalAddress);
+            _addLogicalAddressToAllServiceContracts(logicalAddress);
+          } else {
+            //TODO we should definitely validate here and give some useful response to the user
+            $log.log('Can\'t add a tag twice');
+          }
+
+          //Reset the input fields again
+          $scope.newLogicalAddressHSAID = null;
+          $scope.newLogicalAddressName = null;
+
+      };
+
       $scope.addSelectedExistingLogicalAddressesToServiceContract = function(ngRepeatScope, serviceContract) {
         _.each(ngRepeatScope.selectedExistingLogicalAddresses, function(logicalAddress) {
           _addLogicalAddressToServiceContract(logicalAddress, serviceContract);
