@@ -1,14 +1,14 @@
 'use strict';
 angular.module('avApp')
-  .factory('LogicalAddress', ['$q', '$http', 'appConfig',
-    function ($q, $http, appConfig) {
+  .factory('LogicalAddress', ['$q', '$http', 'configuration',
+    function ($q, $http, configuration) {
     return {
       getFilteredLogicalAddresses: function(query) {
         var deferred = $q.defer();
         console.log('getFilteredLogicalAddresses query[' + query + ']');
         if (query) {
           var lowerCaseQuery = query.toLowerCase();
-          $http.get(appConfig.apiHost + '/anslutningsplattform/api/logicalAddresses', {
+          $http.get(configuration.apiHost + '/anslutningsplattform/api/logicalAddresses', {
             params: {
               query: lowerCaseQuery
             }
@@ -24,7 +24,7 @@ angular.module('avApp')
         var deferred = $q.defer();
         console.log('getLogicalAddressesForEnvironmentAndServiceDomain: environmentId[' + environmentId + '], serviceDomainId[' + serviceDomainId + ']');
         if (environmentId && serviceDomainId) {
-          $http.get(appConfig.apiHost + '/anslutningsplattform/api/logicalAddresses', {
+          $http.get(configuration.apiHost + '/anslutningsplattform/api/logicalAddresses', {
             params: {
               environmentId: environmentId,
               serviceDomainId: serviceDomainId

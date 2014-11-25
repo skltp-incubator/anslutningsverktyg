@@ -10,6 +10,7 @@
  */
 angular
   .module('avApp', [
+    'services.config',
     'ngAnimate',
     'ngCookies',
     'ngResource',
@@ -54,14 +55,4 @@ angular
       });
   }]).config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push('SessionInterceptor');
-  }])
-  .value('appConfig', {})
-  .run(['Configuration','appConfig', function(Configuration, appConfig) {
-    Configuration.getConfig().then(function(config) {
-      //Copy props to our value object;
-      for(var propName in config) {
-        appConfig[propName]=config[propName];
-      }
-      console.log(appConfig);
-    });
   }]);
