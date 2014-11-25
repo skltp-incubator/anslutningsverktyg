@@ -27,6 +27,10 @@ angular
 
     // Now set up the states
     $stateProvider
+      .state('landing', {
+        url: '/',
+        templateUrl: 'views/landing.html'
+      })
       .state('connectServiceProducer', {
         url: '/connectServiceProducer',
         templateUrl: 'views/serviceProducer/connect.html',
