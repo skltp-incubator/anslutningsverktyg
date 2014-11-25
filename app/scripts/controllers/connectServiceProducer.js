@@ -321,7 +321,8 @@ angular.module('avApp')
       };
 
       var resetContracts = function() {
-        $scope.gridOptions.data = []; //clear the grid from service contracts when we change env
+        $scope.gridOptions.data = [];
+        $scope.selectedServiceContracts = [];
         $scope.connectServiceProducerRequest.serviceContracts = [];
       };
 
