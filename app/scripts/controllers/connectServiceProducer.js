@@ -65,6 +65,12 @@ angular.module('avApp')
 
       $scope.filterServiceConsumers = function (query) {
         ServiceComponent.getFilteredServiceComponents(query).then(function (result) {
+          //This line effectively removes, from the search result
+          // the previously chosen service component
+          if($scope.selectedServiceComponent.selected) {
+            _.remove(result, {id: $scope.selectedServiceComponent.selected.id});
+          }
+
           $scope.filteredServiceConsumers = result;
         });
       };
@@ -295,6 +301,7 @@ angular.module('avApp')
         $scope.individualLogicalAddress = false;
         $scope.logicalAddressesForAllServiceContracts = [];
         $scope.selectedServiceConsumer = {};
+        $scope.requestForCallPermissionInSeparateOrder = true;
       };
 
       var resetLogicalAddressesForServiceContracts = function() {
