@@ -108,6 +108,7 @@ angular.module('avApp')
 
       $scope.environmentSelected = function () {
         if ($scope.selectedEnvironment && $scope.connectServiceProducerRequest.serviceComponent) {
+          resetContracts();
           var serviceComponentHsaId = $scope.connectServiceProducerRequest.serviceComponent.hsaId;
           var environmentId = $scope.selectedEnvironment.id;
           $scope.connectServiceProducerRequest.environment = $scope.selectedEnvironment;
@@ -119,6 +120,7 @@ angular.module('avApp')
 
       $scope.serviceDomainSelected = function () {
         if ($scope.selectedEnvironment && $scope.connectServiceProducerRequest.serviceComponent && $scope.selectedServiceDomain) {
+          resetContracts();
           var serviceComponentId = $scope.connectServiceProducerRequest.serviceComponent.hsaId;
           var environmentId = $scope.selectedEnvironment.id;
           var serviceDomainId = $scope.selectedServiceDomain.tjansteDomanId;
@@ -302,6 +304,11 @@ angular.module('avApp')
         $scope.logicalAddressesForAllServiceContracts = [];
         $scope.selectedServiceConsumer = {};
         $scope.requestForCallPermissionInSeparateOrder = true;
+      };
+
+      var resetContracts = function() {
+        $scope.gridOptions.data = []; //clear the grid from service contracts when we change env
+        $scope.connectServiceProducerRequest.serviceContracts = [];
       };
 
       var resetLogicalAddressesForServiceContracts = function() {
