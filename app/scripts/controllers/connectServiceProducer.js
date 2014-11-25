@@ -22,7 +22,14 @@ angular.module('avApp')
         environment: {},
         serviceDomain: {},
         serviceContracts: [],
-        serviceConsumer: {}
+        serviceConsumer: {},
+        slaFullfilled: false,
+        otherInfo: '',
+        client: {
+          name: '',
+          email: '',
+          phone: ''
+        }
       };
 
       $scope.selectedServiceComponent = {};
@@ -295,7 +302,14 @@ angular.module('avApp')
         $scope.selectedServiceDomain = {};
         $scope.selectedLogicalAddress = {};
         $scope.connectServiceProducerRequest = {
-          serviceContracts: []
+          serviceComponent: {},
+          environment: {},
+          serviceDomain: {},
+          serviceContracts: [],
+          serviceConsumer: {},
+          slaFullfilled: false,
+          otherInfo: '',
+          client: $scope.connectServiceProducerRequest.client //keep client info
         };
         $scope.gridOptions.data = [];
         $scope.selectedExistingLogicalAddresses = [];

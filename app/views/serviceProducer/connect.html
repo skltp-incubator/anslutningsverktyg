@@ -444,14 +444,14 @@
 
           <div class="radio">
             <label>
-              <input ng-model="slaFullfilled" ng-value="false" type="radio" name="slaFullfilledRadios"
+              <input ng-model="connectServiceProducerRequest.slaFullfilled" ng-value="true" type="radio" name="slaFullfilledRadios"
                      id="slaFullFilledRadios1">
               Ja
             </label>
           </div>
           <div class="radio">
             <label>
-              <input ng-model="slaFullfilled" ng-value="true" type="radio" name="slaFullfilledRadios" id="slaFullFilledRadios2">
+              <input ng-model="connectServiceProducerRequest.slaFullfilled" ng-value="false" type="radio" name="slaFullfilledRadios" id="slaFullFilledRadios2">
               Nej
             </label>
           </div>
@@ -462,7 +462,7 @@
         <div class="col-md-12">
           <div class="form-group">
             <label for="ovrigInformation">Övrig information</label>
-            <textarea id="ovrigInformation" class="form-control" cols="30" rows="10">
+            <textarea ng-model="connectServiceProducerRequest.otherInfo" id="ovrigInformation" class="form-control" cols="30" rows="10">
             </textarea>
           </div>
         </div>
@@ -477,21 +477,21 @@
               <label for="bestallareNamn" class="col-md-2 control-label">Namn</label>
 
               <div class="col-md-6">
-                <input type="text" class="form-control" id="bestallareNamn" placeholder="namn">
+                <input ng-model="connectServiceProducerRequest.client.name" type="text" class="form-control" id="bestallareNamn" placeholder="namn">
               </div>
             </div>
             <div class="form-group">
               <label for="bestallareEmail" class="col-sm-2 control-label">Mail</label>
 
               <div class="col-md-6">
-                <input type="email" class="form-control" id="bestallareEmail" placeholder="email">
+                <input ng-model="connectServiceProducerRequest.client.email" type="email" class="form-control" id="bestallareEmail" placeholder="email">
               </div>
             </div>
             <div class="form-group">
               <label for="bestallareTelefon" class="col-sm-2 control-label">Telefon</label>
 
               <div class="col-md-6">
-                <input type="text" class="form-control" id="bestallareTelefon" placeholder="telefon">
+                <input ng-model="connectServiceProducerRequest.client.phone" type="text" class="form-control" id="bestallareTelefon" placeholder="telefon">
               </div>
             </div>
           </form>
