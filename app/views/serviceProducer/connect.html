@@ -414,7 +414,7 @@
       </div>
       <div class="row" ng-show="!requestForCallPermissionInSeparateOrder ">
         <div class="col-md-4">
-          <ui-select ng-model="selectedServiceConsumer.selected" theme="bootstrap" reset-search-input="true ">
+          <ui-select ng-model="selectedServiceConsumer.selected" theme="bootstrap" reset-search-input="true" on-select="onSelectServiceConsumer($item, $model)">
             <ui-select-match placeholder="Välj tjänstekonsument">{{$select.selected.namn}} -
               {{$select.selected.hsaId}}
             </ui-select-match>

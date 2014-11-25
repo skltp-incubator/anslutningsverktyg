@@ -84,17 +84,11 @@ angular.module('avApp')
         }
       );
 
-      $scope.$watch('selectedServiceConsumer.selected', function (newValue) {
-          if (newValue) {
-            console.log('new service consumer selected:');
-            console.log(newValue);
-            ServiceComponent.getServiceComponent(newValue.id).then(function (result) {
-              console.log(result);
-              $scope.connectServiceProducerRequest.serviceConsumer = result;
-            });
-          }
-        }
-      );
+      $scope.onSelectServiceConsumer = function(item, model) {
+        ServiceComponent.getServiceComponent(item.id).then(function (result) {
+          $scope.connectServiceProducerRequest.serviceConsumer = result;
+        });
+      };
 
       $scope.requestForCallPermissionClicked = function() {
         //Reset stuff
