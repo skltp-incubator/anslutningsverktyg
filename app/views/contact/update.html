@@ -1,0 +1,141 @@
+<div class="container-fluid">
+  <div class="page-header">
+    <h1>Uppdatera kontaktinformation
+    </h1>
+  </div>
+  <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+
+  <div class="jumbotron">
+
+    <div class="row">
+      <div class="col-md-4">
+        <ui-select ng-model="selectedServiceComponent.selected" theme="bootstrap" reset-search-input="false">
+          <ui-select-match placeholder="Välj tjänstekomponent">{{$select.selected.namn}} - {{$select.selected.hsaId}}</ui-select-match>
+          <ui-select-choices
+            repeat="serviceComponent in filteredServiceComponents | filter: $select.search"
+            refresh="filterServiceComponents($select.search)"
+            refresh-delay="200"
+            >
+            <div ng-bind-html="(serviceComponent.namn + ' - ' + serviceComponent.hsaId) | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+
+      </div>
+    </div>
+
+    <form role="form">
+      <div class="row">
+
+        <div class="col-md-12">
+
+          <div class="col-md-4">
+
+            <div class="row">
+              <h4>Huvudansvarig</h4>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label for="huvudansvarigNamn">Namn</label>
+                <input type="text" class="form-control" id="huvudansvarigNamn" placeholder=""
+                       ng-model="updateContactRequest.serviceComponent.personInCharge.name">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label for="huvudansvarigEmail">Mail</label>
+                <input type="email" class="form-control" id="huvudansvarigEmail"
+                       placeholder="" ng-model="updateContactRequest.serviceComponent.personInCharge.mail">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label for="huvudansvarigTelefon">Telefon</label>
+                <input type="text" class="form-control" id="huvudansvarigTelefon" placeholder=""
+                       ng-model="updateContactRequest.serviceComponent.personInCharge.phone">
+              </div>
+            </div>
+
+            <div class="row">
+              <h4>Funktionsbrevlåda</h4>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label for="brevladaEmail">Mail</label>
+                <input type="email" class="form-control" id="brevladaEmail"
+                       placeholder="" ng-model="updateContactRequest.serviceComponent.funktionsBrevladaEpost">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label for="brevladaTelefon">Telefon</label>
+                <input type="text" class="form-control" id="brevladaTelefon"
+                       placeholder="" ng-model="updateContactRequest.serviceComponent.funktionsBrevladaTelefon">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-md-offset-3">
+            <div class="row">
+              <h4>Kontakt, teknik</h4>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label for="kontaktNamn">Namn</label>
+                <input type="text" class="form-control" id="kontaktNamn" placeholder=""
+                       ng-model="updateContactRequest.serviceComponent.tekniskKontaktNamn">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label for="kontaktMail">Mail</label>
+                <input type="email" class="form-control" id="kontaktMail" placeholder=""
+                       ng-model="updateContactRequest.serviceComponent.tekniskKontaktEpost">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label for="kontaktTelefon">Telefon</label>
+                <input type="text" class="form-control" id="kontaktTelefon" placeholder=""
+                       ng-model="updateContactRequest.serviceComponent.tekniskKontaktTelefon">
+              </div>
+            </div>
+
+            <div class="row">
+              <h4>Övrigt</h4>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label for="ipAddress">IP nummer</label>
+                <input type="text" class="form-control" id="ipAddress"
+                       placeholder="" ng-model="updateContactRequest.serviceComponent.ipadress">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group">
+                <label for="pingForConfiguration">PingForConfiguration URL</label>
+                <input type="text" class="form-control" id="pingForConfiguration"
+                       placeholder="" ng-model="updateContactRequest.serviceComponent.pingForConfiguration">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="footer row">
+
+  </div>
+</div>
