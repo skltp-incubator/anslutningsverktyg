@@ -21,11 +21,16 @@ angular.module('avApp')
         serviceComponent: {},
         environment: {},
         serviceDomain: {},
-        serviceContracts: []
+        serviceContracts: [],
+        serviceConsumer: {}
       };
 
       $scope.selectedServiceComponent = {};
       $scope.filteredServiceComponents = [];
+
+      $scope.selectedServiceConsumer = {};
+      $scope.filteredServiceConsumers = [];
+
       $scope.serviceDomains = [];
 
       $scope.selectedEnvironment = {};
@@ -41,6 +46,7 @@ angular.module('avApp')
 
       $scope.individualLogicalAddress = false;
 
+      $scope.requestForCallPermissionInSeparateOrder = true; //Default
       $scope.gridOptions = {
         enableRowSelection: true,
         enableSelectAll: true,
@@ -54,6 +60,18 @@ angular.module('avApp')
       $scope.filterServiceComponents = function (query) {
         ServiceComponent.getFilteredServiceComponents(query).then(function (result) {
           $scope.filteredServiceComponents = result;
+        });
+      };
+
+      $scope.filterServiceConsumers = function (query) {
+        ServiceComponent.getFilteredServiceComponents(query).then(function (result) {
+          //This line effectively removes, from the search result
+          // the previously chosen service component
+          if($scope.selectedServiceComponent.selected) {
+            _.remove(result, {id: $scope.selectedServiceComponent.selected.id});
+          }
+
+          $scope.filteredServiceConsumers = result;
         });
       };
 
@@ -71,6 +89,18 @@ angular.module('avApp')
           }
         }
       );
+
+      $scope.onSelectServiceConsumer = function(item, model) {
+        ServiceComponent.getServiceComponent(item.id).then(function (result) {
+          $scope.connectServiceProducerRequest.serviceConsumer = result;
+        });
+      };
+
+      $scope.requestForCallPermissionClicked = function() {
+        //Reset stuff
+        $scope.selectedServiceConsumer = {};
+        $scope.connectServiceProducerRequest.serviceConsumer = {};
+      };
 
       $scope.$watch('individualLogicalAddress', function() {
         resetLogicalAddressesForServiceContracts();
@@ -270,6 +300,8 @@ angular.module('avApp')
         $scope.selectedServiceContracts = [];
         $scope.individualLogicalAddress = false;
         $scope.logicalAddressesForAllServiceContracts = [];
+        $scope.selectedServiceConsumer = {};
+        $scope.requestForCallPermissionInSeparateOrder = true;
       };
 
       var resetLogicalAddressesForServiceContracts = function() {
