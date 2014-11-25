@@ -20,10 +20,7 @@ angular.module('avApp')
       $scope.$watch('selectedServiceComponent.selected', function (newValue) {
           if (newValue) {
             reset();
-            console.log('new service component selected:');
-            console.log(newValue);
             ServiceComponent.getServiceComponent(newValue.id).then(function (result) {
-              console.log(result);
               $scope.updateContactRequest.serviceComponent = _.cloneDeep(result);
             });
           } else {
