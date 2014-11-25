@@ -31,6 +31,11 @@ angular
         url: '/',
         templateUrl: 'views/landing.html'
       })
+      .state('updateContact', {
+        url: '/contact/update',
+        templateUrl: 'views/contact/update.html',
+        controller: 'UpdateContactCtrl'
+      })
       .state('connectServiceProducer', {
         url: '/connectServiceProducer',
         templateUrl: 'views/serviceProducer/connect.html',
