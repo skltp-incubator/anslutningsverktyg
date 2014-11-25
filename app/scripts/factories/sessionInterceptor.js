@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('avApp')
-  .factory('SessionInterceptor', ['appConfig', function (appConfig) {
+  .factory('SessionInterceptor', ['configuration', function (configuration) {
     var sessionInterceptor = {
       request: function (config) {
         config.headers = config.headers || {};
-        config.headers['X-ap-auth'] = appConfig.apiToken;
+        config.headers['X-ap-auth'] = configuration.apiToken;
         return config;
       }
     };
