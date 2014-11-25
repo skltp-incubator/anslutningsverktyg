@@ -215,11 +215,24 @@
                 </ui-select-choices>
               </ui-select>
             </div>
-
           </div>
 
           <div class="row">
+            <label>Lägg till ny logisk address</label>
+            <div class="form-group">
+                <input ng-model="newLogicalAddressHSAID" type="text" class="form-control" id="newLogicalAddress_HSAID"
+                       placeholder="HSA ID">
+            </div>
+          </div>
 
+          <div class="row">
+            <div class="form-group">
+                <input ng-model="newLogicalAddressName" type="text" class="form-control" id="newLogicalAddress_Name"
+                       placeholder="Namn">
+            </div>
+          </div>
+
+          <div class="row">
             <div class="form-group">
               <label for="selectExistingLogicalAddresses">Välj från befintliga logiska adresser</label>
               <select multiple ng-multiple="true" ng-model="selectedExistingLogicalAddresses"
@@ -243,9 +256,22 @@
             </div>
 
           </div>
+
           <div class="row">
 
-            <div class="form-group top30">
+            <div class="form-group top45">
+              <div class="btn-group">
+                <button type="button" class="btn btn-default" ng-click="addNewLogicalAddressForAllServiceContracts()">
+                  <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+
+            <div class="form-group top75">
               <div class="btn-group">
                 <button type="button" class="btn btn-default" ng-click="addSelectedExistingLogicalAddressesToAllServiceContracts()">
                   <label>Valda</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
@@ -323,7 +349,21 @@
             </div>
 
             <div class="row">
+              <label>Lägg till ny logisk address</label>
+              <div class="form-group">
+                <input ng-model="newLogicalAddressHSAID" type="text" class="form-control" id="newLogicalAddress_HSAID_{{$index}}"
+                       placeholder="HSA ID">
+              </div>
+            </div>
 
+            <div class="row">
+              <div class="form-group">
+                <input ng-model="newLogicalAddressName" type="text" class="form-control" id="newLogicalAddress_Name_{{$index}}"
+                       placeholder="Namn">
+              </div>
+            </div>
+
+            <div class="row">
               <div class="form-group">
                 <label for="selectExistingLogicalAddresses-{{$index}}">Välj från befintliga logiska adresser</label>
                 <select multiple ng-multiple="true" ng-model="selectedExistingLogicalAddresses"
@@ -337,7 +377,6 @@
 
           <div class="col-md-2 col-md-offset-1">
             <div class="row">
-
               <div class="form-group top25">
                 <div class="btn-group">
                   <button type="button" class="btn btn-default" ng-click="addFilteredLogicalAddressToServiceContract(this, contract)">
@@ -345,11 +384,22 @@
                   </button>
                 </div>
               </div>
-
             </div>
+
+            <div class="row">
+              <div class="form-group top45">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default" ng-click="addNewLogicalAddressToServiceContract(this, contract)">
+                    <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+
             <div class="row">
 
-              <div class="form-group top30">
+              <div class="form-group top75">
                 <div class="btn-group">
                   <button type="button" class="btn btn-default" ng-click="addSelectedExistingLogicalAddressesToServiceContract(this, contract)">
                     <label>Valda</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
