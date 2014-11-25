@@ -198,6 +198,20 @@ angular.module('avApp')
 
       };
 
+      $scope.addNewLogicalAddressToServiceContract = function(ngRepeatScope, serviceContract) {
+        var logicalAddress = {
+          hsaId: ngRepeatScope.newLogicalAddressHSAID,
+          namn: ngRepeatScope.newLogicalAddressName
+        };
+
+        _addLogicalAddressToServiceContract(logicalAddress, serviceContract);
+
+        //Reset the input fields again
+        ngRepeatScope.newLogicalAddressHSAID = null;
+        ngRepeatScope.newLogicalAddressName = null;
+
+      };
+
       $scope.addSelectedExistingLogicalAddressesToServiceContract = function(ngRepeatScope, serviceContract) {
         _.each(ngRepeatScope.selectedExistingLogicalAddresses, function(logicalAddress) {
           _addLogicalAddressToServiceContract(logicalAddress, serviceContract);
