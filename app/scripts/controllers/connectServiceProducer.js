@@ -21,11 +21,16 @@ angular.module('avApp')
         serviceComponent: {},
         environment: {},
         serviceDomain: {},
-        serviceContracts: []
+        serviceContracts: [],
+        serviceConsumer: {}
       };
 
       $scope.selectedServiceComponent = {};
       $scope.filteredServiceComponents = [];
+
+      $scope.selectedServiceConsumer = {};
+      $scope.filteredServiceConsumers = [];
+
       $scope.serviceDomains = [];
 
       $scope.selectedEnvironment = {};
@@ -41,6 +46,7 @@ angular.module('avApp')
 
       $scope.individualLogicalAddress = false;
 
+      $scope.requestForCallPermissionInSeparateOrder = true; //Default
       $scope.gridOptions = {
         enableRowSelection: true,
         enableSelectAll: true,
@@ -54,6 +60,12 @@ angular.module('avApp')
       $scope.filterServiceComponents = function (query) {
         ServiceComponent.getFilteredServiceComponents(query).then(function (result) {
           $scope.filteredServiceComponents = result;
+        });
+      };
+
+      $scope.filterServiceConsumers = function (query) {
+        ServiceComponent.getFilteredServiceComponents(query).then(function (result) {
+          $scope.filteredServiceConsumers = result;
         });
       };
 
@@ -71,6 +83,24 @@ angular.module('avApp')
           }
         }
       );
+
+      $scope.$watch('selectedServiceConsumer.selected', function (newValue) {
+          if (newValue) {
+            console.log('new service consumer selected:');
+            console.log(newValue);
+            ServiceComponent.getServiceComponent(newValue.id).then(function (result) {
+              console.log(result);
+              $scope.connectServiceProducerRequest.serviceConsumer = result;
+            });
+          }
+        }
+      );
+
+      $scope.requestForCallPermissionClicked = function() {
+        //Reset stuff
+        $scope.selectedServiceConsumer = {};
+        $scope.connectServiceProducerRequest.serviceConsumer = {};
+      };
 
       $scope.$watch('individualLogicalAddress', function() {
         resetLogicalAddressesForServiceContracts();
@@ -270,6 +300,7 @@ angular.module('avApp')
         $scope.selectedServiceContracts = [];
         $scope.individualLogicalAddress = false;
         $scope.logicalAddressesForAllServiceContracts = [];
+        $scope.selectedServiceConsumer = {};
       };
 
       var resetLogicalAddressesForServiceContracts = function() {

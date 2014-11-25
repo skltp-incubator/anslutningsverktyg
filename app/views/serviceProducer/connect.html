@@ -383,6 +383,58 @@
     </div>
   </div>
 
+  <div>
+  <!--
+  <div
+    ng-show="connectServiceProducerRequest.serviceComponent && connectServiceProducerRequest.serviceContracts.length && !individualLogicalAddress">-->
+    <h2>Lägg till anropsbehörighet för tjänstekonsument</h2>
+
+    <div class="jumbotron">
+      <p>För att anslutningen ska fungera mellan tjänstekonsument och tjänsteproducent måste även tjänstekonsumenten vara ansluten till tjänstekontraten, samt ha anropsbehörighet till de logiska adresserna.
+        Om tjänstekonsumenten redan är ansluten till kontrakten kan du i detta flöde även begära anropsbehörighet för tjänstekonsumenten till de logiska adresserna du angivit för respektive tjänstekontrakt.</p>
+
+      <div class="row">
+        <div class="col-md-12">
+
+          <div class="radio">
+            <label>
+              <input ng-model="requestForCallPermissionInSeparateOrder" ng-value="true" type="radio" name="callPermissionRadios"
+                     id="callPermissionRadios1" ng-change="requestForCallPermissionClicked()">
+              Anropsbehörighet kommer begäras via en konsumentanslutningsbeställning
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input ng-model="requestForCallPermissionInSeparateOrder" ng-value="false" type="radio" name="callPermissionRadios" id="callPermissionRadios2">
+              Anropsbehörighet ska begäras i samband med denna beställning
+            </label>
+          </div>
+        </div>
+
+      </div>
+      <div class="row" ng-show="!requestForCallPermissionInSeparateOrder ">
+        <div class="col-md-4">
+          <ui-select ng-model="selectedServiceConsumer.selected" theme="bootstrap" reset-search-input="true ">
+            <ui-select-match placeholder="Välj tjänstekonsument">{{$select.selected.namn}} -
+              {{$select.selected.hsaId}}
+            </ui-select-match>
+            <ui-select-choices
+              repeat="serviceConsumer in filteredServiceConsumers | filter: $select.search"
+              refresh="filterServiceConsumers($select.search)"
+              refresh-delay="200"
+              >
+              <div
+                ng-bind-html="(serviceConsumer.namn + ' - ' + serviceConsumer.hsaId) | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+      <p ng-show="!requestForCallPermissionInSeparateOrder">Denna tjänstekonsument ska få anropsbehörighet för valda tjänstekontrakt på de valda logiska adresser.</p>
+
+    </div>
+
+  </div>
+
   <div ng-show="connectServiceProducerRequest.serviceComponent && connectServiceProducerRequest.serviceContracts.length && !individualLogicalAddress" >
     <h2>Övrigt</h2>
 
