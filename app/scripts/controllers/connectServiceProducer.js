@@ -91,7 +91,7 @@ angular.module('avApp')
         if ($scope.selectedEnvironment && $scope.connectServiceProducerRequest.serviceComponent && $scope.selectedServiceDomain) {
           var serviceComponentId = $scope.connectServiceProducerRequest.serviceComponent.hsaId;
           var environmentId = $scope.selectedEnvironment.id;
-          var serviceDomainId = $scope.selectedServiceDomain.id;
+          var serviceDomainId = $scope.selectedServiceDomain.tjansteDomanId;
           $scope.connectServiceProducerRequest.serviceDomain = $scope.selectedServiceDomain;
           ServiceContract.listContracts(serviceComponentId, environmentId, serviceDomainId).then(function (contracts) {
             $scope.gridOptions.data = contracts;
