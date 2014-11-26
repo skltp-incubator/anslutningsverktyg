@@ -109,8 +109,13 @@ angular.module('avApp')
         $scope.connectServiceProducerRequest.serviceConsumer = {};
       };
 
-      $scope.$watch('linkLogicalAddressChoice', function() {
+      $scope.$watch('linkLogicalAddressChoice', function(newValue) {
         resetLogicalAddressesForServiceContracts();
+        if(newValue === 'sourceSystemBased') {
+          var logicalAddress = $scope.connectServiceProducerRequest.serviceComponent;
+          $scope.logicalAddresses.push(logicalAddress);
+          _addLogicalAddressToAllServiceContracts(logicalAddress);
+        }
       });
 
       $scope.environmentSelected = function () {
