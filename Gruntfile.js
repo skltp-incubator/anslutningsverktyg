@@ -382,6 +382,11 @@ module.exports = function (grunt) {
           cwd: '.',
           src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
           dest: '<%= yeoman.dist %>'
+        }, {
+          expand: true,
+          cwd: 'bower_components/angular-ui-grid',
+          src: 'ui-grid.{eot,svg,ttf,woff}',
+          dest: '<%= yeoman.dist %>/styles'
         }]
       },
       styles: {
@@ -453,6 +458,24 @@ module.exports = function (grunt) {
     'concurrent:dist',
     'autoprefixer',
     'replace:production',
+    'concat',
+    'ngAnnotate',
+    'copy:dist',
+    'cdnify',
+    'cssmin',
+    'uglify',
+    'filerev',
+    'usemin',
+    'htmlmin'
+  ]);
+
+  grunt.registerTask('build-development', [
+    'clean:dist',
+    'wiredep',
+    'useminPrepare',
+    'concurrent:dist',
+    'autoprefixer',
+    'replace:development',
     'concat',
     'ngAnnotate',
     'copy:dist',
