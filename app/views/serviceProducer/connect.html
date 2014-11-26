@@ -184,22 +184,29 @@
 
         <div class="radio">
           <label>
-            <input ng-model="individualLogicalAddress" ng-value="false" type="radio" name="individualLogicalAddressRadios" id="optionsRadios1">
+            <input ng-model="linkLogicalAddressChoice" value="sameForAllContracts" type="radio" name="linkLogicalAddressChoiceRadios" id="optionsRadios1">
             Välj samma logiska adresser för alla tjänstekontrakt
           </label>
         </div>
         <div class="radio">
           <label>
-            <input ng-model="individualLogicalAddress" ng-value="true" type="radio" name="individualLogicalAddressRadios" id="optionsRadios2">
+            <input ng-model="linkLogicalAddressChoice" value="individualForContract" type="radio" name="linkLogicalAddressChoiceRadios" id="optionsRadios2">
             Välj logiska adresser individuellt för varje tjänstekontrakt
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input ng-model="linkLogicalAddressChoice" value="sourceSystemBased" type="radio" name="linkLogicalAddressChoiceRadios" id="optionsRadios3">
+            Källsystemsbaserad addressering tillämpas och den logiska adressen är densamma
+            som Tjänsteproducenten
           </label>
         </div>
       </div>
     </div>
   </div>
 
-  <h3 ng-show="connectServiceProducerRequest.serviceComponent && connectServiceProducerRequest.serviceContracts.length && !individualLogicalAddress">Välj samma logiska adresser för alla tjänstekontrakt</h3>
-  <div ng-show="connectServiceProducerRequest.serviceComponent && connectServiceProducerRequest.serviceContracts.length && !individualLogicalAddress" class="jumbotron">
+  <h3 ng-show="connectServiceProducerRequest.serviceComponent && connectServiceProducerRequest.serviceContracts.length && linkLogicalAddressChoice === 'sameForAllContracts' || linkLogicalAddressChoice === 'sourceSystemBased'">Välj samma logiska adresser för alla tjänstekontrakt</h3>
+  <div ng-show="connectServiceProducerRequest.serviceComponent && connectServiceProducerRequest.serviceContracts.length && linkLogicalAddressChoice === 'sameForAllContracts' || linkLogicalAddressChoice === 'sourceSystemBased'" class="jumbotron">
   <div class="row">
       <div class="col-md-12">
         <div class="col-md-4">
@@ -307,8 +314,8 @@
 
 
   <h3 ng-show="connectServiceProducerRequest.serviceComponent && connectServiceProducerRequest.serviceContracts.length">
-    <span ng-show="!individualLogicalAddress">Välj RIVTA-version och URL för respektive tjänstekontrakt</span>
-    <span ng-show="individualLogicalAddress">Välj RIVTA-version, URL och logiska adresser för respektive tjänstekontrakt</span>
+    <span ng-show="linkLogicalAddressChoice === 'individualForContract'">Välj RIVTA-version och URL för respektive tjänstekontrakt</span>
+    <span ng-show="linkLogicalAddressChoice === 'individualForContract'">Välj RIVTA-version, URL och logiska adresser för respektive tjänstekontrakt</span>
   </h3>
 
   <div ng-repeat="contract in connectServiceProducerRequest.serviceContracts">
@@ -328,9 +335,9 @@
 
       </div>
 
-      <h4 ng-show="individualLogicalAddress">Välj logiska adresser till {{contract.namn}} {{contract.majorVersion}}.{{contract.minorVersion}}</h4>
+      <h4 ng-show="linkLogicalAddressChoice === 'individualForContract'">Välj logiska adresser till {{contract.namn}} {{contract.majorVersion}}.{{contract.minorVersion}}</h4>
 
-      <div ng-show="individualLogicalAddress" class="row">
+      <div ng-show="linkLogicalAddressChoice === 'individualForContract'" class="row">
         <div class="col-md-12">
           <div class="col-md-4">
             <div class="row">
