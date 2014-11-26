@@ -119,7 +119,7 @@ angular.module('avApp')
           var serviceComponentHsaId = $scope.connectServiceProducerRequest.serviceComponent.hsaId;
           var environmentId = $scope.selectedEnvironment.id;
           $scope.connectServiceProducerRequest.environment = $scope.selectedEnvironment;
-          ServiceDomain.listDomains(serviceComponentHsaId, environmentId).then(function (domains) {
+          ServiceDomain.listDomains().then(function (domains) {
             $scope.serviceDomains = domains;
           });
         }
