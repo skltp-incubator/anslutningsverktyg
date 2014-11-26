@@ -1,4 +1,5 @@
 {
   "apiHost": "http://localhost:8080",
-  "apiToken": "secret-token"
+  "apiToken": "secret-token",
+  "devDebug": "true"
 }

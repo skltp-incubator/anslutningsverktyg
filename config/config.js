@@ -3,5 +3,6 @@
 angular.module('services.config', [])
   .constant('configuration', {
     apiHost: '@@apiHost',
-    apiToken: '@@apiToken'
+    apiToken: '@@apiToken',
+    devDebug: '@@devDebug'
   });

@@ -1,4 +1,5 @@
 {
   "apiHost": "",
-  "apiToken": "secret-token"
+  "apiToken": "secret-token",
+  "devDebug": "false"
 }

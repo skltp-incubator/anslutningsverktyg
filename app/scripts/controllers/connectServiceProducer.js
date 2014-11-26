@@ -9,13 +9,13 @@
  */
 
 angular.module('avApp')
-  .controller('ConnectServiceProducerCtrl', ['$rootScope', '$scope', '$log', 'ServiceDomain', 'ServiceContract', 'ServiceComponent', 'environments', 'rivtaVersions', 'LogicalAddress',
-    function ($rootScope, $scope, $log, ServiceDomain, ServiceContract, ServiceComponent, environments, rivtaVersions, LogicalAddress) {
+  .controller('ConnectServiceProducerCtrl', ['$rootScope', '$scope', '$log', 'ServiceDomain', 'ServiceContract', 'ServiceComponent', 'environments', 'rivtaVersions', 'LogicalAddress', 'configuration',
+    function ($rootScope, $scope, $log, ServiceDomain, ServiceContract, ServiceComponent, environments, rivtaVersions, LogicalAddress, configuration) {
       $scope.environments = environments;
       $scope.rivtaVersions = rivtaVersions;
       console.log($scope.rivtaVersions);
 
-      $scope.showDevStuff = true;
+      $scope.showDevStuff = configuration.devDebug;
 
       $scope.connectServiceProducerRequest = {
         serviceComponent: {},
