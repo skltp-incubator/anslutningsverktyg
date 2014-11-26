@@ -59,9 +59,10 @@ angular.module('avApp')
         enableSelectAll: true,
         multiSelect: true,
         columnDefs: [
-          {name: 'Namn', field: 'namn'},
+          {name: 'Namn', field: 'getName()'},
           {name: 'version', field: 'getVersion()'}
-        ]
+        ],
+        rowTemplate: 'templates/grid-row.html'
       };
 
       $scope.filterServiceComponents = function (query) {
@@ -121,8 +122,6 @@ angular.module('avApp')
       $scope.environmentSelected = function () {
         if ($scope.selectedEnvironment && $scope.connectServiceProducerRequest.serviceComponent) {
           resetContracts();
-          var serviceComponentHsaId = $scope.connectServiceProducerRequest.serviceComponent.hsaId;
-          var environmentId = $scope.selectedEnvironment.id;
           $scope.connectServiceProducerRequest.environment = $scope.selectedEnvironment;
           ServiceDomain.listDomains().then(function (domains) {
             $scope.serviceDomains = domains;
@@ -142,8 +141,11 @@ angular.module('avApp')
             _.each($scope.gridOptions.data, function(contractData) { //ui-grid doesn't seem to support composite field values in any other way
               contractData.getVersion = function() {
                 return this.majorVersion + '.' + this.minorVersion;
-              }
-            })
+              };
+              contractData.getName = function() {
+                return this.namn + (this.installedInEnvironment ? ' (redan installerat)' : '');
+              };
+            });
           });
           LogicalAddress.getLogicalAddressesForEnvironmentAndServiceDomain(environmentId, serviceDomainId).then(function(logicalAddresses) {
             $scope.existingLogicalAddresses = logicalAddresses;
@@ -272,14 +274,22 @@ angular.module('avApp')
         //set gridApi on scope
         $scope.gridApi = gridApi;
         gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-          updateSelectedServiceContracts(row);
+          checkInstalledAndUpdate(gridApi, row);
         });
 
         gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
           _.forEach(rows, function (row) {
-            updateSelectedServiceContracts(row);
+            checkInstalledAndUpdate(gridApi, row);
           });
         });
+      };
+
+      var checkInstalledAndUpdate = function(gridApi, row) {
+        if (row.entity.installedInEnvironment) {
+          gridApi.selection.unSelectRow(row.entity);
+        } else {
+          updateSelectedServiceContracts(row);
+        }
       };
 
       var _addLogicalAddressToAllServiceContracts = function(logicalAddress) {

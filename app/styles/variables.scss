@@ -13,6 +13,12 @@ $black: rgb(0, 0, 0);
 //box-shadow
 $box_shadow_opacity: rgba(0,0,0,0.5);
 
+//ui-grid modifications
+$uiGridRowColor: rgb(253, 253, 253);
+$uiGridRowDisabledBackgroundColor: rgb(237, 237, 237);
+$uiGridRowDisabledTextColor: rgb(163, 163, 163);
+$uiGridRowDisabledButtonTextColor: rgb(240, 240, 238);
+
 //Some margin-top offsets
 .top5 {
   margin-top: 5px;
