@@ -51,7 +51,7 @@ angular.module('avApp')
       $scope.selectedServiceContracts = [];
       $scope.logicalAddressesForAllServiceContracts = [];
 
-      $scope.individualLogicalAddress = false;
+      $scope.linkLogicalAddressChoice = 'sameForAllContracts';
 
       $scope.requestForCallPermissionInSeparateOrder = true; //Default
       $scope.gridOptions = {
@@ -109,8 +109,13 @@ angular.module('avApp')
         $scope.connectServiceProducerRequest.serviceConsumer = {};
       };
 
-      $scope.$watch('individualLogicalAddress', function() {
+      $scope.$watch('linkLogicalAddressChoice', function(newValue) {
         resetLogicalAddressesForServiceContracts();
+        if(newValue === 'sourceSystemBased') {
+          var logicalAddress = $scope.connectServiceProducerRequest.serviceComponent;
+          $scope.logicalAddresses.push(logicalAddress);
+          _addLogicalAddressToAllServiceContracts(logicalAddress);
+        }
       });
 
       $scope.environmentSelected = function () {
@@ -314,7 +319,7 @@ angular.module('avApp')
         if (row.isSelected && !_.find($scope.selectedServiceContracts, serviceContractIdentifier)) {
           $scope.selectedServiceContracts.push(serviceContract);
           var newServiceContract = _getCleanServiceContract(serviceContract);
-          if (!$scope.individualLogicalAddress && $scope.logicalAddressesForAllServiceContracts) {
+          if ($scope.linkLogicalAddressChoice === 'individualForContract' && $scope.logicalAddressesForAllServiceContracts) {
             newServiceContract.logicalAddresses = _.map($scope.logicalAddressesForAllServiceContracts, function(logicalAddress) {
               return _.clone(logicalAddress);
             });
@@ -348,7 +353,7 @@ angular.module('avApp')
         $scope.gridOptions.data = [];
         $scope.selectedExistingLogicalAddresses = [];
         $scope.selectedServiceContracts = [];
-        $scope.individualLogicalAddress = false;
+        $scope.linkLogicalAddressChoice = 'sameForAllContracts';
         $scope.logicalAddressesForAllServiceContracts = [];
         $scope.selectedServiceConsumer = {};
         $scope.requestForCallPermissionInSeparateOrder = true;

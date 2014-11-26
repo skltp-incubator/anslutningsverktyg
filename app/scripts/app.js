@@ -60,7 +60,7 @@ angular
     tagsInputConfigProvider
       .setDefaults('tagsInput', {
         placeholder: '',
-        addOnEnter: true
+        addOnEnter: false
       });
   }]).config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push('SessionInterceptor');
