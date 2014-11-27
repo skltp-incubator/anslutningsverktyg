@@ -381,6 +381,7 @@ angular.module('avApp')
         $scope.logicalAddressesForAllServiceContracts = [];
         $scope.selectedServiceConsumer = {};
         $scope.requestForCallPermissionInSeparateOrder = true;
+        $scope.logicalAddresses = []; //So we don't get any logical address lingering in the tags input
       };
 
       var resetServiceComponent = function() {
