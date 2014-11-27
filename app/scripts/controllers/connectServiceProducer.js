@@ -9,8 +9,8 @@
  */
 
 angular.module('avApp')
-  .controller('ConnectServiceProducerCtrl', ['$rootScope', '$scope', '$log', 'ServiceDomain', 'ServiceContract', 'ServiceComponent', 'environments', 'rivtaVersions', 'LogicalAddress', 'configuration',
-    function ($rootScope, $scope, $log, ServiceDomain, ServiceContract, ServiceComponent, environments, rivtaVersions, LogicalAddress, configuration) {
+  .controller('ConnectServiceProducerCtrl', ['$rootScope', '$scope', '$log', 'ServiceDomain', 'ServiceContract', 'ServiceComponent', 'environments', 'rivtaVersions', 'LogicalAddress', 'ServiceProducerConnectionOrder', 'configuration',
+    function ($rootScope, $scope, $log, ServiceDomain, ServiceContract, ServiceComponent, environments, rivtaVersions, LogicalAddress, ServiceProducerConnectionOrder, configuration) {
       $scope.environments = environments;
       $scope.rivtaVersions = rivtaVersions;
       console.log($scope.rivtaVersions);
@@ -276,6 +276,10 @@ angular.module('avApp')
 
       };
 
+
+      $scope.sendServiceProducerConnectionOrder = function() {
+          ServiceProducerConnectionOrder.createOrder($scope.connectServiceProducerRequest);
+      };
       /*
        Grid config
        */
