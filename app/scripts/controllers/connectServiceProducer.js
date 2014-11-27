@@ -343,7 +343,7 @@ angular.module('avApp')
         if (row.isSelected && !_.find($scope.selectedServiceContracts, serviceContractIdentifier)) {
           $scope.selectedServiceContracts.push(serviceContract);
           var newServiceContract = _getCleanServiceContract(serviceContract);
-          if ($scope.linkLogicalAddressChoice === 'individualForContract' && $scope.logicalAddressesForAllServiceContracts) {
+          if ($scope.linkLogicalAddressChoice !== 'individualForContract' && $scope.logicalAddressesForAllServiceContracts) {
             newServiceContract.logicalAddresses = _.map($scope.logicalAddressesForAllServiceContracts, function(logicalAddress) {
               return _.clone(logicalAddress);
             });
