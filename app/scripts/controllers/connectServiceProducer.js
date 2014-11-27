@@ -15,6 +15,8 @@ angular.module('avApp')
       $scope.rivtaVersions = rivtaVersions;
       console.log($scope.rivtaVersions);
 
+      $scope.newComponent = false;
+
       $scope.showDevStuff = configuration.devDebug;
 
       $scope.connectServiceProducerRequest = {
@@ -83,6 +85,10 @@ angular.module('avApp')
         });
       };
 
+      $scope.$watch('newComponent', function() {
+        resetServiceComponent();
+      });
+
       $scope.$watch('selectedServiceComponent.selected', function (newValue) {
           if (newValue) {
             reset();
@@ -102,6 +108,10 @@ angular.module('avApp')
         ServiceComponent.getServiceComponent(item.id).then(function (result) {
           $scope.connectServiceProducerRequest.serviceConsumer = result;
         });
+      };
+
+      $scope.enableNewServiceProducer = function() {
+
       };
 
       $scope.requestForCallPermissionClicked = function() {
@@ -367,6 +377,11 @@ angular.module('avApp')
         $scope.logicalAddressesForAllServiceContracts = [];
         $scope.selectedServiceConsumer = {};
         $scope.requestForCallPermissionInSeparateOrder = true;
+      };
+
+      var resetServiceComponent = function() {
+        delete $scope.selectedServiceComponent.selected;
+        $scope.connectServiceProducerRequest.serviceComponent = {};
       };
 
       var resetContracts = function() {
