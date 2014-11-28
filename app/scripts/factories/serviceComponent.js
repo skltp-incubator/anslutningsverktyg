@@ -3,57 +3,6 @@ angular.module('avApp')
   .factory('ServiceComponent', ['$q', '$http', 'configuration',
     function ($q, $http, configuration) {
 
-      var serviceComponents = [
-        {
-          name: 'Tjänsteproducent 1',
-          hsaid: '1',
-          personInCharge: {
-            name: 'A Bsson',
-            mail: 'email@email.se',
-            phone: '192912912'
-          },
-          contact: {
-            name: 'En kontakt',
-            mail: 'email@email.se',
-            phone: '192912912'
-          },
-          mailbox: {
-            mail: 'funktion@email.se',
-            phone: '192912912'
-          },
-          other: {
-            ip: '127.0.0.1'
-          }
-        },
-        {
-          name: 'Tjänsteproducent 2',
-          hsaid: '2',
-          personInCharge: {
-            name: 'C Dsson',
-            mail: 'email@email.se',
-            phone: '192912912'
-          },
-          contact: {
-            name: 'En till kontakt',
-            mail: 'email@email.se',
-            phone: '192912912'
-          },
-          mailbox: {
-            mail: 'funktion@email.se',
-            phone: '192912912'
-          },
-          other: {
-            ip: '1.3.3.7'
-          }
-        },
-        {name: 'Tjänsteproducent 3', hsaid: '3'},
-        {name: 'asnsteproducent 2', hsaid: '4'},
-        {name: 'sdteproducent 2', hsaid: '5'},
-        {name: 'edefroducent 2', hsaid: '5'},
-        {name: 'fsdsdsteproducent 2', hsaid: '6'},
-        {name: 'dsdseproducent 2', hsaid: '7'},
-        {name: 'dsdsnsteproducent 2', hsaid: '8'}];
-
       return {
         getFilteredServiceComponents: function (query) {
           var deferred = $q.defer();
@@ -81,6 +30,17 @@ angular.module('avApp')
             deferred.resolve(data);
           }).error(function (data, status, headers) { //TODO: error handling
             deferred.reject();
+          });
+          return deferred.promise;
+        },
+        updateServiceComponent: function (serviceComponent) {
+          var clonedSc = _.clone(serviceComponent);
+          delete clonedSc.class; //TODO: we should handle this in backend
+          var deferred = $q.defer();
+          $http.put(configuration.apiHost + '/anslutningsplattform/api/serviceComponents/' + clonedSc.hsaId , clonedSc).success(function() {
+            deferred.resolve();
+          }).error(function(data, status, headers) { //TODO: handle errors
+
           });
           return deferred.promise;
         }

@@ -4,10 +4,6 @@ angular.module('avApp')
   .controller('UpdateContactCtrl', ['$scope', '$log', 'ServiceComponent',
     function ($scope, $log, ServiceComponent) {
 
-      $scope.updateContactRequest = {
-        serviceComponent: {}
-      };
-
       $scope.selectedServiceComponent = {};
       $scope.filteredServiceComponents = [];
 
@@ -20,8 +16,8 @@ angular.module('avApp')
       $scope.$watch('selectedServiceComponent.selected', function (newValue) {
           if (newValue) {
             reset();
-            ServiceComponent.getServiceComponent(newValue.id).then(function (result) {
-              $scope.updateContactRequest.serviceComponent = _.cloneDeep(result);
+            ServiceComponent.getServiceComponent(newValue.hsaId).then(function (result) {
+              $scope.serviceComponent = _.cloneDeep(result);
             });
           } else {
             reset();
@@ -29,10 +25,14 @@ angular.module('avApp')
         }
       );
 
+      $scope.updateComponent = function() {
+        console.log('updateComponent: ');
+        console.log($scope.serviceComponent);
+        ServiceComponent.updateServiceComponent($scope.serviceComponent);
+      };
+
       var reset = function () {
-        $scope.updateContactRequest = {
-          serviceComponent: {}
-        };
+        delete $scope.serviceComponent;
       };
     }
   ]

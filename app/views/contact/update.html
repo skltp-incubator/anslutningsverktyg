@@ -12,24 +12,49 @@
 
     <div class="row">
       <div class="col-md-4">
-        <ui-select ng-model="selectedServiceComponent.selected" theme="bootstrap" reset-search-input="false">
-          <ui-select-match placeholder="Välj tjänstekomponent">{{$select.selected.namn}} - {{$select.selected.hsaId}}</ui-select-match>
-          <ui-select-choices
-            repeat="serviceComponent in filteredServiceComponents | filter: $select.search"
-            refresh="filterServiceComponents($select.search)"
-            refresh-delay="200"
-            >
-            <div ng-bind-html="(serviceComponent.namn + ' - ' + serviceComponent.hsaId) | highlight: $select.search"></div>
-          </ui-select-choices>
-        </ui-select>
-
+        <div class="row">
+          <div class="form-group">
+            <ui-select ng-model="selectedServiceComponent.selected" theme="bootstrap" reset-search-input="false">
+              <ui-select-match placeholder="Välj tjänstekomponent">{{$select.selected.namn}} - {{$select.selected.hsaId}}</ui-select-match>
+              <ui-select-choices
+                repeat="serviceComponent in filteredServiceComponents | filter: $select.search"
+                refresh="filterServiceComponents($select.search)"
+                refresh-delay="200"
+                >
+                <div ng-bind-html="(serviceComponent.namn + ' - ' + serviceComponent.hsaId) | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
       </div>
     </div>
 
-    <form role="form">
+    <form role="form" ng-show="serviceComponent">
       <div class="row">
+        <h4>Basinformation</h4>
+      </div>
 
-        <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="row">
+            <div class="form-group">
+              <label for="komponentNamn">Tjänstekomponentens namn</label>
+              <input type="text" class="form-control" id="komponentNamn" placeholder=""
+                     ng-model="serviceComponent.namn">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label for="hsaId">HSA-ID</label>
+              <input type="text" class="form-control" id="hsaId"
+                     placeholder="" readonly ng-value="serviceComponent.hsaId">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
 
           <div class="col-md-4">
 
@@ -41,7 +66,7 @@
               <div class="form-group">
                 <label for="huvudansvarigNamn">Namn</label>
                 <input type="text" class="form-control" id="huvudansvarigNamn" placeholder=""
-                       ng-model="updateContactRequest.serviceComponent.personInCharge.name">
+                       ng-model="serviceComponent.huvudAnsvarigNamn">
               </div>
             </div>
 
@@ -49,7 +74,7 @@
               <div class="form-group">
                 <label for="huvudansvarigEmail">Mail</label>
                 <input type="email" class="form-control" id="huvudansvarigEmail"
-                       placeholder="" ng-model="updateContactRequest.serviceComponent.personInCharge.mail">
+                       placeholder="" ng-model="serviceComponent.huvudAnsvarigEpost">
               </div>
             </div>
 
@@ -57,7 +82,7 @@
               <div class="form-group">
                 <label for="huvudansvarigTelefon">Telefon</label>
                 <input type="text" class="form-control" id="huvudansvarigTelefon" placeholder=""
-                       ng-model="updateContactRequest.serviceComponent.personInCharge.phone">
+                       ng-model="serviceComponent.huvudAnsvarigTelefon">
               </div>
             </div>
 
@@ -69,7 +94,7 @@
               <div class="form-group">
                 <label for="brevladaEmail">Mail</label>
                 <input type="email" class="form-control" id="brevladaEmail"
-                       placeholder="" ng-model="updateContactRequest.serviceComponent.funktionsBrevladaEpost">
+                       placeholder="" ng-model="serviceComponent.funktionsBrevladaEpost">
               </div>
             </div>
 
@@ -77,7 +102,7 @@
               <div class="form-group">
                 <label for="brevladaTelefon">Telefon</label>
                 <input type="text" class="form-control" id="brevladaTelefon"
-                       placeholder="" ng-model="updateContactRequest.serviceComponent.funktionsBrevladaTelefon">
+                       placeholder="" ng-model="serviceComponent.funktionsBrevladaTelefon">
               </div>
             </div>
           </div>
@@ -91,7 +116,7 @@
               <div class="form-group">
                 <label for="kontaktNamn">Namn</label>
                 <input type="text" class="form-control" id="kontaktNamn" placeholder=""
-                       ng-model="updateContactRequest.serviceComponent.tekniskKontaktNamn">
+                       ng-model="serviceComponent.tekniskKontaktNamn">
               </div>
             </div>
 
@@ -99,7 +124,7 @@
               <div class="form-group">
                 <label for="kontaktMail">Mail</label>
                 <input type="email" class="form-control" id="kontaktMail" placeholder=""
-                       ng-model="updateContactRequest.serviceComponent.tekniskKontaktEpost">
+                       ng-model="serviceComponent.tekniskKontaktEpost">
               </div>
             </div>
 
@@ -107,7 +132,7 @@
               <div class="form-group">
                 <label for="kontaktTelefon">Telefon</label>
                 <input type="text" class="form-control" id="kontaktTelefon" placeholder=""
-                       ng-model="updateContactRequest.serviceComponent.tekniskKontaktTelefon">
+                       ng-model="serviceComponent.tekniskKontaktTelefon">
               </div>
             </div>
 
@@ -119,7 +144,7 @@
               <div class="form-group">
                 <label for="ipAddress">IP nummer</label>
                 <input type="text" class="form-control" id="ipAddress"
-                       placeholder="" ng-model="updateContactRequest.serviceComponent.ipadress">
+                       placeholder="" ng-model="serviceComponent.ipadress">
               </div>
             </div>
 
@@ -127,11 +152,15 @@
               <div class="form-group">
                 <label for="pingForConfiguration">PingForConfiguration URL</label>
                 <input type="text" class="form-control" id="pingForConfiguration"
-                       placeholder="" ng-model="updateContactRequest.serviceComponent.pingForConfiguration">
+                       placeholder="" ng-model="serviceComponent.pingForConfiguration">
               </div>
             </div>
+
+            <div class="row">
+              <button ng-click="updateComponent()" class="btn btn-primary btn-lg pull-right top25">skicka</button>
+            </div>
+
           </div>
-        </div>
       </div>
     </form>
   </div>

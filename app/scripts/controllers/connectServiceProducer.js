@@ -78,7 +78,7 @@ angular.module('avApp')
           //This line effectively removes, from the search result
           // the previously chosen service component
           if($scope.selectedServiceComponent.selected) {
-            _.remove(result, {id: $scope.selectedServiceComponent.selected.id});
+            _.remove(result, {hsaId: $scope.selectedServiceComponent.selected.hsaId});
           }
 
           $scope.filteredServiceConsumers = result;
@@ -94,7 +94,7 @@ angular.module('avApp')
             reset();
             console.log('new service component selected:');
             console.log(newValue);
-            ServiceComponent.getServiceComponent(newValue.id).then(function (result) {
+            ServiceComponent.getServiceComponent(newValue.hsaId).then(function (result) {
               console.log(result);
               $scope.connectServiceProducerRequest.serviceComponent = result;
             });
@@ -105,7 +105,7 @@ angular.module('avApp')
       );
 
       $scope.onSelectServiceConsumer = function(item, model) {
-        ServiceComponent.getServiceComponent(item.id).then(function (result) {
+        ServiceComponent.getServiceComponent(item.hsaId).then(function (result) {
           $scope.connectServiceProducerRequest.serviceConsumer = result;
         });
       };
