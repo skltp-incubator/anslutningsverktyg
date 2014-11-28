@@ -182,3 +182,18 @@ body {
 .footer {
   height: 500px;
 }
+
+.table.logical-addresses {
+  td {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-top: 0;
+//    border-bottom: 1px solid $color_celeste_approx;
+  }
+}
+
+.table-hover.logical-addresses {
+  tr:hover {
+    background-color: $color_gallery_approx;
+  }
+}

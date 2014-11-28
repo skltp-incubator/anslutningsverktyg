@@ -13,8 +13,11 @@ angular.module('avApp')
             serviceDomainId: serviceDomainId
           }
         }).success(function(data) {
-          console.log(data);
-          deferred.resolve(data);
+          var serviceContracts = _.map(data, function(serviceContract) {
+            serviceContract.installedInEnvironment = !!Math.floor(Math.random() * 2);
+            return serviceContract;
+          });
+          deferred.resolve(serviceContracts);
         }).error(function(data, status, headers) { //TODO: handle errors
           deferred.reject();
         });
