@@ -177,7 +177,7 @@
 
       <div class="col-md-4 form-group">
         <label for="environment">Driftmiljö</label>
-        <select id="environment" class="form-control" ng-model="selectedEnvironment" ng-change="environmentSelected()" ng-options="environment.namn for environment in environments">
+        <select id="environment" class="form-control" ng-model="selectedTargetEnvironment" ng-change="targetEnvironmentSelected()" ng-options="environment.namn for environment in targetEnvironments">
           <option value="">Välj driftmiljö</option>
         </select>
       </div>
