@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="page-header">
-    <h1>Anslut tjänst för tjänsteproducent
+    <h1>Tjänsteproducent: Anslut till nya tjänstekontrakt
     </h1>
   </div>
   <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -9,61 +9,66 @@
     Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
     <h2>Välj tjänsteproducent</h2>
     <div class="jumbotron">
-
+      <div class="row">
+        <h4>Tjänsteproducent</h4>
+      </div>
       <div class="row">
         <div class="col-md-4">
           <div class="row">
-            <div class="form-group">
-              <ui-select ng-model="selectedServiceComponent.selected" theme="bootstrap" reset-search-input="false" ng-disabled="newComponent">
-                <ui-select-match placeholder="Välj tjänsteproducent">{{$select.selected.namn}} - {{$select.selected.hsaId}}</ui-select-match>
-                <ui-select-choices
-                  repeat="serviceComponent in filteredServiceComponents | filter: $select.search"
-                  refresh="filterServiceComponents($select.search)"
-                  refresh-delay="200"
-                  >
-                  <div ng-bind-html="(serviceComponent.namn + ' - ' + serviceComponent.hsaId) | highlight: $select.search"></div>
-                </ui-select-choices>
-              </ui-select>
-            </div>
-
-          </div>
-        </div>
-        <div class="col-md-4">
           <div class="form-group">
-              <button ng-hide="newComponent" type="button" class="btn btn-default" ng-click="newComponent = true">Registrera ny tjänsteproducent</button>
-              <button ng-show="newComponent" type="button" class="btn btn-default" ng-click="newComponent = false">Välj befintlig tjänsteproducent</button>
+            <ui-select ng-model="selectedServiceComponent.selected" theme="bootstrap" reset-search-input="false" ng-disabled="newComponent">
+              <ui-select-match placeholder="Sök befintlig tjänsteproducent">{{$select.selected.namn}} - {{$select.selected.hsaId}}</ui-select-match>
+              <ui-select-choices
+                repeat="serviceComponent in filteredServiceComponents | filter: $select.search"
+                refresh="filterServiceComponents($select.search)"
+                refresh-delay="200"
+                >
+                <div ng-bind-html="(serviceComponent.namn + ' - ' + serviceComponent.hsaId) | highlight: $select.search"></div>
+              </ui-select-choices>
+            </ui-select>
           </div>
+
         </div>
       </div>
-
-      <div class="row" ng-show="newComponent">
-        <h4>Basinformation</h4>
-      </div>
-
-      <div class="row" ng-show="newComponent">
-        <div class="col-md-4">
-          <div class="row">
-            <div class="form-group">
-              <label for="komponentNamn">Tjänstekomponentens namn</label>
-              <input type="text" class="form-control" id="komponentNamn" placeholder=""
-                     ng-model="connectServiceProducerRequest.serviceComponent.namn">
-            </div>
-          </div>
-
-          <div class="row" ng-show="newComponent">
-            <div class="form-group">
-              <label for="hsaId">HSA-ID</label>
-              <input type="text" class="form-control" id="hsaId"
-                     placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.hsaId">
-            </div>
-          </div>
+      <div class="col-md-4">
+        <div class="form-group">
+            <button ng-hide="newComponent" type="button" class="btn btn-default" ng-click="newComponent = true">Anslut ny tjänsteproducent</button>
+            <button ng-show="newComponent" type="button" class="btn btn-default" ng-click="newComponent = false">Sök befintlig tjänsteproducent</button>
         </div>
       </div>
+    </div>
 
-      <form role="form" ng-show="newComponent || selectedServiceComponent.selected">
-        <div class="row">
+    <form role="form" ng-show="newComponent || selectedServiceComponent.selected">
+      <div class="row">
 
-            <div class="col-md-4">
+          <div class="col-md-4">
+            <!--<div class="row">-->
+                <!--<h4>Basinformation</h4>-->
+              <!--</div>-->
+
+              <div class="row" ng-show="newComponent">
+                <div class="form-group">
+                  <label for="komponentNamn">Tjänstekomponentens namn</label>
+                  <input type="text" class="form-control" id="komponentNamn" placeholder=""
+                         ng-model="connectServiceProducerRequest.serviceComponent.namn">
+                </div>
+              </div>
+
+              <div class="row" ng-show="newComponent">
+                <div class="form-group">
+                  <label for="hsaId">HSA-ID</label>
+                  <input type="text" class="form-control" id="hsaId"
+                         placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.hsaId">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group">
+                  <label for="organisation">Organisation</label>
+                  <input type="text" class="form-control" id="organisation" placeholder=""
+                         ng-model="connectServiceProducerRequest.serviceComponent.organisation">
+                </div>
+              </div>
 
               <div class="row">
                 <h4>Huvudansvarig</h4>
@@ -71,7 +76,7 @@
 
               <div class="row">
                 <div class="form-group">
-                  <label for="huvudansvarigNamn">Namn</label>
+                  <label for="huvudansvarigNamn">För- och efternamn</label>
                   <input type="text" class="form-control" id="huvudansvarigNamn" placeholder=""
                          ng-model="connectServiceProducerRequest.serviceComponent.huvudAnsvarigNamn">
                 </div>
@@ -79,7 +84,7 @@
 
               <div class="row">
                 <div class="form-group">
-                  <label for="huvudansvarigEmail">Mail</label>
+                  <label for="huvudansvarigEmail">E-postadress</label>
                   <input type="email" class="form-control" id="huvudansvarigEmail"
                          placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.huvudAnsvarigEpost">
                 </div>
@@ -94,12 +99,12 @@
               </div>
 
               <div class="row">
-                <h4>Funktionsbrevlåda</h4>
+                <h4>Teknisk support</h4>
               </div>
 
               <div class="row">
                 <div class="form-group">
-                  <label for="brevladaEmail">Mail</label>
+                  <label for="brevladaEmail">Funktionsbrevlåda</label>
                   <input type="email" class="form-control" id="brevladaEmail"
                          placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.funktionsBrevladaEpost">
                 </div>
@@ -116,12 +121,12 @@
 
             <div class="col-md-4 col-md-offset-3">
               <div class="row">
-                <h4>Kontakt, teknik</h4>
+                <h4>Teknisk kontaktperson</h4>
               </div>
 
               <div class="row">
                 <div class="form-group">
-                  <label for="kontaktNamn">Namn</label>
+                  <label for="kontaktNamn">För- och efternamn</label>
                   <input type="text" class="form-control" id="kontaktNamn" placeholder=""
                          ng-model="connectServiceProducerRequest.serviceComponent.tekniskKontaktNamn">
                 </div>
@@ -129,7 +134,7 @@
 
               <div class="row">
                 <div class="form-group">
-                  <label for="kontaktMail">Mail</label>
+                  <label for="kontaktMail">E-postadress</label>
                   <input type="email" class="form-control" id="kontaktMail" placeholder=""
                          ng-model="connectServiceProducerRequest.serviceComponent.tekniskKontaktEpost">
                 </div>
@@ -144,12 +149,12 @@
               </div>
 
               <div class="row">
-                <h4>Övrigt</h4>
+                <h4>Teknisk information</h4>
               </div>
 
               <div class="row">
                 <div class="form-group">
-                  <label for="ipAddress">IP nummer</label>
+                  <label for="ipAddress">IP-adress</label>
                   <input type="text" class="form-control" id="ipAddress"
                          placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.ipadress">
                 </div>
@@ -157,7 +162,7 @@
 
               <div class="row">
                 <div class="form-group">
-                  <label for="pingForConfiguration">PingForConfiguration URL</label>
+                  <label for="pingForConfiguration">URL till övervakningstjänst</label>
                   <input type="text" class="form-control" id="pingForConfiguration"
                          placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.pingForConfiguration">
                 </div>
@@ -169,7 +174,7 @@
       </form>
     </div>
 
-  <h2 ng-show="connectServiceProducerRequest.serviceComponent.hsaId && connectServiceProducerRequest.serviceComponent.namn">Välj tjänstekontrakt</h2>
+  <h2 ng-show="connectServiceProducerRequest.serviceComponent.hsaId && connectServiceProducerRequest.serviceComponent.namn">Välj driftmiljö</h2>
 
   <div ng-show="connectServiceProducerRequest.serviceComponent.hsaId && connectServiceProducerRequest.serviceComponent.namn" class="jumbotron">
 
@@ -182,8 +187,18 @@
         </select>
       </div>
 
+    </div><!-- End row -->
+
+  </div>
+
+  <h2 ng-show="connectServiceProducerRequest.serviceComponent.hsaId && connectServiceProducerRequest.serviceComponent.namn && selectedTargetEnvironment.id">Välj tjänstekontrakt</h2>
+
+  <div ng-show="connectServiceProducerRequest.serviceComponent.hsaId && connectServiceProducerRequest.serviceComponent.namn && selectedTargetEnvironment.id" class="jumbotron">
+
+    <div class="row">
+
       <div class="col-md-4 form-group">
-        <label for="service-domain">Tjänstedomän</label>
+        <label for="service-domain">Tjänstedomän eller informationsmängd</label>
         <select class="form-control" ng-model="selectedServiceDomain" ng-change="serviceDomainSelected()" ng-options="serviceDomain.tjansteDomanId for serviceDomain in serviceDomains" id="service-domain">
           <option value="">Välj tjänstedomän</option>
         </select>
@@ -202,17 +217,21 @@
 
     <div class="row">
       <div class="col-md-12">
-
+        <p>Lägg till de logiska adresser som en konsument ska kunna adressera. Vad som används som logisk adress beror på vilken tjänstedomän beställningen gäller.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
         <div class="radio">
           <label>
             <input ng-model="linkLogicalAddressChoice" value="sameForAllContracts" type="radio" name="linkLogicalAddressChoiceRadios" id="optionsRadios1">
-            Välj samma logiska adresser för alla tjänstekontrakt
+            Lägg till samma logiska adresser för alla tjänstekontrakt
           </label>
         </div>
         <div class="radio">
           <label>
             <input ng-model="linkLogicalAddressChoice" value="individualForContract" type="radio" name="linkLogicalAddressChoiceRadios" id="optionsRadios2">
-            Välj logiska adresser individuellt för varje tjänstekontrakt
+            Lägg till logiska adresser individuellt för varje tjänstekontrakt
           </label>
         </div>
         <div class="radio">
@@ -226,7 +245,7 @@
     </div>
   </div>
 
-  <h3 ng-show="connectServiceProducerRequest.serviceComponent && connectServiceProducerRequest.serviceContracts.length && linkLogicalAddressChoice === 'sameForAllContracts' || linkLogicalAddressChoice === 'sourceSystemBased'">Välj samma logiska adresser för alla tjänstekontrakt</h3>
+  <h3 ng-show="connectServiceProducerRequest.serviceComponent && connectServiceProducerRequest.serviceContracts.length && linkLogicalAddressChoice === 'sameForAllContracts' || linkLogicalAddressChoice === 'sourceSystemBased'">Lägg till samma logiska adresser för alla tjänstekontrakt</h3>
   <div ng-show="connectServiceProducerRequest.serviceComponent && connectServiceProducerRequest.serviceContracts.length && linkLogicalAddressChoice === 'sameForAllContracts' || linkLogicalAddressChoice === 'sourceSystemBased'" class="jumbotron">
   <div class="row">
       <div class="col-md-12">
@@ -335,8 +354,8 @@
 
 
   <h3 ng-show="connectServiceProducerRequest.serviceComponent && connectServiceProducerRequest.serviceContracts.length">
-    <span ng-show="linkLogicalAddressChoice === 'individualForContract'">Välj RIVTA-version och URL för respektive tjänstekontrakt</span>
-    <span ng-show="linkLogicalAddressChoice === 'individualForContract'">Välj RIVTA-version, URL och logiska adresser för respektive tjänstekontrakt</span>
+    <span ng-show="linkLogicalAddressChoice === 'individualForContract'">Välj RIVTA-profil och URL för respektive tjänstekontrakt</span>
+    <span ng-show="linkLogicalAddressChoice === 'individualForContract'">Välj RIVTA-profil, URL och logiska adresser för respektive tjänstekontrakt</span>
   </h3>
 
   <div ng-repeat="contract in connectServiceProducerRequest.serviceContracts">
@@ -345,7 +364,7 @@
       <div class="row">
 
         <div class="col-md-3">
-          <label for="rivtaVersion">Rivta version</label>
+          <label for="rivtaVersion">RIVTA-profil</label>
           <select id="rivtaVersion" class="form-control" ng-model="contract.rivtaVersion" ng-options="rivtaVersion.name for rivtaVersion in rivtaVersions | orderBy:'name':true" ng-init="contract.rivtaVersion = (rivtaVersions | orderBy:'name':true)[0]"></select>
         </div>
 
