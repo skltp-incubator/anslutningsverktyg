@@ -11,7 +11,7 @@
 angular.module('avApp')
   .controller('ConnectServiceProducerCtrl', ['$rootScope', '$scope', '$log', 'ServiceDomain', 'ServiceContract', 'ServiceComponent', 'environments', 'rivtaVersions', 'LogicalAddress', 'ServiceProducerConnectionOrder', 'configuration',
     function ($rootScope, $scope, $log, ServiceDomain, ServiceContract, ServiceComponent, environments, rivtaVersions, LogicalAddress, ServiceProducerConnectionOrder, configuration) {
-      $scope.environments = environments;
+      $scope.targetEnvironments = environments;
       $scope.rivtaVersions = rivtaVersions;
       console.log($scope.rivtaVersions);
 
@@ -21,7 +21,7 @@ angular.module('avApp')
 
       $scope.connectServiceProducerRequest = {
         serviceComponent: {},
-        environment: {},
+        targetEnvironment: {},
         serviceDomain: {},
         serviceContracts: [],
         serviceConsumer: {},
@@ -42,7 +42,7 @@ angular.module('avApp')
 
       $scope.serviceDomains = [];
 
-      $scope.selectedEnvironment = {};
+      $scope.selectedTargetEnvironment = {};
       $scope.selectedServiceDomain = {};
 
       $scope.selectedLogicalAddress = {};
@@ -129,10 +129,10 @@ angular.module('avApp')
         }
       });
 
-      $scope.environmentSelected = function () {
-        if ($scope.selectedEnvironment && $scope.connectServiceProducerRequest.serviceComponent) {
+      $scope.targetEnvironmentSelected = function () {
+        if ($scope.selectedTargetEnvironment && $scope.connectServiceProducerRequest.serviceComponent) {
           resetContracts();
-          $scope.connectServiceProducerRequest.environment = $scope.selectedEnvironment;
+          $scope.connectServiceProducerRequest.targetEnvironment = $scope.selectedTargetEnvironment;
           ServiceDomain.listDomains().then(function (domains) {
             $scope.serviceDomains = domains;
           });
@@ -140,10 +140,10 @@ angular.module('avApp')
       };
 
       $scope.serviceDomainSelected = function () {
-        if ($scope.selectedEnvironment && $scope.connectServiceProducerRequest.serviceComponent && $scope.selectedServiceDomain) {
+        if ($scope.selectedTargetEnvironment && $scope.connectServiceProducerRequest.serviceComponent && $scope.selectedServiceDomain) {
           resetContracts();
           var serviceComponentId = $scope.connectServiceProducerRequest.serviceComponent.hsaId;
-          var environmentId = $scope.selectedEnvironment.id;
+          var environmentId = $scope.selectedTargetEnvironment.id;
           var serviceDomainId = $scope.selectedServiceDomain.tjansteDomanId;
           $scope.connectServiceProducerRequest.serviceDomain = $scope.selectedServiceDomain;
           ServiceContract.listContracts(serviceComponentId, environmentId, serviceDomainId).then(function (contracts) {
@@ -361,12 +361,12 @@ angular.module('avApp')
       };
 
       var reset = function () {
-        $scope.selectedEnvironment = {};
+        $scope.selectedTargetEnvironment = {};
         $scope.selectedServiceDomain = {};
         $scope.selectedLogicalAddress = {};
         $scope.connectServiceProducerRequest = {
           serviceComponent: {},
-          environment: {},
+          targetEnvironment: {},
           serviceDomain: {},
           serviceContracts: [],
           serviceConsumer: {},
