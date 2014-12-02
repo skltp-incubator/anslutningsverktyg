@@ -175,7 +175,13 @@ angular.module('avApp')
                 return this.majorVersion + '.' + this.minorVersion;
               };
               contractData.getName = function() {
-                return this.namn + (!this.installedInEnvironment ? ' (ej ansluten)' : '');
+                var statusText = '';
+                if (!this.installedInEnvironment) {
+                  statusText = ' (ej installerat)';
+                } else if (!this.installedForProducerHsaId) {
+                  statusText = ' (ej ansluten)';
+                }
+                return this.namn + statusText;
               };
             });
           });
@@ -275,7 +281,7 @@ angular.module('avApp')
 
       var checkNotInstalledAndUpdate = function(gridApi, row) {
         var serviceContract = row.entity;
-        if (!serviceContract.installedInEnvironment) {
+        if (!serviceContract.installedInEnvironment || !serviceContract.installedForProducerHsaId) {
           gridApi.selection.unSelectRow(serviceContract);
         } else {
           row.isSelected ? addSelectedServiceContract(serviceContract) : removeSelectedServiceContract(serviceContract);
