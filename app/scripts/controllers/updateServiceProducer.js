@@ -108,12 +108,6 @@ angular.module('avApp')
         });
       };
 
-      $scope.requestForCallPermissionClicked = function() {
-        //Reset stuff
-        $scope.selectedServiceConsumer = {};
-        $scope.updateServiceProducerRequest.serviceConsumer = {};
-      };
-
       $scope.$watch('linkLogicalAddressChoice', function() {
         resetLogicalAddressesForServiceContracts();
         _updateConnectedLogicalAddresses();

@@ -221,7 +221,7 @@
         <div class="col-md-4">
           <div class="row">
             <div class="form-group">
-              <label>Lägg till ny logisk address</label>
+              <label>Sök efter HSA-ID</label>
               <ui-select  ng-model="selectedLogicalAddress.selected" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'" theme="bootstrap"
                           reset-search-input="true">
                 <ui-select-match placeholder="Namn - HSA ID">{{$select.selected.namn}} - {{$select.selected.hsaId}}</ui-select-match>
@@ -248,15 +248,16 @@
             </div>
           </div>
 
-          <div class="row">
-            <div class="form-group">
-              <label for="selectExistingLogicalAddresses">Välj från befintliga logiska adresser</label>
-              <select multiple ng-multiple="true" ng-model="selectedExistingLogicalAddresses" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'"
-                      ng-options="logicalAddress.namn +' - '+logicalAddress.hsaId for logicalAddress in existingLogicalAddresses"
-                      class="form-control" id="selectExistingLogicalAddresses">
-              </select>
-            </div>
-          </div>
+          <!-- befintliga logiska adresser bortkommenterade tills vidare -->
+          <!--<div class="row">-->
+            <!--<div class="form-group">-->
+              <!--<label for="selectExistingLogicalAddresses">Välj från befintliga logiska adresser</label>-->
+              <!--<select multiple ng-multiple="true" ng-model="selectedExistingLogicalAddresses" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'"-->
+                      <!--ng-options="logicalAddress.namn +' - '+logicalAddress.hsaId for logicalAddress in existingLogicalAddresses"-->
+                      <!--class="form-control" id="selectExistingLogicalAddresses">-->
+              <!--</select>-->
+            <!--</div>-->
+          <!--</div>-->
 
         </div>
 
@@ -284,30 +285,27 @@
             </div>
 
           </div>
+          <!-- befintliga logiska adresser bortkommenterade tills vidare -->
+          <!--<div class="row">-->
+            <!--<div class="form-group top75">-->
+              <!--<div class="btn-group">-->
+                <!--<button type="button" class="btn btn-default" ng-click="addLogicalAddressesToAllServiceContracts(selectedExistingLogicalAddresses)" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'">-->
+                  <!--<label>Valda</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>-->
+                <!--</button>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
 
-          <div class="row">
+          <!--<div class="row">-->
+            <!--<div class="form-group top17">-->
+              <!--<div class="btn-group">-->
+                <!--<button type="button" class="btn btn-default" ng-click="addLogicalAddressesToAllServiceContracts(existingLogicalAddresses)" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'">-->
+                  <!--<label>Alla</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>-->
+                <!--</button>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
 
-            <div class="form-group top75">
-              <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-click="addLogicalAddressesToAllServiceContracts(selectedExistingLogicalAddresses)" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'">
-                  <label>Valda</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="row">
-
-            <div class="form-group top17">
-              <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-click="addLogicalAddressesToAllServiceContracts(existingLogicalAddresses)" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'">
-                  <label>Alla</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
-                </button>
-              </div>
-            </div>
-
-          </div>
         </div>
 
         <div class="form-group col-md-5">
@@ -361,7 +359,7 @@
 
 
   <h3 ng-show="updateServiceProducerRequest.serviceComponent && updateServiceProducerRequest.serviceContracts.length">
-    <span ng-show="linkLogicalAddressChoice === 'individualForContract'">Välj RIVTA-profil och URL för respektive tjänstekontrakt</span>
+    <span ng-show="linkLogicalAddressChoice === 'sameForAllContracts'">Välj RIVTA-profil och URL för respektive tjänstekontrakt</span>
     <span ng-show="linkLogicalAddressChoice === 'individualForContract'">Välj RIVTA-profil, URL och logiska adresser för respektive tjänstekontrakt</span>
   </h3>
 
@@ -389,7 +387,7 @@
           <div class="col-md-4">
             <div class="row">
               <div class="form-group">
-                <label>Lägg till ny logisk address</label>
+                <label>Sök efter HSA-ID</label>
                 <ui-select ng-model="$parent.selectedLogicalAddress" theme="bootstrap"
                            reset-search-input="true">
                   <ui-select-match placeholder="Namn - HSA ID">{{$select.selected.namn}} - {{$select.selected.hsaId}}</ui-select-match>
@@ -416,16 +414,16 @@
                        placeholder="Namn">
               </div>
             </div>
-
-            <div class="row">
-              <div class="form-group">
-                <label for="selectExistingLogicalAddresses-{{$index}}">Välj från befintliga logiska adresser</label>
-                <select multiple ng-multiple="true" ng-model="selectedExistingLogicalAddresses"
-                        ng-options="logicalAddress.namn +' - '+logicalAddress.hsaId for logicalAddress in existingLogicalAddresses"
-                        class="form-control" id="selectExistingLogicalAddresses-{{$index}}">
-                </select>
-              </div>
-            </div>
+            <!-- befintliga logiska adresser bortkommenterade tills vidare -->
+            <!--<div class="row">-->
+              <!--<div class="form-group">-->
+                <!--<label for="selectExistingLogicalAddresses-{{$index}}">Välj från befintliga logiska adresser</label>-->
+                <!--<select multiple ng-multiple="true" ng-model="selectedExistingLogicalAddresses"-->
+                        <!--ng-options="logicalAddress.namn +' - '+logicalAddress.hsaId for logicalAddress in existingLogicalAddresses"-->
+                        <!--class="form-control" id="selectExistingLogicalAddresses-{{$index}}">-->
+                <!--</select>-->
+              <!--</div>-->
+            <!--</div>-->
 
           </div>
 
@@ -450,30 +448,27 @@
               </div>
             </div>
 
+            <!-- befintliga logiska adresser bortkommenterade tills vidare -->
+            <!--<div class="row">-->
+              <!--<div class="form-group top75">-->
+                <!--<div class="btn-group">-->
+                  <!--<button type="button" class="btn btn-default" ng-click="addLogicalAddressesToServiceContract(this.selectedExistingLogicalAddresses, contract)">-->
+                    <!--<label>Valda</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>-->
+                  <!--</button>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
 
-            <div class="row">
+            <!--<div class="row">-->
+              <!--<div class="form-group top17">-->
+                <!--<div class="btn-group">-->
+                  <!--<button type="button" class="btn btn-default" ng-click="addLogicalAddressesToServiceContract(existingLogicalAddresses, contract)">-->
+                    <!--<label>Alla</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>-->
+                  <!--</button>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
 
-              <div class="form-group top75">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default" ng-click="addLogicalAddressesToServiceContract(this.selectedExistingLogicalAddresses, contract)">
-                    <label>Valda</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
-                  </button>
-                </div>
-              </div>
-
-            </div>
-
-            <div class="row">
-
-              <div class="form-group top17">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default" ng-click="addLogicalAddressesToServiceContract(existingLogicalAddresses, contract)">
-                    <label>Alla</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
-                  </button>
-                </div>
-              </div>
-
-            </div>
           </div>
 
           <div class="form-group col-md-5">
@@ -523,80 +518,11 @@
     </div>
   </div>
 
-  <div
-    ng-show="updateServiceProducerRequest.serviceComponent && updateServiceProducerRequest.serviceContracts.length">
-    <h2>Lägg till anropsbehörighet för tjänstekonsument</h2>
-
-    <div class="jumbotron">
-      <p>För att anslutningen ska fungera mellan tjänstekonsument och tjänsteproducent måste även tjänstekonsumenten vara ansluten till tjänstekontraten, samt ha anropsbehörighet till de logiska adresserna.
-        Om tjänstekonsumenten redan är ansluten till kontrakten kan du i detta flöde även begära anropsbehörighet för tjänstekonsumenten till de logiska adresserna du angivit för respektive tjänstekontrakt.</p>
-
-      <div class="row">
-        <div class="col-md-12">
-
-          <div class="radio">
-            <label>
-              <input ng-model="requestForCallPermissionInSeparateOrder" ng-value="true" type="radio" name="callPermissionRadios"
-                     id="callPermissionRadios1" ng-change="requestForCallPermissionClicked()">
-              Anropsbehörighet kommer begäras via en konsumentanslutningsbeställning
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input ng-model="requestForCallPermissionInSeparateOrder" ng-value="false" type="radio" name="callPermissionRadios" id="callPermissionRadios2">
-              Anropsbehörighet ska begäras i samband med denna beställning
-            </label>
-          </div>
-        </div>
-
-      </div>
-      <div class="row" ng-show="!requestForCallPermissionInSeparateOrder ">
-        <div class="col-md-4">
-          <ui-select ng-model="selectedServiceConsumer.selected" theme="bootstrap" reset-search-input="true" on-select="onSelectServiceConsumer($item, $model)">
-            <ui-select-match placeholder="Välj tjänstekonsument">{{$select.selected.namn}} -
-              {{$select.selected.hsaId}}
-            </ui-select-match>
-            <ui-select-choices
-              repeat="serviceConsumer in filteredServiceConsumers | filter: $select.search"
-              refresh="filterServiceConsumers($select.search)"
-              refresh-delay="200"
-              >
-              <div
-                ng-bind-html="(serviceConsumer.namn + ' - ' + serviceConsumer.hsaId) | highlight: $select.search"></div>
-            </ui-select-choices>
-          </ui-select>
-        </div>
-      </div>
-      <p ng-show="!requestForCallPermissionInSeparateOrder">Denna tjänstekonsument ska få anropsbehörighet för valda tjänstekontrakt på de valda logiska adresser.</p>
-
-    </div>
-
-  </div>
-
   <div ng-show="updateServiceProducerRequest.serviceComponent && updateServiceProducerRequest.serviceContracts.length" >
     <h2>Övrigt</h2>
 
     <div class="jumbotron">
-      <h3>Är tjänstedomänens SLA uppfyllt?</h3>
-
-      <div class="row">
-        <div class="col-md-12">
-
-          <div class="radio">
-            <label>
-              <input ng-model="updateServiceProducerRequest.slaFullfilled" ng-value="true" type="radio" name="slaFullfilledRadios"
-                     id="slaFullFilledRadios1">
-              Ja
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input ng-model="updateServiceProducerRequest.slaFullfilled" ng-value="false" type="radio" name="slaFullfilledRadios" id="slaFullFilledRadios2">
-              Nej
-            </label>
-          </div>
-        </div>
-      </div>
+      <!--<h3>Beställare</h3>-->
 
       <div class="row">
         <div class="col-md-12">
@@ -611,27 +537,29 @@
       <div class="row">
         <div class="col-md-12">
           <h4>Beställare</h4>
-
           <form class="form-horizontal" role="form">
             <div class="form-group">
-              <label for="bestallareNamn" class="col-md-2 control-label">Namn</label>
-
+              <label for="bestallareNamn" class="col-md-2 control-label">För- och efternamn</label>
               <div class="col-md-6">
-                <input ng-model="updateServiceProducerRequest.client.name" ng-required="true" type="text" class="form-control" id="bestallareNamn" placeholder="namn">
+                <input ng-model="updateServiceProducerRequest.client.name" ng-required="true" type="text" class="form-control" id="bestallareNamn" placeholder="För- och efternamn">
               </div>
             </div>
             <div class="form-group">
-              <label for="bestallareEmail" class="col-sm-2 control-label">Mail</label>
-
+              <label for="bestallareEmail" class="col-sm-2 control-label">E-postadress</label>
               <div class="col-md-6">
-                <input ng-model="updateServiceProducerRequest.client.email" type="email" class="form-control" id="bestallareEmail" placeholder="email">
+                <input ng-model="updateServiceProducerRequest.client.email" type="email" class="form-control" id="bestallareEmail" placeholder="E-postadress">
               </div>
             </div>
             <div class="form-group">
               <label for="bestallareTelefon" class="col-sm-2 control-label">Telefon</label>
-
               <div class="col-md-6">
-                <input ng-model="updateServiceProducerRequest.client.phone" type="text" class="form-control" id="bestallareTelefon" placeholder="telefon">
+                <input ng-model="updateServiceProducerRequest.client.phone" type="text" class="form-control" id="bestallareTelefon" placeholder="Telefon">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="bestallareRoll" class="col-sm-2 control-label">Roll</label>
+              <div class="col-md-6">
+                <input ng-model="updateServiceProducerRequest.client.role" type="text" class="form-control" id="bestallareRoll" placeholder="Roll">
               </div>
             </div>
           </form>
