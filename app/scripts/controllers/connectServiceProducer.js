@@ -9,8 +9,8 @@
  */
 
 angular.module('avApp')
-  .controller('ConnectServiceProducerCtrl', ['$rootScope', '$scope', '$log', 'ServiceDomain', 'ServiceContract', 'ServiceComponent', 'environments', 'rivtaVersions', 'LogicalAddress', 'ServiceProducerConnectionOrder', 'configuration', '$state',
-    function ($rootScope, $scope, $log, ServiceDomain, ServiceContract, ServiceComponent, environments, rivtaVersions, LogicalAddress, ServiceProducerConnectionOrder, configuration, $state) {
+  .controller('ConnectServiceProducerCtrl', ['$rootScope', '$scope', '$log', 'ServiceDomain', 'ServiceContract', 'ServiceComponent', 'environments', 'rivtaVersions', 'LogicalAddress', 'Order', 'configuration', '$state',
+    function ($rootScope, $scope, $log, ServiceDomain, ServiceContract, ServiceComponent, environments, rivtaVersions, LogicalAddress, Order, configuration, $state) {
       $scope.targetEnvironments = environments;
       $scope.rivtaVersions = rivtaVersions;
       console.log($scope.rivtaVersions);
@@ -64,7 +64,7 @@ angular.module('avApp')
           {name: 'Namn', field: 'getName()'},
           {name: 'version', field: 'getVersion()'}
         ],
-        rowTemplate: 'templates/grid-row.html'
+        rowTemplate: 'templates/ui-grid/connect-service-producer-grid-row.html'
       };
 
       $scope.filterServiceComponents = function (query) {
@@ -283,7 +283,7 @@ angular.module('avApp')
 
 
       $scope.sendServiceProducerConnectionOrder = function() {
-          ServiceProducerConnectionOrder.createOrder($scope.connectServiceProducerRequest).then(function(status) {
+          Order.createServiceProducerConnectionOrder($scope.connectServiceProducerRequest).then(function(status) {
             console.log('Status: ' + status);
             if(status === 201) {
               console.log("Going to state");

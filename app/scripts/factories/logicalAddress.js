@@ -36,6 +36,18 @@ angular.module('avApp')
           });
         }
         return deferred.promise;
+      },
+      getConnectedLogicalAddresses: function(serviceComponentId, environmentId, serviceContractIds) {
+        var deferred = $q.defer();
+        console.log('getConnectedLogicalAddresses: serviceComponentId[' + serviceComponentId + '], environmentId[' + environmentId + '], serviceContractIds[' + serviceContractIds + ']');
+        deferred.resolve([
+          {
+            namn: 'befintlig 1',
+            hsaId: 'hsaIdBef1'
+          }
+        ]);
+
+        return deferred.promise;
       }
     };
   }]);
