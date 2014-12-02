@@ -42,7 +42,7 @@ angular.module('avApp')
         console.log('getConnectedLogicalAddresses: serviceComponentId[' + serviceComponentId + '], environmentId[' + environmentId + '], serviceContractIds[' + serviceContractIds + ']');
         deferred.resolve([
           {
-            name: 'befintlig 1',
+            namn: 'befintlig 1',
             hsaId: 'hsaIdBef1'
           }
         ]);

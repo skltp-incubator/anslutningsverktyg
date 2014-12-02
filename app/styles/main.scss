@@ -184,6 +184,14 @@ body {
 }
 
 .table.logical-addresses {
+  tr {
+    &.new {
+      background-color: rgb(144, 238, 144);
+    }
+    &.existing {
+      background-color: rgb(173, 216, 230);
+    }
+  }
   td {
     padding-top: 2px;
     padding-bottom: 2px;

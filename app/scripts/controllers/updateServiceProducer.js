@@ -10,7 +10,7 @@ angular.module('avApp')
 
       $scope.showDevStuff = configuration.devDebug;
 
-      $scope.connectServiceProducerRequest = {
+      $scope.updateServiceProducerRequest = {
         serviceComponent: {},
         environment: {},
         serviceDomain: {},
@@ -42,7 +42,6 @@ angular.module('avApp')
       $scope.existingLogicalAddresses = [];
       $scope.selectedExistingLogicalAddresses = [];
       $scope.selectedServiceContracts = [];
-      $scope.logicalAddressesForAllServiceContracts = [];
 
       $scope.linkLogicalAddressChoice = 'sameForAllContracts';
 
@@ -79,6 +78,14 @@ angular.module('avApp')
         });
       };
 
+      $scope.getRemovedLogicalAddressesForContract = function(serviceContract) {
+        if (!$scope.removedLogicalAddressesPerContract[_getServiceContractIdentifierString(serviceContract)]) {
+          return [];
+        } else {
+          return $scope.removedLogicalAddressesPerContract[_getServiceContractIdentifierString(serviceContract)];
+        }
+      };
+
       $scope.$watch('newComponent', function() {
         resetServiceComponent();
       });
@@ -86,11 +93,8 @@ angular.module('avApp')
       $scope.$watch('selectedServiceComponent.selected', function (newValue) {
           if (newValue) {
             reset();
-            console.log('new service component selected:');
-            console.log(newValue);
             ServiceComponent.getServiceComponent(newValue.hsaId).then(function (result) {
-              console.log(result);
-              $scope.connectServiceProducerRequest.serviceComponent = result;
+              $scope.updateServiceProducerRequest.serviceComponent = result;
             });
           } else {
             reset();
@@ -100,33 +104,63 @@ angular.module('avApp')
 
       $scope.onSelectServiceConsumer = function(item, model) {
         ServiceComponent.getServiceComponent(item.hsaId).then(function (result) {
-          $scope.connectServiceProducerRequest.serviceConsumer = result;
+          $scope.updateServiceProducerRequest.serviceConsumer = result;
         });
-      };
-
-      $scope.enableNewServiceProducer = function() {
-
       };
 
       $scope.requestForCallPermissionClicked = function() {
         //Reset stuff
         $scope.selectedServiceConsumer = {};
-        $scope.connectServiceProducerRequest.serviceConsumer = {};
+        $scope.updateServiceProducerRequest.serviceConsumer = {};
       };
 
-      $scope.$watch('linkLogicalAddressChoice', function(newValue) {
+      $scope.$watch('linkLogicalAddressChoice', function() {
         resetLogicalAddressesForServiceContracts();
-        if(newValue === 'sourceSystemBased') {
-          var logicalAddress = $scope.connectServiceProducerRequest.serviceComponent;
-          $scope.logicalAddresses.push(logicalAddress);
-          _addLogicalAddressToAllServiceContracts(logicalAddress);
-        }
+        _updateConnectedLogicalAddresses();
       });
 
+      $scope.$watchCollection('selectedServiceContracts', function () {
+        _updateConnectedLogicalAddresses();
+      });
+
+      var _updateConnectedLogicalAddresses = function() {
+        var serviceComponentHsaId = $scope.updateServiceProducerRequest.serviceComponent.hsaId;
+        var environmentId = $scope.updateServiceProducerRequest.environment.id;
+        if ($scope.linkLogicalAddressChoice === 'sameForAllContracts') {
+          var serviceContractIds = _.map($scope.selectedServiceContracts, function (serviceContract) {
+            return _getServiceContractIdentifierString(serviceContract);
+          });
+          LogicalAddress.getConnectedLogicalAddresses(serviceComponentHsaId, environmentId, serviceContractIds).then(function (connectedLogicalAddresses) {
+            _.each(connectedLogicalAddresses, function (logicalAddress) {
+              logicalAddress.existing = true;
+              var where = {hsaId: logicalAddress.hsaId};
+              if (!_.find($scope.logicalAddresses, where)) {
+                $scope.logicalAddresses.push(logicalAddress); //$scope.logicalAddresses is used to display the logical addresses in the tags-input
+              }
+              _addLogicalAddressToAllServiceContracts(logicalAddress);
+            });
+          });
+        } else {
+          _.each($scope.updateServiceProducerRequest.serviceContracts, function(serviceContract) {
+            var serviceContractIdentifierString = _getServiceContractIdentifierString(serviceContract);
+            var serviceContractIds = [serviceContractIdentifierString];
+            LogicalAddress.getConnectedLogicalAddresses(serviceComponentHsaId, environmentId, serviceContractIds).then(function (connectedLogicalAddresses) {
+              _.each(connectedLogicalAddresses, function (logicalAddress) {
+                var where = {hsaId: logicalAddress.hsaId};
+                if (!_.find(serviceContract.removedLogicalAddresses, where)) {
+                  logicalAddress.existing = true;
+                  _addLogicalAddressToServiceContract(logicalAddress, serviceContract);
+                }
+              });
+            });
+          });
+        }
+      };
+
       $scope.environmentSelected = function () {
-        if ($scope.selectedEnvironment && $scope.connectServiceProducerRequest.serviceComponent) {
+        if ($scope.selectedEnvironment && $scope.updateServiceProducerRequest.serviceComponent) {
           resetContracts();
-          $scope.connectServiceProducerRequest.environment = $scope.selectedEnvironment;
+          $scope.updateServiceProducerRequest.environment = $scope.selectedEnvironment;
           ServiceDomain.listDomains().then(function (domains) {
             $scope.serviceDomains = domains;
           });
@@ -134,12 +168,12 @@ angular.module('avApp')
       };
 
       $scope.serviceDomainSelected = function () {
-        if ($scope.selectedEnvironment && $scope.connectServiceProducerRequest.serviceComponent && $scope.selectedServiceDomain) {
+        if ($scope.selectedEnvironment && $scope.updateServiceProducerRequest.serviceComponent && $scope.selectedServiceDomain) {
           resetContracts();
-          var serviceComponentId = $scope.connectServiceProducerRequest.serviceComponent.hsaId;
+          var serviceComponentId = $scope.updateServiceProducerRequest.serviceComponent.hsaId;
           var environmentId = $scope.selectedEnvironment.id;
           var serviceDomainId = $scope.selectedServiceDomain.tjansteDomanId;
-          $scope.connectServiceProducerRequest.serviceDomain = $scope.selectedServiceDomain;
+          $scope.updateServiceProducerRequest.serviceDomain = $scope.selectedServiceDomain;
           ServiceContract.listContracts(serviceComponentId, environmentId, serviceDomainId).then(function (contracts) {
             $scope.gridOptions.data = contracts;
             _.each($scope.gridOptions.data, function(contractData) { //ui-grid doesn't seem to support composite field values in any other way
@@ -153,7 +187,6 @@ angular.module('avApp')
           });
           LogicalAddress.getLogicalAddressesForEnvironmentAndServiceDomain(environmentId, serviceDomainId).then(function(logicalAddresses) {
             $scope.existingLogicalAddresses = logicalAddresses;
-            console.log(logicalAddresses);
           });
 
         }
@@ -162,140 +195,72 @@ angular.module('avApp')
       $scope.filterLogicalAddresses = function (logicalAddressQuery) {
         LogicalAddress.getFilteredLogicalAddresses(logicalAddressQuery).then(function (logicalAddresses) {
             $scope.filteredLogicalAddresses = logicalAddresses;
-            console.log(logicalAddresses);
-
           }
         );
       };
 
-      $scope.addFilteredLogicalAddressToAllServiceContracts = function () {
-        var logicalAddress = $scope.selectedLogicalAddress.selected;
+      /**
+       *  use this one!
+       * @param logicalAddress
+       */
+      $scope.addLogicalAddressToAllServiceContracts = function(logicalAddress) {
         var where = {hsaId: logicalAddress.hsaId};
         if (!_.find($scope.logicalAddresses, where)) {
-          $scope.logicalAddresses.push(logicalAddress); //$scope.logicalAddresses is used to display the logical addresses in the tags-input
-        } else {
-          $log.log('Can\'t add a tag twice');
+          $scope.logicalAddresses.push(logicalAddress);
         }
-        console.log('adding logical address to all service contracts');
         _addLogicalAddressToAllServiceContracts(logicalAddress);
       };
 
-      $scope.addFilteredLogicalAddressToServiceContract = function (ngRepeatScope, serviceContract) {
-        var logicalAddress = ngRepeatScope.selectedLogicalAddress;
-        _addLogicalAddressToServiceContract(logicalAddress, serviceContract);
-      };
-
-      $scope.addSelectedExistingLogicalAddressesToAllServiceContracts = function() {
-        _.each($scope.selectedExistingLogicalAddresses, function(logicalAddress) {
-          if (!_.find($scope.logicalAddresses, {hsaId: logicalAddress.hsaId})) {
-            $scope.logicalAddresses.push(logicalAddress); //$scope.logicalAddresses is used to display the logical addresses in the tags-input
-          } else {
-            $log.log('Can\'t add a tag twice');
+      /**
+       * use this one!
+       * @param logicalAddresses
+       */
+      $scope.addLogicalAddressesToAllServiceContracts = function(logicalAddresses) {
+        _.each(logicalAddresses, function(logicalAddress) {
+          var where = {hsaId: logicalAddress.hsaId};
+          if (!_.find($scope.logicalAddresses, where)) {
+            $scope.logicalAddresses.push(logicalAddress);
           }
           _addLogicalAddressToAllServiceContracts(logicalAddress);
         });
       };
 
-      $scope.addNewLogicalAddressForAllServiceContracts = function() {
-        var logicalAddress = {
-          hsaId: $scope.newLogicalAddressHSAID,
-          namn: $scope.newLogicalAddressName
-        };
-
-        if (!_.find($scope.logicalAddresses, {hsaId: logicalAddress.hsaId})) {
-          $scope.logicalAddresses.push(logicalAddress);
-          _addLogicalAddressToAllServiceContracts(logicalAddress);
-        } else {
-          //TODO we should definitely validate here and give some useful response to the user
-          $log.log('Can\'t add a tag twice');
-        }
-
-        //Reset the input fields again
-        $scope.newLogicalAddressHSAID = null;
-        $scope.newLogicalAddressName = null;
-
-      };
-
-      $scope.addNewLogicalAddressToServiceContract = function(ngRepeatScope, serviceContract) {
-        var logicalAddress = {
-          hsaId: ngRepeatScope.newLogicalAddressHSAID,
-          namn: ngRepeatScope.newLogicalAddressName
-        };
-
+      /**
+       * use this one!
+       * @param logicalAddress
+       * @param serviceContract
+       */
+      $scope.addLogicalAddressToServiceContract = function(logicalAddress, serviceContract) {
         _addLogicalAddressToServiceContract(logicalAddress, serviceContract);
-
-        //Reset the input fields again
-        ngRepeatScope.newLogicalAddressHSAID = null;
-        ngRepeatScope.newLogicalAddressName = null;
-
       };
 
-      $scope.addSelectedExistingLogicalAddressesToServiceContract = function(ngRepeatScope, serviceContract) {
-        _.each(ngRepeatScope.selectedExistingLogicalAddresses, function(logicalAddress) {
+      /**
+       * use this one!
+       * @param logicalAddresses
+       * @param serviceContract
+       */
+      $scope.addLogicalAddressesToServiceContract = function(logicalAddresses, serviceContract) {
+        _.each(logicalAddresses, function(logicalAddress) {
           _addLogicalAddressToServiceContract(logicalAddress, serviceContract);
         });
       };
 
-      $scope.addAllExistingLogicalAddressesToAllServiceContracts = function() {
-        _.each($scope.existingLogicalAddresses, function(logicalAddress) {
-          if (!_.find($scope.logicalAddresses, {hsaId: logicalAddress.hsaId})) {
-            $scope.logicalAddresses.push(logicalAddress); //$scope.logicalAddresses is used to display the logical addresses in the tags-input
-          } else {
-            $log.log('Can\'t add a tag twice');
-          }
-          _addLogicalAddressToAllServiceContracts(logicalAddress);
-        });
-      };
-
-      $scope.addAllExistingLogicalAddressesToServiceContract = function(serviceContract) {
-        _.each($scope.existingLogicalAddresses, function(logicalAddress) {
-          _addLogicalAddressToServiceContract(logicalAddress, serviceContract);
-        });
-      };
-
-      $scope.removeLogicalAddressFromAllServiceContracts = function(tag) {
-        var logicalAddressId = tag.hsaId;
-        _.remove($scope.logicalAddresses, {hsaId: logicalAddressId});
-        console.log(tag);
-        _.forEach($scope.connectServiceProducerRequest.serviceContracts, function(serviceContract) {
-          if (angular.isDefined(serviceContract.logicalAddresses)) {
-            _.remove(serviceContract.logicalAddresses, {hsaId: logicalAddressId});
-            //_addLogicalAddressToRemovedList(tag, serviceContract);
-          }
-        });
-        _addLogicalAddressToRemovedList(tag);
-      };
-
-      var _addLogicalAddressToRemovedList = function(logicalAddress, serviceContract) {
-        console.log('_addLogicalAddressToRemovedList');
-        console.log(logicalAddress);
-        console.log(serviceContract);
-        if (serviceContract) {
-          if (!angular.isDefined($scope.removedLogicalAddressesPerContract[serviceContract.namn])) { //TODO: fix id
-            $scope.removedLogicalAddressesPerContract[serviceContract.namn] = []; //TODO: fix id
-          }
-          if (!_.find($scope.removedLogicalAddressesPerContract[serviceContract.namn], {hsaId: logicalAddress.hsaId})) {
-            $scope.removedLogicalAddressesPerContract[serviceContract.namn].push(logicalAddress); //TODO: fix contract id
-          }
-        } else {
-          if (!_.find($scope.removedLogicalAddressesForAllContracts, {hsaId: logicalAddress.hsaId})) {
-            $scope.removedLogicalAddressesForAllContracts.push(logicalAddress);
-          }
+      $scope.removeLogicalAddressFromAllServiceContracts = function(logicalAddress) {
+        _removeLogicalAddressFromAllServiceContracts(logicalAddress);
+        _.remove($scope.logicalAddresses, {hsaId: logicalAddress.hsaId});
+        if (logicalAddress.existing) {
+          _addLogicalAddressToGlobalRemovedList(logicalAddress);
         }
       };
 
-      $scope.removeLogicalAddressFromServiceContract = function(tag, serviceContract) {
-        var logicalAddressId = tag.hsaId;
-        if (angular.isDefined(serviceContract.logicalAddresses)) {
-          _.remove(serviceContract.logicalAddresses, {hsaId: logicalAddressId});
-          _addLogicalAddressToRemovedList(tag, serviceContract);
-        }
+      $scope.removeLogicalAddressFromServiceContract = function(logicalAddress, serviceContract) {
+        _removeLogicalAddressFromServiceContract(logicalAddress, serviceContract);
       };
-
 
       $scope.sendServiceProducerConnectionOrder = function() {
-        ServiceProducerConnectionOrder.createOrder($scope.connectServiceProducerRequest);
+        ServiceProducerConnectionOrder.createOrder($scope.updateServiceProducerRequest);
       };
+
       /*
        Grid config
        */
@@ -324,29 +289,58 @@ angular.module('avApp')
       };
 
       var _addLogicalAddressToAllServiceContracts = function(logicalAddress) {
-        _.forEach($scope.connectServiceProducerRequest.serviceContracts, function (serviceContract) {
-          if (!angular.isDefined(serviceContract.logicalAddresses)) {
-            serviceContract.logicalAddresses = [];
-          }
-          if (!_.find(serviceContract.logicalAddresses, {hsaId: logicalAddress.hsaId})) {
-            serviceContract.logicalAddresses.push(logicalAddress);
-          } else {
-            $log.log('Can\'t add a tag twice');
-          }
-          if (!_.find($scope.logicalAddressesForAllServiceContracts, {hsaId: logicalAddress.hsaId})) {
-            $scope.logicalAddressesForAllServiceContracts.push(logicalAddress);
-          }
+        _.forEach($scope.updateServiceProducerRequest.serviceContracts, function (serviceContract) {
+          _addLogicalAddressToServiceContract(logicalAddress, serviceContract);
         });
       };
 
       var _addLogicalAddressToServiceContract = function(logicalAddress, serviceContract) {
-        if (!angular.isDefined(serviceContract.logicalAddresses)) {
-          serviceContract.logicalAddresses = [];
+        var clonedLogicalAddress = _.clone(logicalAddress);
+        if (clonedLogicalAddress.existing) { //add to logicalAddresses
+          if (!angular.isDefined(serviceContract.logicalAddresses)) {
+            serviceContract.logicalAddresses = [];
+          }
+          if (!_.find(serviceContract.logicalAddresses, {hsaId: clonedLogicalAddress.hsaId})) {
+            serviceContract.logicalAddresses.push(clonedLogicalAddress);
+          } else {
+            $log.log('Can\'t add logicalAddress twice');
+          }
+        } else { //add to newLogicalAddresses
+          if (!angular.isDefined(serviceContract.newLogicalAddresses)) {
+            serviceContract.newLogicalAddresses = [];
+          }
+          if (!_.find(serviceContract.newLogicalAddresses, {hsaId: clonedLogicalAddress.hsaId})) {
+            serviceContract.newLogicalAddresses.push(clonedLogicalAddress);
+          } else {
+            $log.log('Can\'t add logicalAddress twice');
+          }
         }
-        if (!_.find(serviceContract.logicalAddresses, {hsaId: logicalAddress.hsaId})) {
-          serviceContract.logicalAddresses.push(logicalAddress);
-        } else {
-          $log.log('Can\'t add a tag twice');
+      };
+
+      var _removeLogicalAddressFromAllServiceContracts = function(logicalAddress) {
+        _.each($scope.updateServiceProducerRequest.serviceContracts, function(serviceContract) {
+          _removeLogicalAddressFromServiceContract(logicalAddress, serviceContract);
+        });
+      };
+
+      var _removeLogicalAddressFromServiceContract = function(logicalAddress, serviceContract) {
+        var logicalAddressId = logicalAddress.hsaId;
+        if (angular.isDefined(serviceContract.newLogicalAddresses)) {
+          _.remove(serviceContract.newLogicalAddresses, {hsaId: logicalAddressId});
+        }
+        if (logicalAddress.existing) {
+          if (!angular.isDefined(serviceContract.removedLogicalAddresses)) {
+            serviceContract.removedLogicalAddresses = [];
+          }
+          if (!_.find(serviceContract.removedLogicalAddresses, {hsaId: logicalAddressId})) {
+            serviceContract.removedLogicalAddresses.push(logicalAddress);
+          }
+        }
+      };
+
+      var _addLogicalAddressToGlobalRemovedList = function (logicalAddress) {
+        if (!_.find($scope.removedLogicalAddressesForAllContracts, {hsaId: logicalAddress.hsaId})) {
+          $scope.removedLogicalAddressesForAllContracts.push(logicalAddress);
         }
       };
 
@@ -355,12 +349,15 @@ angular.module('avApp')
         if (!_.find($scope.selectedServiceContracts, serviceContractIdentifier)) {
           $scope.selectedServiceContracts.push(serviceContract);
           var newServiceContract = _getCleanServiceContract(serviceContract);
-          if ($scope.linkLogicalAddressChoice !== 'individualForContract' && $scope.logicalAddressesForAllServiceContracts) {
-            newServiceContract.logicalAddresses = _.map($scope.logicalAddressesForAllServiceContracts, function(logicalAddress) {
-              return _.clone(logicalAddress);
+          if ($scope.linkLogicalAddressChoice !== 'individualForContract' && $scope.logicalAddresses) {
+            newServiceContract.logicalAddresses = _.filter($scope.logicalAddresses, function(logicalAddress) {
+              return logicalAddress.existing ? _.clone(logicalAddress) : false;
+            });
+            newServiceContract.newLogicalAddresses = _.filter($scope.logicalAddresses, function(logicalAddress) {
+              return !logicalAddress.existing ? _.clone(logicalAddress) : false;
             });
           }
-          $scope.connectServiceProducerRequest.serviceContracts.push(newServiceContract);
+          $scope.updateServiceProducerRequest.serviceContracts.push(newServiceContract);
         }
       };
 
@@ -368,7 +365,7 @@ angular.module('avApp')
         var serviceContractIdentifier = _getServiceContractIdentifier(serviceContract);
         if (_.find($scope.selectedServiceContracts, serviceContractIdentifier)) {
           _.remove($scope.selectedServiceContracts, serviceContractIdentifier);
-          _.remove($scope.connectServiceProducerRequest.serviceContracts, serviceContractIdentifier);
+          _.remove($scope.updateServiceProducerRequest.serviceContracts, serviceContractIdentifier);
         }
       };
 
@@ -380,6 +377,12 @@ angular.module('avApp')
         };
       };
 
+      var _getServiceContractIdentifierString = function(serviceContract) {
+        return serviceContract.namnrymd + '_' +
+            serviceContract.majorVersion + '_' +
+            serviceContract.minorVersion;
+      };
+
       var _getCleanServiceContract = function(serviceContract) {
         return _.cloneDeep(serviceContract);
       };
@@ -388,7 +391,7 @@ angular.module('avApp')
         $scope.selectedEnvironment = {};
         $scope.selectedServiceDomain = {};
         $scope.selectedLogicalAddress = {};
-        $scope.connectServiceProducerRequest = {
+        $scope.updateServiceProducerRequest = {
           serviceComponent: {},
           environment: {},
           serviceDomain: {},
@@ -396,13 +399,12 @@ angular.module('avApp')
           serviceConsumer: {},
           slaFullfilled: false,
           otherInfo: '',
-          client: $scope.connectServiceProducerRequest.client //keep client info
+          client: $scope.updateServiceProducerRequest.client //keep client info
         };
         $scope.gridOptions.data = [];
         $scope.selectedExistingLogicalAddresses = [];
         $scope.selectedServiceContracts = [];
         $scope.linkLogicalAddressChoice = 'sameForAllContracts';
-        $scope.logicalAddressesForAllServiceContracts = [];
         $scope.selectedServiceConsumer = {};
         $scope.requestForCallPermissionInSeparateOrder = true;
         $scope.logicalAddresses = []; //So we don't get any logical address lingering in the tags input
@@ -411,24 +413,32 @@ angular.module('avApp')
 
       var resetServiceComponent = function() {
         delete $scope.selectedServiceComponent.selected;
-        $scope.connectServiceProducerRequest.serviceComponent = {};
+        $scope.updateServiceProducerRequest.serviceComponent = {};
       };
 
       var resetContracts = function() {
         $scope.gridOptions.data = [];
         $scope.selectedServiceContracts = [];
-        $scope.connectServiceProducerRequest.serviceContracts = [];
+        $scope.updateServiceProducerRequest.serviceContracts = [];
       };
 
       var resetLogicalAddressesForServiceContracts = function() {
         $log.info('resetLogicalAddressesForServiceContracts()');
-        _.forEach($scope.connectServiceProducerRequest.serviceContracts, function(serviceContract) {
+        _.forEach($scope.updateServiceProducerRequest.serviceContracts, function(serviceContract) {
           serviceContract.logicalAddresses = [];
+          serviceContract.newLogicalAddresses = [];
+          serviceContract.removedLogicalAddresses = [];
         });
         $scope.logicalAddresses = [];
-        $scope.logicalAddressesForAllServiceContracts = [];
         $scope.removedLogicalAddressesForAllContracts = [];
         $scope.removedLogicalAddressesPerContract = {};
+      };
+
+      //used as filter function
+      $scope.logicalAddressNotIn = function(logicalAddresses) {
+        return function(logicalAddress) {
+          return !_.find(logicalAddresses, {hsaId: logicalAddress.hsaId});
+        }
       };
     }
   ]
