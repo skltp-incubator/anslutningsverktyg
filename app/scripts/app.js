@@ -52,6 +52,10 @@ angular
           ]
         }
       })
+      .state('serviceProducerOrderConfirmed', {
+        url: '/connectServiceProducer/confirmed',
+        templateUrl: 'views/serviceProducer/confirmed.html'
+      })
       .state('updateServiceProducer', {
         url: '/updateServiceProducer',
         templateUrl: 'views/serviceProducer/update.html',

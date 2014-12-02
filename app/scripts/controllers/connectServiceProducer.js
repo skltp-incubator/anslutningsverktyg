@@ -9,8 +9,8 @@
  */
 
 angular.module('avApp')
-  .controller('ConnectServiceProducerCtrl', ['$rootScope', '$scope', '$log', 'ServiceDomain', 'ServiceContract', 'ServiceComponent', 'environments', 'rivtaVersions', 'LogicalAddress', 'ServiceProducerConnectionOrder', 'configuration',
-    function ($rootScope, $scope, $log, ServiceDomain, ServiceContract, ServiceComponent, environments, rivtaVersions, LogicalAddress, ServiceProducerConnectionOrder, configuration) {
+  .controller('ConnectServiceProducerCtrl', ['$rootScope', '$scope', '$log', 'ServiceDomain', 'ServiceContract', 'ServiceComponent', 'environments', 'rivtaVersions', 'LogicalAddress', 'ServiceProducerConnectionOrder', 'configuration', '$state',
+    function ($rootScope, $scope, $log, ServiceDomain, ServiceContract, ServiceComponent, environments, rivtaVersions, LogicalAddress, ServiceProducerConnectionOrder, configuration, $state) {
       $scope.targetEnvironments = environments;
       $scope.rivtaVersions = rivtaVersions;
       console.log($scope.rivtaVersions);
@@ -273,12 +273,17 @@ angular.module('avApp')
         if (angular.isDefined(serviceContract.logicalAddresses)) {
           _.remove(serviceContract.logicalAddresses, {hsaId: logicalAddressId});
         }
-
       };
 
 
       $scope.sendServiceProducerConnectionOrder = function() {
-          ServiceProducerConnectionOrder.createOrder($scope.connectServiceProducerRequest);
+          ServiceProducerConnectionOrder.createOrder($scope.connectServiceProducerRequest).then(function(status) {
+            console.log('Status: ' + status);
+            if(status === 201) {
+              console.log("Going to state");
+              $state.go('serviceProducerOrderConfirmed');
+            }
+          });
       };
       /*
        Grid config
