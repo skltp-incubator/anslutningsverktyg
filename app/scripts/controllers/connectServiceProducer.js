@@ -153,7 +153,13 @@ angular.module('avApp')
                 return this.majorVersion + '.' + this.minorVersion;
               };
               contractData.getName = function() {
-                return this.namn + (this.installedInEnvironment ? ' (redan installerat)' : '');
+                var statusText = '';
+                if (!this.installedInEnvironment) {
+                  statusText = ' (ej installerat)';
+                } else if (this.installedForProducerHsaId) {
+                  statusText = ' (redan ansluten)';
+                }
+                return this.namn + statusText;
               };
             });
           });
