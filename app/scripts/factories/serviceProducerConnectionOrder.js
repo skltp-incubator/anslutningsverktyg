@@ -1,9 +1,9 @@
 'use strict';
 angular.module('avApp')
-  .factory('ServiceProducerConnectionOrder', ['configuration', '$q', '$http',
+  .factory('Order', ['configuration', '$q', '$http',
     function (configuration, $q, $http) {
       return {
-        createOrder: function (order) {
+        createServiceProducerConnectionOrder: function (order) {
           var deferred = $q.defer();
           console.log(order);
           $http.post(configuration.apiHost + '/anslutningsplattform/api/serviceProducerConnectionOrders', order).success(function (data, status, headers) {
@@ -11,6 +11,12 @@ angular.module('avApp')
           }).error(function (data, status, headers) { //TODO: handle errors
             deferred.reject();
           });
+          return deferred.promise;
+        },
+        createServiceProducerConnectionUpdateOrder: function (order) {
+          var deferred = $q.defer();
+          console.log(order);
+          deferred.resolve(418);
           return deferred.promise;
         }
       };

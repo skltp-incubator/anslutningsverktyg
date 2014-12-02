@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('avApp')
-  .controller('UpdateServiceProducerCtrl', ['$rootScope', '$scope', '$log', 'ServiceDomain', 'ServiceContract', 'ServiceComponent', 'environments', 'rivtaVersions', 'LogicalAddress', 'ServiceProducerConnectionOrder', 'configuration',
-    function ($rootScope, $scope, $log, ServiceDomain, ServiceContract, ServiceComponent, environments, rivtaVersions, LogicalAddress, ServiceProducerConnectionOrder, configuration) {
+  .controller('UpdateServiceProducerCtrl', ['$rootScope', '$scope', '$log', 'ServiceDomain', 'ServiceContract', 'ServiceComponent', 'environments', 'rivtaVersions', 'LogicalAddress', 'Order', 'configuration',
+    function ($rootScope, $scope, $log, ServiceDomain, ServiceContract, ServiceComponent, environments, rivtaVersions, LogicalAddress, Order, configuration) {
       $scope.environments = environments;
       $scope.rivtaVersions = rivtaVersions;
 
@@ -257,8 +257,8 @@ angular.module('avApp')
         _removeLogicalAddressFromServiceContract(logicalAddress, serviceContract);
       };
 
-      $scope.sendServiceProducerConnectionOrder = function() {
-        ServiceProducerConnectionOrder.createOrder($scope.updateServiceProducerRequest);
+      $scope.sendOrder = function() {
+        Order.createServiceProducerConnectionUpdateOrder($scope.updateServiceProducerRequest);
       };
 
       /*
