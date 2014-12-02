@@ -310,7 +310,7 @@ angular.module('avApp')
       };
 
       var checkInstalledAndUpdate = function(gridApi, row) {
-        if (row.entity.installedInEnvironment) {
+        if (!row.entity.installedInEnvironment || row.entity.installedForProducerHsaId) {
           gridApi.selection.unSelectRow(row.entity);
         } else {
           updateSelectedServiceContracts(row);
