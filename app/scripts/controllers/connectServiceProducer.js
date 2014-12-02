@@ -281,16 +281,23 @@ angular.module('avApp')
         }
       };
 
-
       $scope.sendServiceProducerConnectionOrder = function() {
+        $scope.$broadcast('show-errors-check-validity');
+        if ($scope.serviceComponentForm.$invalid || $scope.bestallareForm.$invalid) {
+          console.log("ServicecomponentForm invalid? " + $scope.serviceComponentForm.$invalid);
+          console.log("BestallareForm invalid? " + $scope.bestallareForm.$invalid);
+        } else {
           Order.createServiceProducerConnectionOrder($scope.connectServiceProducerRequest).then(function(status) {
             console.log('Status: ' + status);
-            if(status === 201) {
+            if (status === 201) {
               console.log("Going to state");
               $state.go('serviceProducerOrderConfirmed');
             }
           });
+
+        }
       };
+
       /*
        Grid config
        */

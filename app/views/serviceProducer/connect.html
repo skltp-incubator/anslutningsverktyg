@@ -38,35 +38,35 @@
       </div>
     </div>
 
-    <form role="form" ng-show="newComponent || selectedServiceComponent.selected">
+    <form role="form" ng-show="newComponent || selectedServiceComponent.selected" name="serviceComponentForm">
       <div class="row">
 
           <div class="col-md-4">
-            <!--<div class="row">-->
-                <!--<h4>Basinformation</h4>-->
-              <!--</div>-->
-
               <div class="row" ng-show="newComponent">
-                <div class="form-group">
-                  <label for="komponentNamn">Tjänstekomponentens namn</label>
-                  <input type="text" class="form-control" id="komponentNamn" placeholder=""
-                         ng-model="connectServiceProducerRequest.serviceComponent.namn">
+                <div class="form-group" show-errors>
+                  <label class="control-label" for="komponentNamnInput">Tjänstekomponentens namn</label>
+                  <input type="text" class="form-control" id="komponentNamnInput" name="komponentNamn" placeholder=""
+                         ng-model="connectServiceProducerRequest.serviceComponent.namn" required>
+                  <span class="help-block" ng-if="serviceComponentForm.komponentNamn.$error.required">Namn för ny tjänstekomponent måste vara ifyllt</span>
                 </div>
               </div>
 
+
               <div class="row" ng-show="newComponent">
-                <div class="form-group">
-                  <label for="hsaId">HSA-ID</label>
-                  <input type="text" class="form-control" id="hsaId"
-                         placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.hsaId">
+                <div class="form-group" show-errors>
+                  <label class="control-label" for="hsaIdInput">HSA-ID</label>
+                  <input type="text" class="form-control" id="hsaIdInput" name="hsaId" placeholder=""
+                         ng-model="connectServiceProducerRequest.serviceComponent.hsaId" required>
+                  <span class="help-block" ng-if="serviceComponentForm.hsaId.$error.required">HsaId måste vara ifyllt</span>
                 </div>
               </div>
 
               <div class="row">
-                <div class="form-group">
-                  <label for="organisation">Organisation</label>
-                  <input type="text" class="form-control" id="organisation" placeholder=""
-                         ng-model="connectServiceProducerRequest.serviceComponent.organisation">
+                <div class="form-group" show-errors>
+                  <label class="control-label" for="organisationInput">Organisation</label>
+                  <input type="text" class="form-control" id="organisationInput" name="organisation" placeholder=""
+                         ng-model="connectServiceProducerRequest.serviceComponent.organisation" required>
+                  <span class="help-block" ng-if="serviceComponentForm.organisation.$error.required">Organisation måste vara ifyllt</span>
                 </div>
               </div>
 
@@ -530,79 +530,66 @@
 
   </div>
 
-  <div ng-show="connectServiceProducerRequest.serviceComponent && connectServiceProducerRequest.serviceContracts.length" >
+  <div
+    ng-show="connectServiceProducerRequest.serviceComponent && connectServiceProducerRequest.serviceContracts.length">
     <h2>Övrigt</h2>
 
-    <div class="jumbotron">
-      <h3>Är tjänstedomänens SLA uppfyllt?</h3>
+  <div class="jumbotron">
 
-      <div class="row">
-        <div class="col-md-12">
-
-          <div class="radio">
-            <label>
-              <input ng-model="connectServiceProducerRequest.slaFullfilled" ng-value="true" type="radio" name="slaFullfilledRadios"
-                     id="slaFullFilledRadios1">
-              Ja
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input ng-model="connectServiceProducerRequest.slaFullfilled" ng-value="false" type="radio" name="slaFullfilledRadios" id="slaFullFilledRadios2">
-              Nej
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
           <div class="form-group">
             <label for="ovrigInformation">Övrig information</label>
-            <textarea ng-model="connectServiceProducerRequest.otherInfo" id="ovrigInformation" class="form-control" cols="30" rows="10">
-            </textarea>
+            <textarea ng-model="connectServiceProducerRequest.otherInfo" id="ovrigInformation" class="form-control"
+                      cols="30" rows="10"></textarea>
           </div>
         </div>
       </div>
-
-      <div class="row">
-        <div class="col-md-12">
-          <h4>Beställare</h4>
-
-          <form class="form-horizontal" role="form">
-            <div class="form-group">
-              <label for="bestallareNamn" class="col-md-2 control-label">Namn</label>
-
-              <div class="col-md-6">
-                <input ng-model="connectServiceProducerRequest.client.name" ng-required="true" type="text" class="form-control" id="bestallareNamn" placeholder="namn">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="bestallareEmail" class="col-sm-2 control-label">Mail</label>
-
-              <div class="col-md-6">
-                <input ng-model="connectServiceProducerRequest.client.email" type="email" class="form-control" id="bestallareEmail" placeholder="email">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="bestallareTelefon" class="col-sm-2 control-label">Telefon</label>
-
-              <div class="col-md-6">
-                <input ng-model="connectServiceProducerRequest.client.phone" type="text" class="form-control" id="bestallareTelefon" placeholder="telefon">
-              </div>
-            </div>
-          </form>
-        </div>
-
-      </div>
-
     </div>
 
     <div class="row">
-      <div class="col-md-4 col-md-push-9">
+      <h4>Beställare</h4>
+    </div>
+    <form name="bestallareForm" role="form">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="row">
+            <div class="form-group" show-errors>
+              <label class=" control-label" for="bestallareNamnInput">För- och efternamn</label>
+              <input ng-model="connectServiceProducerRequest.client.name"
+                     type="text" class="form-control" id="bestallareNamnInput" name="bestallareNamn"
+                     placeholder="" required>
+              <span class="help-block" ng-if="bestallareForm.bestallareNamn.$error.required">För- och efternamn måste vara ifyllt</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group" show-errors>
+              <label for="bestallareEmailInput" class="control-label">E-postadress</label>
+              <input ng-model="connectServiceProducerRequest.client.email" type="email" class="form-control"
+                     id="bestallareEmailInput" name="bestallareMail" placeholder="" required>
+              <span class="help-block" ng-if="bestallareForm.bestallareMail.$error.required">E-postadress måste vara ifyllt</span>
+              <span class="help-block" ng-if="bestallareForm.bestallareMail.$error.email">E-postadress är ej giltig</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group" show-errors>
+              <label for="bestallareTelefonInput" class="control-label">Telefon</label>
+              <input ng-model="connectServiceProducerRequest.client.phone" type="text" class="form-control"
+                     id="bestallareTelefonInput" name="bestallareTelefon" placeholder="" required>
+              <span class="help-block" ng-if="bestallareForm.bestallareTelefon.$error.required">Telefon måste vara ifyllt</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-md-4 col-md-push-8">
         <button type="button" class="btn btn-primary btn-lg btn-wrap" ng-click="sendServiceProducerConnectionOrder()">Bekräfta</button>
       </div>
     </div>
+  </div>
+
   </div>
 
   <h3 ng-show="showDevStuff">sammanfattning:</h3>
