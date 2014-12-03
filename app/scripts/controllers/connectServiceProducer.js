@@ -56,6 +56,9 @@ angular.module('avApp')
       $scope.linkLogicalAddressChoice = 'sameForAllContracts';
 
       $scope.requestForCallPermissionInSeparateOrder = true; //Default
+
+      $scope.orderValid = true;
+
       $scope.gridOptions = {
         enableRowSelection: true,
         enableSelectAll: true,
@@ -283,9 +286,9 @@ angular.module('avApp')
 
       $scope.sendServiceProducerConnectionOrder = function() {
         if(!validateForms()) {
-          //TODO Tell the user that there is something wron with the form
-          console.log("Some form has an error");
+          $scope.orderValid = false;
         } else {
+          $scope.orderValid = true;
           Order.createServiceProducerConnectionOrder($scope.connectServiceProducerRequest).then(function(status) {
             console.log('Status: ' + status);
             if (status === 201) {
@@ -407,6 +410,7 @@ angular.module('avApp')
 
         //Reset all form validation that we might have done
         $scope.$broadcast('show-errors-reset');
+        $scope.orderValid = true;
       };
 
       var resetServiceComponent = function() {
