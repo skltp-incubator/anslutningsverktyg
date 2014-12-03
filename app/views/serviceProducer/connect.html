@@ -281,27 +281,28 @@
           <div class="row">
             <label>Lägg till ny logisk address</label>
             <div class="form-group">
-                <input ng-model="newLogicalAddressHSAID" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'" type="text" class="form-control" id="newLogicalAddress_HSAID"
+                <input ng-model="newLogicalAddress.hsaId" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'" type="text" class="form-control" id="newLogicalAddress_HSAID"
                        placeholder="HSA ID">
             </div>
           </div>
 
           <div class="row">
             <div class="form-group">
-                <input ng-model="newLogicalAddressName" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'" type="text" class="form-control" id="newLogicalAddress_Name"
+                <input ng-model="newLogicalAddress.namn" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'" type="text" class="form-control" id="newLogicalAddress_Name"
                        placeholder="Namn">
             </div>
           </div>
 
-          <div class="row">
-            <div class="form-group">
-              <label for="selectExistingLogicalAddresses">Välj från befintliga logiska adresser</label>
-              <select multiple ng-multiple="true" ng-model="selectedExistingLogicalAddresses" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'"
-                      ng-options="logicalAddress.namn +' - '+logicalAddress.hsaId for logicalAddress in existingLogicalAddresses"
-                      class="form-control" id="selectExistingLogicalAddresses">
-              </select>
-            </div>
-          </div>
+          <!-- befintliga logiska adresser bortkommenterade tills vidare -->
+          <!--<div class="row">-->
+            <!--<div class="form-group">-->
+              <!--<label for="selectExistingLogicalAddresses">Välj från befintliga logiska adresser</label>-->
+              <!--<select multiple ng-multiple="true" ng-model="selectedExistingLogicalAddresses" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'"-->
+                      <!--ng-options="logicalAddress.namn +' - '+logicalAddress.hsaId for logicalAddress in existingLogicalAddresses"-->
+                      <!--class="form-control" id="selectExistingLogicalAddresses">-->
+              <!--</select>-->
+            <!--</div>-->
+          <!--</div>-->
 
         </div>
 
@@ -310,7 +311,7 @@
 
             <div class="form-group top25">
               <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-click="addFilteredLogicalAddressToAllServiceContracts()" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'">
+                <button type="button" class="btn btn-default" ng-click="addLogicalAddressToAllServiceContracts(selectedLogicalAddress.selected)" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'">
                   <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
                 </button>
               </div>
@@ -322,42 +323,55 @@
 
             <div class="form-group top45">
               <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-click="addNewLogicalAddressForAllServiceContracts()" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'">
+                <button type="button" class="btn btn-default" ng-click="addLogicalAddressToAllServiceContracts(newLogicalAddress); newLogicalAddress = {};" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'">
                   <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
                 </button>
               </div>
             </div>
 
           </div>
+          <!-- befintliga logiska adresser bortkommenterade tills vidare -->
+          <!--<div class="row">-->
+            <!--<div class="form-group top75">-->
+              <!--<div class="btn-group">-->
+                <!--<button type="button" class="btn btn-default" ng-click="addLogicalAddressesToAllServiceContracts(selectedExistingLogicalAddresses)" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'">-->
+                  <!--<label>Valda</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>-->
+                <!--</button>-->
+              <!--</div>-->
+            <!--</div>-->
 
-          <div class="row">
+          <!--</div>-->
 
-            <div class="form-group top75">
-              <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-click="addSelectedExistingLogicalAddressesToAllServiceContracts()" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'">
-                  <label>Valda</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
-                </button>
-              </div>
-            </div>
+          <!--<div class="row">-->
+            <!--<div class="form-group top17">-->
+              <!--<div class="btn-group">-->
+                <!--<button type="button" class="btn btn-default" ng-click="addLogicalAddressesToAllServiceContracts(existingLogicalAddresses)" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'">-->
+                  <!--<label>Alla</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>-->
+                <!--</button>-->
+              <!--</div>-->
+            <!--</div>-->
 
-          </div>
-
-          <div class="row">
-
-            <div class="form-group top17">
-              <div class="btn-group">
-                <button type="button" class="btn btn-default" ng-click="addAllExistingLogicalAddressesToAllServiceContracts()" ng-disabled="linkLogicalAddressChoice === 'sourceSystemBased'">
-                  <label>Alla</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
-                </button>
-              </div>
-            </div>
-
-          </div>
+          <!--</div>-->
         </div>
 
         <div class="form-group col-md-4">
           <label>Valda logiska adresser</label>
-          <tags-input  ng-model="logicalAddresses" display-property="namn" on-tag-removed="removeLogicalAddressFromAllServiceContracts($tag)"></tags-input>
+          <table class="table table-hover logical-addresses">
+            <tr class="new" ng-repeat="logicalAddress in logicalAddresses">
+              <td>{{logicalAddress.namn}}</td>
+              <td ng-hide="linkLogicalAddressChoice === 'sourceSystemBased'">
+                <button ng-click="removeLogicalAddressFromAllServiceContracts(logicalAddress)" type="button" class="btn btn-danger btn-xs pull-right">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+              </td>
+            </tr>
+            <tr ng-hide="logicalAddresses.length">
+              <td>
+                <em>inga logiska adresser valda</em>
+              </td>
+            </tr>
+          </table>
+
         </div>
 
       </div>
@@ -445,27 +459,28 @@
             <div class="row">
               <label>Lägg till ny logisk address</label>
               <div class="form-group">
-                <input ng-model="newLogicalAddressHSAID" type="text" class="form-control" id="newLogicalAddress_HSAID_{{$index}}"
+                <input ng-model="newLogicalAddress.hsaId" type="text" class="form-control" id="newLogicalAddress_HSAID_{{$index}}"
                        placeholder="HSA ID">
               </div>
             </div>
 
             <div class="row">
               <div class="form-group">
-                <input ng-model="newLogicalAddressName" type="text" class="form-control" id="newLogicalAddress_Name_{{$index}}"
+                <input ng-model="newLogicalAddress.namn" type="text" class="form-control" id="newLogicalAddress_Name_{{$index}}"
                        placeholder="Namn">
               </div>
             </div>
 
-            <div class="row">
-              <div class="form-group">
-                <label for="selectExistingLogicalAddresses-{{$index}}">Välj från befintliga logiska adresser</label>
-                <select multiple ng-multiple="true" ng-model="selectedExistingLogicalAddresses"
-                        ng-options="logicalAddress.namn +' - '+logicalAddress.hsaId for logicalAddress in existingLogicalAddresses"
-                        class="form-control" id="selectExistingLogicalAddresses-{{$index}}">
-                </select>
-              </div>
-            </div>
+            <!-- befintliga logiska adresser bortkommenterade tills vidare -->
+            <!--<div class="row">-->
+              <!--<div class="form-group">-->
+                <!--<label for="selectExistingLogicalAddresses-{{$index}}">Välj från befintliga logiska adresser</label>-->
+                <!--<select multiple ng-multiple="true" ng-model="selectedExistingLogicalAddresses"-->
+                        <!--ng-options="logicalAddress.namn +' - '+logicalAddress.hsaId for logicalAddress in existingLogicalAddresses"-->
+                        <!--class="form-control" id="selectExistingLogicalAddresses-{{$index}}">-->
+                <!--</select>-->
+              <!--</div>-->
+            <!--</div>-->
 
           </div>
 
@@ -473,9 +488,12 @@
             <div class="row">
               <div class="form-group top25">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default" ng-click="addFilteredLogicalAddressToServiceContract(this, contract)">
+                  <button type="button" class="btn btn-default" ng-click="addLogicalAddressToServiceContract(this.selectedLogicalAddress, contract)">
                     <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
                   </button>
+                  <!--<button type="button" class="btn btn-default" ng-click="addFilteredLogicalAddressToServiceContract(this, contract)">-->
+                    <!--<span class="glyphicon glyphicon-forward" aria-hidden="true"></span>-->
+                  <!--</button>-->
                 </div>
               </div>
             </div>
@@ -483,42 +501,58 @@
             <div class="row">
               <div class="form-group top45">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default" ng-click="addNewLogicalAddressToServiceContract(this, contract)">
+                  <button type="button" class="btn btn-default" ng-click="addLogicalAddressToServiceContract(newLogicalAddress, contract); newLogicalAddress = {};">
                     <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
                   </button>
+                  <!--<button type="button" class="btn btn-default" ng-click="addNewLogicalAddressToServiceContract(this, contract)">-->
+                    <!--<span class="glyphicon glyphicon-forward" aria-hidden="true"></span>-->
+                  <!--</button>-->
                 </div>
               </div>
             </div>
 
 
-            <div class="row">
+            <!-- befintliga logiska adresser bortkommenterade tills vidare -->
+            <!--<div class="row">-->
+              <!--<div class="form-group top75">-->
+                <!--<div class="btn-group">-->
+                  <!--<button type="button" class="btn btn-default" ng-click="addLogicalAddressesToServiceContract(this.selectedExistingLogicalAddresses, contract)">-->
+                    <!--<label>Valda</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>-->
+                  <!--</button>-->
+                <!--</div>-->
+              <!--</div>-->
 
-              <div class="form-group top75">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default" ng-click="addSelectedExistingLogicalAddressesToServiceContract(this, contract)">
-                    <label>Valda</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
-                  </button>
-                </div>
-              </div>
+            <!--</div>-->
 
-            </div>
+            <!--<div class="row">-->
+              <!--<div class="form-group top17">-->
+                <!--<div class="btn-group">-->
+                  <!--<button type="button" class="btn btn-default" ng-click="addLogicalAddressesToServiceContract(existingLogicalAddresses, contract)">-->
+                    <!--<label>Alla</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>-->
+                  <!--</button>-->
+                <!--</div>-->
+              <!--</div>-->
 
-            <div class="row">
-
-              <div class="form-group top17">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default" ng-click="addAllExistingLogicalAddressesToServiceContract(contract)">
-                    <label>Alla</label> <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
-                  </button>
-                </div>
-              </div>
-
-            </div>
+            <!--</div>-->
           </div>
 
           <div class="form-group col-md-4">
             <label>Valda logiska adresser</label>
-            <tags-input ng-model="contract.logicalAddresses" display-property="namn" on-tag-removed="removeLogicalAddressFromServiceContract($tag, contract)"></tags-input>
+            <table class="table table-hover logical-addresses">
+              <tr ng-hide="contract.logicalAddresses.length">
+                <td>
+                  <em>inga logiska adresser valda</em>
+                </td>
+              </tr>
+              <tr class="new" ng-repeat="logicalAddress in contract.logicalAddresses">
+                <td>{{logicalAddress.namn}}</td>
+                <td>
+                  <button ng-click="removeLogicalAddressFromServiceContract(logicalAddress, contract)" type="button" class="btn btn-danger btn-xs pull-right">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  </button>
+                </td>
+              </tr>
+            </table>
           </div>
 
         </div>
