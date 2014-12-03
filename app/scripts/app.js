@@ -19,7 +19,8 @@ angular
     'ui.grid',
     'ui.grid.selection',
     'ui.select',
-    'ngTagsInput'
+    'ngTagsInput',
+    'ui.bootstrap.showErrors'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
@@ -84,4 +85,6 @@ angular
       });
   }]).config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push('SessionInterceptor');
+  }]).config(['showErrorsConfigProvider', function(showErrorsConfigProvider) {
+    showErrorsConfigProvider.showSuccess(true);
   }]);

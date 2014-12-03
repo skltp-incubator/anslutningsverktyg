@@ -56,6 +56,9 @@ angular.module('avApp')
       $scope.linkLogicalAddressChoice = 'sameForAllContracts';
 
       $scope.requestForCallPermissionInSeparateOrder = true; //Default
+
+      $scope.orderValid = true;
+
       $scope.gridOptions = {
         enableRowSelection: true,
         enableSelectAll: true,
@@ -281,16 +284,27 @@ angular.module('avApp')
         }
       };
 
-
       $scope.sendServiceProducerConnectionOrder = function() {
+        if(!validateForms()) {
+          $scope.orderValid = false;
+        } else {
+          $scope.orderValid = true;
           Order.createServiceProducerConnectionOrder($scope.connectServiceProducerRequest).then(function(status) {
             console.log('Status: ' + status);
-            if(status === 201) {
+            if (status === 201) {
               console.log("Going to state");
               $state.go('serviceProducerOrderConfirmed');
             }
           });
+
+        }
       };
+
+      $scope.$watch('newComponent', function(newValue) {
+        //Everytime this scope model changes
+        //reset all validation in the page
+        $scope.$broadcast('show-errors-reset');
+      });
       /*
        Grid config
        */
@@ -393,6 +407,10 @@ angular.module('avApp')
         $scope.selectedServiceConsumer = {};
         $scope.requestForCallPermissionInSeparateOrder = true;
         $scope.logicalAddresses = []; //So we don't get any logical address lingering in the tags input
+
+        //Reset all form validation that we might have done
+        $scope.$broadcast('show-errors-reset');
+        $scope.orderValid = true;
       };
 
       var resetServiceComponent = function() {
@@ -413,6 +431,19 @@ angular.module('avApp')
         });
         $scope.logicalAddresses = [];
         $scope.logicalAddressesForAllServiceContracts = [];
+      };
+
+      var validateForms = function() {
+        $scope.$broadcast('show-errors-check-validity');
+
+        //Get all divs with class form-group, since it is these that show the
+        //has-success or has-error classes
+        var formGroupElements = document.getElementsByClassName("form-group");
+
+        return !_.any(formGroupElements, function(formGroup) {
+            return angular.element(formGroup).hasClass('has-error');
+          }
+        );
       };
     }
   ]
