@@ -298,6 +298,11 @@ angular.module('avApp')
         }
       };
 
+      $scope.$watch('newComponent', function(newValue) {
+        //Everytime this scope model changes
+        //reset all validation in the page
+        $scope.$broadcast('show-errors-reset');
+      });
       /*
        Grid config
        */
@@ -400,6 +405,9 @@ angular.module('avApp')
         $scope.selectedServiceConsumer = {};
         $scope.requestForCallPermissionInSeparateOrder = true;
         $scope.logicalAddresses = []; //So we don't get any logical address lingering in the tags input
+
+        //Reset all form validation that we might have done
+        $scope.$broadcast('show-errors-reset');
       };
 
       var resetServiceComponent = function() {
