@@ -175,9 +175,10 @@
               <div class="row">
                 <div class="form-group" show-errors>
                   <label class="control-label" for="pingForConfigurationInput">URL till övervakningstjänst</label>
-                  <input type="text" class="form-control" id="pingForConfigurationInput" name="pingForConfiguration"
+                  <input type="url" class="form-control" id="pingForConfigurationInput" name="pingForConfiguration"
                          placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.pingForConfiguration" required>
                   <span class="help-block" ng-if="serviceComponentForm.pingForConfiguration.$error.required">URL måste vara ifyllt</span>
+                  <span class="help-block" ng-if="serviceComponentForm.pingForConfiguration.$error.url">URL är ej korrekt</span>
                 </div>
               </div>
             </div>
@@ -376,15 +377,48 @@
       <h3>{{contract.namn}} {{contract.majorVersion}}.{{contract.minorVersion}}</h3>
       <div class="row">
 
-        <div class="col-md-3">
-          <label for="rivtaVersion">RIVTA-profil</label>
-          <select id="rivtaVersion" class="form-control" ng-model="contract.rivtaVersion" ng-options="rivtaVersion.name for rivtaVersion in rivtaVersions | orderBy:'name':true" ng-init="contract.rivtaVersion = (rivtaVersions | orderBy:'name':true)[0]"></select>
-        </div>
-
-        <div class="col-md-8">
-          <label for="url">URL</label>
-          <input type="text" class="form-control" id="url" ng-model="contract.url" placeholder="skriv in url">
-        </div>
+        <!-- Should be a form here
+        <form name="bestallareForm" role="form">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="row">
+                <div class="form-group" show-errors>
+                  <label class=" control-label" for="bestallareNamnInput">För- och efternamn</label>
+                  <input ng-model="connectServiceProducerRequest.client.name"
+                         type="text" class="form-control" id="bestallareNamnInput" name="bestallareNamn"
+                         placeholder="" required>
+                  <span class="help-block" ng-if="bestallareForm.bestallareNamn.$error.required">För- och efternamn måste vara ifyllt</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group" show-errors>
+                  <label for="bestallareEmailInput" class="control-label">E-postadress</label>
+                  <input ng-model="connectServiceProducerRequest.client.email" type="email" class="form-control"
+                         id="bestallareEmailInput" name="bestallareMail" placeholder="" required>
+                  <span class="help-block" ng-if="bestallareForm.bestallareMail.$error.required">E-postadress måste vara ifyllt</span>
+                  <span class="help-block" ng-if="bestallareForm.bestallareMail.$error.email">E-postadress är ej giltig</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+-->
+        <form name="serviceContractForm">
+          <div class="col-md-3">
+            <label for="rivtaVersion">RIVTA-profil</label>
+            <select id="rivtaVersion" class="form-control" ng-model="contract.rivtaVersion"
+                    ng-options="rivtaVersion.name for rivtaVersion in rivtaVersions | orderBy:'name':true"
+                    ng-init="contract.rivtaVersion = (rivtaVersions | orderBy:'name':true)[0]"></select>
+          </div>
+          <div class="form-group" show-errors>
+            <div class="col-md-8">
+              <label class="control-label" for="urlInput">URL</label>
+              <input type="url" class="form-control" id="urlInput" name="url" ng-model="contract.url" placeholder="skriv in url" required>
+              <span class="help-block" ng-if="serviceContractForm.url.$error.required">Url måste vara ifyllt</span>
+              <span class="help-block" ng-if="serviceContractForm.url.$error.url">Url är ej korrekt</span>
+            </div>
+          </div>
+        </form>
 
       </div>
 

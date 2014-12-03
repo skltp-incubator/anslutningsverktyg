@@ -282,10 +282,9 @@ angular.module('avApp')
       };
 
       $scope.sendServiceProducerConnectionOrder = function() {
-        $scope.$broadcast('show-errors-check-validity');
-        if ($scope.serviceComponentForm.$invalid || $scope.bestallareForm.$invalid) {
-          console.log("ServicecomponentForm invalid? " + $scope.serviceComponentForm.$invalid);
-          console.log("BestallareForm invalid? " + $scope.bestallareForm.$invalid);
+        if(!validateForms()) {
+          //TODO Tell the user that there is something wron with the form
+          console.log("Some form has an error");
         } else {
           Order.createServiceProducerConnectionOrder($scope.connectServiceProducerRequest).then(function(status) {
             console.log('Status: ' + status);
@@ -428,6 +427,19 @@ angular.module('avApp')
         });
         $scope.logicalAddresses = [];
         $scope.logicalAddressesForAllServiceContracts = [];
+      };
+
+      var validateForms = function() {
+        $scope.$broadcast('show-errors-check-validity');
+
+        //Get all divs with class form-group, since it is these that show the
+        //has-success or has-error classes
+        var formGroupElements = document.getElementsByClassName("form-group");
+
+        return !_.any(formGroupElements, function(formGroup) {
+            return angular.element(formGroup).hasClass('has-error');
+          }
+        );
       };
     }
   ]
