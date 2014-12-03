@@ -75,26 +75,30 @@
               </div>
 
               <div class="row">
-                <div class="form-group">
-                  <label for="huvudansvarigNamn">För- och efternamn</label>
-                  <input type="text" class="form-control" id="huvudansvarigNamn" placeholder=""
-                         ng-model="connectServiceProducerRequest.serviceComponent.huvudAnsvarigNamn">
+                <div class="form-group" show-errors>
+                  <label class="control-label" for="huvudansvarigNamnInput">För- och efternamn</label>
+                  <input type="text" class="form-control" id="huvudansvarigNamnInput" name="huvudAnsvarig" placeholder=""
+                         ng-model="connectServiceProducerRequest.serviceComponent.huvudAnsvarigNamn" required>
+                  <span class="help-block" ng-if="serviceComponentForm.huvudAnsvarig.$error.required">För- och efternamn måste vara ifyllt</span>
                 </div>
               </div>
 
               <div class="row">
-                <div class="form-group">
-                  <label for="huvudansvarigEmail">E-postadress</label>
-                  <input type="email" class="form-control" id="huvudansvarigEmail"
-                         placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.huvudAnsvarigEpost">
+                <div class="form-group" show-errors>
+                  <label class="control-label" for="huvudansvarigEmailInput">E-postadress</label>
+                  <input type="email" class="form-control" id="huvudansvarigEmailInput" name="huvudAnsvarigEmail"
+                         placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.huvudAnsvarigEpost" required>
+                  <span class="help-block" ng-if="serviceComponentForm.huvudAnsvarigEmail.$error.required">E-postadress måste vara ifyllt</span>
+                  <span class="help-block" ng-if="serviceComponentForm.huvudAnsvarigEmail.$error.email">E-postadress är ej giltig</span>
                 </div>
               </div>
 
               <div class="row">
-                <div class="form-group">
-                  <label for="huvudansvarigTelefon">Telefon</label>
-                  <input type="text" class="form-control" id="huvudansvarigTelefon" placeholder=""
-                         ng-model="connectServiceProducerRequest.serviceComponent.huvudAnsvarigTelefon">
+                <div class="form-group" show-errors>
+                  <label class="control-label" for="huvudansvarigTelefonInput">Telefon</label>
+                  <input type="text" class="form-control" id="huvudansvarigTelefonInput" name="huvudansvarigTelefon" placeholder=""
+                         ng-model="connectServiceProducerRequest.serviceComponent.huvudAnsvarigTelefon" required>
+                  <span class="help-block" ng-if="serviceComponentForm.huvudansvarigTelefon.$error.required">Telefonnummer måste vara ifyllt</span>
                 </div>
               </div>
 
@@ -103,18 +107,21 @@
               </div>
 
               <div class="row">
-                <div class="form-group">
-                  <label for="brevladaEmail">Funktionsbrevlåda</label>
-                  <input type="email" class="form-control" id="brevladaEmail"
-                         placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.funktionsBrevladaEpost">
+                <div class="form-group" show-errors>
+                  <label class="control-label" for="brevladaEmailInput">Funktionsbrevlåda</label>
+                  <input type="email" class="form-control" id="brevladaEmailInput" name="brevladaEmail"
+                         placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.funktionsBrevladaEpost" required>
+                  <span class="help-block" ng-if="serviceComponentForm.brevladaEmail.$error.required">E-postadress måste vara ifyllt</span>
+                  <span class="help-block" ng-if="serviceComponentForm.brevladaEmail.$error.email">E-postadress är ej giltig</span>
                 </div>
               </div>
 
               <div class="row">
-                <div class="form-group">
-                  <label for="brevladaTelefon">Telefon</label>
-                  <input type="text" class="form-control" id="brevladaTelefon"
-                         placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.funktionsBrevladaTelefon">
+                <div class="form-group" show-errors>
+                  <label class="control-label" for="brevladaTelefonInput">Telefon</label>
+                  <input type="text" class="form-control" id="brevladaTelefonInput" name="brevladaTelefon"
+                         placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.funktionsBrevladaTelefon" required>
+                  <span class="help-block" ng-if="serviceComponentForm.brevladaTelefon.$error.required">Telefonnummer måste vara ifyllt</span>
                 </div>
               </div>
             </div>
@@ -125,26 +132,30 @@
               </div>
 
               <div class="row">
-                <div class="form-group">
-                  <label for="kontaktNamn">För- och efternamn</label>
-                  <input type="text" class="form-control" id="kontaktNamn" placeholder=""
-                         ng-model="connectServiceProducerRequest.serviceComponent.tekniskKontaktNamn">
+                <div class="form-group" show-errors>
+                  <label class="control-label" for="kontaktNamnInput">För- och efternamn</label>
+                  <input type="text" class="form-control" id="kontaktNamnInput" name="kontaktNamn" placeholder=""
+                         ng-model="connectServiceProducerRequest.serviceComponent.tekniskKontaktNamn" required>
+                  <span class="help-block" ng-if="serviceComponentForm.kontaktNamn.$error.required">För- och efternamn måste vara ifyllt</span>
                 </div>
               </div>
 
               <div class="row">
-                <div class="form-group">
-                  <label for="kontaktMail">E-postadress</label>
-                  <input type="email" class="form-control" id="kontaktMail" placeholder=""
-                         ng-model="connectServiceProducerRequest.serviceComponent.tekniskKontaktEpost">
+                <div class="form-group" show-errors>
+                  <label class="control-label" for="kontaktMailInput">E-postadress</label>
+                  <input type="email" class="form-control" id="kontaktMailInput" name="kontaktMail" placeholder=""
+                         ng-model="connectServiceProducerRequest.serviceComponent.tekniskKontaktEpost" required>
+                  <span class="help-block" ng-if="serviceComponentForm.kontaktMail.$error.required">E-postadress måste vara ifyllt</span>
+                  <span class="help-block" ng-if="serviceComponentForm.kontaktMail.$error.email">E-postadress är ej giltig</span>
                 </div>
               </div>
 
               <div class="row">
-                <div class="form-group">
-                  <label for="kontaktTelefon">Telefon</label>
-                  <input type="text" class="form-control" id="kontaktTelefon" placeholder=""
-                         ng-model="connectServiceProducerRequest.serviceComponent.tekniskKontaktTelefon">
+                <div class="form-group" show-errors>
+                  <label class="control-label" for="kontaktTelefonInput">Telefon</label>
+                  <input type="text" class="form-control" id="kontaktTelefonInput" name="kontaktTelefon" placeholder=""
+                         ng-model="connectServiceProducerRequest.serviceComponent.tekniskKontaktTelefon" required>
+                  <span class="help-block" ng-if="serviceComponentForm.kontaktTelefon.$error.required">Telefonnummer måste vara ifyllt</span>
                 </div>
               </div>
 
@@ -153,18 +164,20 @@
               </div>
 
               <div class="row">
-                <div class="form-group">
-                  <label for="ipAddress">IP-adress</label>
-                  <input type="text" class="form-control" id="ipAddress"
-                         placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.ipadress">
+                <div class="form-group" show-errors>
+                  <label class="control-label" for="ipAddressInput">IP-adress</label>
+                  <input type="text" class="form-control" id="ipAddressInput" name="ipAddress"
+                         placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.ipadress" required>
+                  <span class="help-block" ng-if="serviceComponentForm.ipAddress.$error.required">IP-adress måste vara ifyllt</span>
                 </div>
               </div>
 
               <div class="row">
-                <div class="form-group">
-                  <label for="pingForConfiguration">URL till övervakningstjänst</label>
-                  <input type="text" class="form-control" id="pingForConfiguration"
-                         placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.pingForConfiguration">
+                <div class="form-group" show-errors>
+                  <label class="control-label" for="pingForConfigurationInput">URL till övervakningstjänst</label>
+                  <input type="text" class="form-control" id="pingForConfigurationInput" name="pingForConfiguration"
+                         placeholder="" ng-model="connectServiceProducerRequest.serviceComponent.pingForConfiguration" required>
+                  <span class="help-block" ng-if="serviceComponentForm.pingForConfiguration.$error.required">URL måste vara ifyllt</span>
                 </div>
               </div>
             </div>
