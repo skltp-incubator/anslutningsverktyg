@@ -14,8 +14,8 @@ angular.module('avApp')
           }
         }).success(function(data) {
           var serviceContracts = _.map(data, function(serviceContract) {
-            //serviceContract.installedInEnvironment = !!Math.floor(Math.random() * 2);
-            //serviceContract.installedForProducerHsaId = !!Math.floor(Math.random() * 2);
+            serviceContract.installedInEnvironment = !!Math.floor(Math.random() * 2);
+            serviceContract.installedForProducerHsaId = !!Math.floor(Math.random() * 2);
             return serviceContract;
           });
           deferred.resolve(serviceContracts);
